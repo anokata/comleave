@@ -1,0 +1,10 @@
+body {
+    background-color: #aac;
+    color: #003;
+    font-family: Geneva, sans-serif;
+}
+
+.users {
+    margin: auto;
+    width: 50%;
+}

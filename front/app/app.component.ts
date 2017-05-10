@@ -11,12 +11,11 @@ export class Person{
 
 @Component({
     selector: 'my-app',
-    template: `<div>
-                    <p>users: 
+    template: `<div class='users'>
+                    users: 
                 <li *ngFor="let p of user">
                   <span>{{p.name}}</span> 
                 </li>
-                    </p>
                </div>`,
     providers: [HttpService]
 })
