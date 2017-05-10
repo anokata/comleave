@@ -10,11 +10,15 @@ from .models import Overs, Person
 def test(request):
     return HttpResponse("hi")
 
-def persons(request):
+def persons_(request):
     persons = Person.objects.order_by('name')
     template = loader.get_template('overwork/index.html')
     context = {
         'persons': persons,
     }
     return HttpResponse(template.render(context))
+
+def persons(request):
+    template = loader.get_template('overwork/persons.html')
+    return HttpResponse(template.render({}))
 

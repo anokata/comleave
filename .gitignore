@@ -1,4 +1,6 @@
 #*.png
+*.js
+*.map
 # Byte-compiled / optimized / DLL files
 __pycache__/
 walltext.png

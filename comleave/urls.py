@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 
 from rest_framework import routers, serializers, viewsets
 from overwork.models import Person
@@ -36,4 +38,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include(router.urls)),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
