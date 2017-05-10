@@ -16,7 +16,24 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from rest_framework import routers, serializers, viewsets
+from overwork.models import Person
+
+class PersonSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Person
+        fields = ('name', 'is_manager')
+
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+
+router = routers.DefaultRouter()
+router.register(r'persons', PersonViewSet)
+
 urlpatterns = [
     url(r'^overwork/', include('overwork.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^', include(router.urls)),
 ]
