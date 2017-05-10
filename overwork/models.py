@@ -24,8 +24,8 @@ class Overs(models.Model):
     status = models.CharField(max_length=100,
                                   choices=STATUS_CHOISES,
                                   default='R')
-    comment = models.CharField(max_length=512)
-    # ref on person
+    comment = models.CharField(max_length=512, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.reg_date.strftime("%Y.%m.%d") + ' ' \
