@@ -11,8 +11,12 @@ export class Person{
 
 @Component({
     selector: 'my-app',
-    template: `<div>DDDD
-                    <p>N: {{user?.name}}</p>
+    template: `<div>
+                    <p>users: 
+                <li *ngFor="let p of user">
+                  <span>{{p.name}}</span> 
+                </li>
+                    </p>
                </div>`,
     providers: [HttpService]
 })
@@ -24,15 +28,11 @@ export class AppComponent implements OnInit {
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
-        console.log('get t');
-         
         this.httpService.getData().subscribe(
             (data: Response) => {
-                console.log('i: ' + data);
-                console.log('j: ' + data.json());
+                console.log(data.json());
                 return this.user=data.json();
             });
-        console.log('it: ' + this.user);
          
     }
 }

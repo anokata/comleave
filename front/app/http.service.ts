@@ -8,7 +8,6 @@ export class HttpService{
     constructor(private http: Http){ }
      
     getData(){
-        console.log('get')
-        return this.http.get('http://localhost:8000/persons/');
+        return this.http.get('http://localhost:8000/persons/?format=json');
     }
 }
