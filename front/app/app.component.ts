@@ -19,6 +19,7 @@ export class Overs {
     name: string;
     start: string;
     is_over: boolean;
+    dework_type: string;
 }
 
 export class Summarize {

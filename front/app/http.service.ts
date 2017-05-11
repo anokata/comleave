@@ -23,7 +23,11 @@ export class HttpService{
         return this.http.get('http://localhost:8000/reqs/?format=json');
     }
 
-    getUrl(url:string) {
+    getUrl(url: string) {
         return this.http.get(url);
+    }
+
+    postAccep(id: number) {
+        //TODO
     }
 }
