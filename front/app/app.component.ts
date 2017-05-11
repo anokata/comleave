@@ -9,12 +9,27 @@ export class Person{
     is_manager: boolean;
 }
 
+export class Overs {
+    reg_date: Date;
+    start_date: Date;
+    interval: number;
+    status: string;
+    comment: string;
+    person: Person;
+}
+
 @Component({
     selector: 'my-app',
     template: `<div class='users'>
-                    users: 
+                    Users: 
                 <li *ngFor="let p of user">
                   <span>{{p.name}}</span> 
+                </li>
+                    overs: 
+                <li *ngFor="let p of overs">
+                  <span>{{p.reg_date}}</span> 
+                  <span>{{p.person}}</span> 
+                  <span>{{p.status}}</span> 
                 </li>
                </div>`,
     providers: [HttpService]
@@ -23,6 +38,7 @@ export class Person{
 export class AppComponent implements OnInit { 
   
     user: Person;
+    overs: Overs;
      
     constructor(private httpService: HttpService){}
      
@@ -33,5 +49,11 @@ export class AppComponent implements OnInit {
                 return this.user=data.json();
             });
          
+        this.httpService.getOvers().subscribe(
+        (data: Response) => {
+            this.overs=data.json();
+            //let person = this.http.get(this.overs.person);
+            }
+        );
     }
 }
