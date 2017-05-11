@@ -8,3 +8,30 @@ body {
     margin: auto;
     width: 50%;
 }
+
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    color: #113; 
+    font-family: Helvetica, Arial, sans-serif; 
+}
+
+td, th { border: 1px solid #AAC; }
+
+th {
+background: #03035F; 
+font-weight: bold; 
+color: #CCF;
+border: 0px;
+}
+
+td {
+text-align: center;
+}
+
+tr:nth-child(even) td { background: #E1E1FF; }
+
+tr:nth-child(odd) td { background: #EEEEFF; }
+

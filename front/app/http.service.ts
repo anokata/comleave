@@ -14,4 +14,8 @@ export class HttpService{
     getOvers() {
         return this.http.get('http://localhost:8000/overs/?format=json');
     }
+
+    getSum() {
+        return this.http.get('http://localhost:8000/sum/?format=json');
+    }
 }

@@ -18,6 +18,13 @@ export class Overs {
     person: Person;
 }
 
+export class Summarize {
+    name: string;
+    unwork: number;
+    overwork: number;
+    total: number;
+}
+
 @Component({
     selector: 'my-app',
     template: `<div class='users'>
@@ -31,6 +38,22 @@ export class Overs {
                   <span>{{p.person}}</span> 
                   <span>{{p.status}}</span> 
                 </li>
+    <table>
+    <thead>
+    <th>ФИО</th>
+    <th>Отгул</th>
+    <th>Переработка</th>
+    <th>Итог</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let rec of sums">
+      <td>{{rec.name}}</td> 
+      <td>{{rec.unwork}}</td> 
+      <td>{{rec.overwork}}</td> 
+      <td>{{rec.total}}</td> 
+    </tr>
+    </tbody>
+    </table>
                </div>`,
     providers: [HttpService]
 })
@@ -39,13 +62,14 @@ export class AppComponent implements OnInit {
   
     user: Person;
     overs: Overs;
+    sums: Summarize;
      
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
         this.httpService.getData().subscribe(
             (data: Response) => {
-                console.log(data.json());
+                //console.log(data.json());
                 return this.user=data.json();
             });
          
@@ -55,5 +79,11 @@ export class AppComponent implements OnInit {
             //let person = this.http.get(this.overs.person);
             }
         );
+
+        this.httpService.getSum().subscribe(
+        (data: Response) => {
+            this.sums=data.json();
+            this.sums.map((e) => e.total = e.overwork - e.unwork);
+        });
     }
 }
