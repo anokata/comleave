@@ -18,4 +18,12 @@ export class HttpService{
     getSum() {
         return this.http.get('http://localhost:8000/sum/?format=json');
     }
+
+    getReqs() {
+        return this.http.get('http://localhost:8000/reqs/?format=json');
+    }
+
+    getUrl(url:string) {
+        return this.http.get(url);
+    }
 }

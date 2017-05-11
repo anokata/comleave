@@ -18,8 +18,8 @@ class Overs(models.Model):
         ('D', 'Denied'),
         ('A', 'Accepted'),
     )
-    reg_date = models.DateTimeField('date registred')
-    start_date = models.DateTimeField('start date')
+    reg_date = models.DateTimeField('date registred', auto_now_add=True)
+    start_date = models.DateField('start date')
     interval = models.IntegerField()
     status = models.CharField(max_length=100,
                                   choices=STATUS_CHOISES,

@@ -11,11 +11,13 @@ export class Person{
 
 export class Overs {
     reg_date: Date;
-    start_date: Date;
+    start_date: string;
     interval: number;
     status: string;
     comment: string;
     person: Person;
+    name: string;
+    start: string;
 }
 
 export class Summarize {
@@ -28,16 +30,6 @@ export class Summarize {
 @Component({
     selector: 'my-app',
     template: `<div class='users'>
-                    Users: 
-                <li *ngFor="let p of user">
-                  <span>{{p.name}}</span> 
-                </li>
-                    overs: 
-                <li *ngFor="let p of overs">
-                  <span>{{p.reg_date}}</span> 
-                  <span>{{p.person}}</span> 
-                  <span>{{p.status}}</span> 
-                </li>
     <table>
     <thead>
     <th>ФИО</th>
@@ -54,6 +46,26 @@ export class Summarize {
     </tr>
     </tbody>
     </table>
+
+
+    <table>
+    <thead>
+    <th>ФИО</th>
+    <th>Дата начала</th>
+    <th>Часов</th>
+    <th>Коментарий</th>
+    <th>Дата регистрации заявки</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let rec of reqs">
+      <td>{{rec.name}}</td> 
+      <td>{{rec.start}}</td> 
+      <td>{{rec.interval}}</td> 
+      <td>{{rec.comment}}</td> 
+      <td>{{rec.reg_date}}</td> 
+    </tr>
+    </tbody>
+    </table>
                </div>`,
     providers: [HttpService]
 })
@@ -62,28 +74,36 @@ export class AppComponent implements OnInit {
   
     user: Person;
     overs: Overs;
-    sums: Summarize;
+    sums: Array<Summarize>;
+    reqs: Array<Overs>;
      
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
         this.httpService.getData().subscribe(
             (data: Response) => {
-                //console.log(data.json());
                 return this.user=data.json();
             });
          
         this.httpService.getOvers().subscribe(
         (data: Response) => {
             this.overs=data.json();
-            //let person = this.http.get(this.overs.person);
             }
         );
 
         this.httpService.getSum().subscribe(
         (data: Response) => {
             this.sums=data.json();
-            this.sums.map((e) => e.total = e.overwork - e.unwork);
+            this.sums.map((e:Summarize) => e.total = e.overwork - e.unwork);
+        });
+
+        this.httpService.getReqs().subscribe(
+        (data: Response) => {
+            this.reqs=data.json();
+            this.reqs.map((e:Overs) => {
+                e.start = new Date(e.start_date)['toLocaleFormat']('%d.%m.%Y');
+                return e;
+            });
         });
     }
 }

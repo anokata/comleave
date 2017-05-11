@@ -1,6 +1,7 @@
 from overwork.models import Person, Overs
 from rest_framework import viewsets
 from .serializators import PersonSerializer, OverworkSerializer, SummarySerializer
+from .serializators import RequestsSerializer
 from django.db.models import Sum
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -23,3 +24,11 @@ class SummaryViewSet(viewsets.ModelViewSet):
         "from overwork_person as oo;";
     queryset = Overs.objects.raw(q)
     serializer_class = SummarySerializer
+
+class RequestsViewSet(viewsets.ModelViewSet):
+    q = "select overwork_overs.id, reg_date, start_date, interval, comment, name "\
+        "from overwork_overs inner join overwork_person "\
+        "on overwork_overs.person_id=overwork_person.id "\
+        "where overwork_overs.status='R'"
+    queryset = Overs.objects.raw(q)
+    serializer_class = RequestsSerializer
