@@ -18,7 +18,7 @@ def persons_(request):
     }
     return HttpResponse(template.render(context))
 
-def persons(request):
+def person(request):
     template = loader.get_template('overwork/persons.html')
     return HttpResponse(template.render({}))
 

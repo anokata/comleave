@@ -18,20 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from rest_framework import routers, serializers, viewsets
-from overwork.models import Person
-
-class PersonSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Person
-        fields = ('name', 'is_manager')
-
-class PersonViewSet(viewsets.ModelViewSet):
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
-
-router = routers.DefaultRouter()
-router.register(r'persons', PersonViewSet)
+from .restrouters import router
 
 urlpatterns = [
     url(r'^overwork/', include('overwork.urls')),
