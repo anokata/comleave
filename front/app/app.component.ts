@@ -18,6 +18,7 @@ export class Overs {
     person: Person;
     name: string;
     start: string;
+    is_over: boolean;
 }
 
 export class Summarize {
@@ -51,6 +52,7 @@ export class Summarize {
     <table>
     <thead>
     <th>ФИО</th>
+    <th>Тип</th>
     <th>Дата начала</th>
     <th>Часов</th>
     <th>Коментарий</th>
@@ -59,6 +61,7 @@ export class Summarize {
     <tbody>
     <tr *ngFor="let rec of reqs">
       <td>{{rec.name}}</td> 
+      <td>{{rec.dework_type}}</td> 
       <td>{{rec.start}}</td> 
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
@@ -102,6 +105,7 @@ export class AppComponent implements OnInit {
             this.reqs=data.json();
             this.reqs.map((e:Overs) => {
                 e.start = new Date(e.start_date)['toLocaleFormat']('%d.%m.%Y');
+                e.dework_type = e.is_over ? 'переработка' : 'отгул';
                 return e;
             });
         });

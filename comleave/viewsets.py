@@ -26,7 +26,7 @@ class SummaryViewSet(viewsets.ModelViewSet):
     serializer_class = SummarySerializer
 
 class RequestsViewSet(viewsets.ModelViewSet):
-    q = "select overwork_overs.id, reg_date, start_date, interval, comment, name "\
+    q = "select overwork_overs.id, reg_date, start_date, interval, comment, name, is_over "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
         "where overwork_overs.status='R'"
