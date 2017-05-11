@@ -13,9 +13,9 @@ class OverworkViewSet(viewsets.ModelViewSet):
 
 
 class SummaryViewSet(viewsets.ModelViewSet):
-    q = "select overwork_overs.id, overwork_person.name as name, overwork_overs.start_date, sum(interval) as interval, reg_date "\
+    q = "select overwork_person.id, overwork_person.name as name, sum(interval) as overwork "\
         "from overwork_overs " \
         "inner join overwork_person on person_id=overwork_person.id " \
-        "where status='A' group by overwork_person.name, reg_date, overwork_overs.id"
+        "where status='A' group by overwork_person.name, overwork_person.id"
     queryset = Overs.objects.raw(q)
     serializer_class = SummarySerializer

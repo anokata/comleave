@@ -14,10 +14,8 @@ class OverworkSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SummarySerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    interval = serializers.IntegerField()
+    overwork = serializers.IntegerField()
     name = serializers.CharField(max_length=200)
-    reg_date = serializers.DateTimeField()
 
     def create(self, validated_data):
         return SummarySerializer.objects.create(**validated_data)

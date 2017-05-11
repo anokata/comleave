@@ -26,9 +26,11 @@ class Overs(models.Model):
                                   default='R')
     comment = models.CharField(max_length=512, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
+    is_over = models.BooleanField("is overwork?(else defect work)")
 
     def __str__(self):
         return self.reg_date.strftime("%Y.%m.%d") + ' ' \
                 + self.get_status_display() + '  ' \
-                + str(self.interval) + ' hours'
+                + str(self.interval) + ' hours ' \
+                + self.person.name
 
