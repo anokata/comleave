@@ -19,10 +19,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from .restrouters import router
+from overwork import views
 
 urlpatterns = [
     url(r'^overwork/', include('overwork.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include(router.urls)),
+    url(r'^action$', views.action, name='action'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

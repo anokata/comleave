@@ -29,6 +29,6 @@ export class HttpService{
     }
 
     postAccept(id: number) {
-        return this.http.post('http://localhost:8000/overwork/action/', id.toString());
+        return this.http.post('http://localhost:8000/action', id.toString());
     }
 }

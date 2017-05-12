@@ -22,3 +22,5 @@ def person(request):
     template = loader.get_template('overwork/persons.html')
     return HttpResponse(template.render({}))
 
+def action(request):
+    return HttpResponse('')

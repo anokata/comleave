@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
+import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 
 export class Person{
     name: string;
@@ -72,7 +73,12 @@ export class Summarize {
     </table>
 <button class="btn btn-default" (click)="submit(1)">Отправить</button>
                </div>`,
-    providers: [HttpService]
+    providers: [HttpService, 
+            {
+            provide: XSRFStrategy,
+            useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
+        }
+    ]
 })
 
 export class AppComponent implements OnInit { 
