@@ -116,7 +116,6 @@ export class AppComponent implements OnInit {
     reqs: Array<Overs>;
     intervals: Interval[];
 
-    //in_person: string;
     comment: string;
     interval: number;
     date: string;

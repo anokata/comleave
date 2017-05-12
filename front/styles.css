@@ -36,5 +36,10 @@ tr:nth-child(even) td { background: #E1E1FF; }
 
 tr:nth-child(odd) td { background: #EEEEFF; }
 
-
+button {
+    background-color: #ddf;
+    border: 1px solid;
+    padding: 0.5em;
+    width: 100%;
+}
 
