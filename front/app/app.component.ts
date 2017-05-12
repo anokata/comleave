@@ -84,12 +84,22 @@ export class Interval {
     </tr>
     </tbody>
     </table>
-    <input type="text" id="datepicker">
+    <br>
+    Дата: <input type="text" id="datepicker">
+    <br>
     Срок:
     <select>
         <option *ngFor="let opt of intervals">
         {{opt.title}}
         </option>
+    </select>
+    <br>
+    Комментарий: <input type=text >
+    <br>
+    <select>
+    <option *ngFor="let person of persons">
+    {{person.name}}
+    </option>
     </select>
                </div>`,
     providers: [HttpService]
@@ -98,11 +108,13 @@ export class Interval {
 
 export class AppComponent implements OnInit { 
   
-    user: Person;
+    persons: Person;
     overs: Overs;
     sums: Array<Summarize>;
     reqs: Array<Overs>;
     intervals: Interval[];
+
+    //in_person: string;
      
     constructor(private httpService: HttpService){}
      
@@ -118,7 +130,7 @@ export class AppComponent implements OnInit {
 
         this.httpService.getData().subscribe(
             (data: Response) => {
-                return this.user=data.json();
+                return this.persons=data.json();
             });
          
         this.httpService.getOvers().subscribe(
