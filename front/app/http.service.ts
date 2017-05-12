@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
  
 @Injectable()
 export class HttpService{
+    host = '';
  
     constructor(private http: Http){ }
      
@@ -27,7 +28,7 @@ export class HttpService{
         return this.http.get(url);
     }
 
-    postAccep(id: number) {
-        //TODO
+    postAccept(id: number) {
+        return this.http.post('http://localhost:8000/overwork/action/', id.toString());
     }
 }

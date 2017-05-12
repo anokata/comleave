@@ -70,6 +70,7 @@ export class Summarize {
     </tr>
     </tbody>
     </table>
+<button class="btn btn-default" (click)="submit(1)">Отправить</button>
                </div>`,
     providers: [HttpService]
 })
@@ -110,5 +111,10 @@ export class AppComponent implements OnInit {
                 return e;
             });
         });
+    }
+
+    submit(id: number){
+        this.httpService.postAccept(id)
+                .subscribe((data) => {console.log('sended');});
     }
 }
