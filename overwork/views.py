@@ -5,11 +5,16 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+from django.views.generic import TemplateView, View
+from django.conf import settings
 
 from .models import Overs, Person
 
-def test(request):
-    return HttpResponse("hi")
+def main(request):
+    template = loader.get_template('route.html')
+    return HttpResponse(template.render({
+        'ANGULAR_URL' : settings.ANGULAR_URL,
+        }))
 
 def persons_(request):
     persons = Person.objects.order_by('name')

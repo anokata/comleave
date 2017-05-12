@@ -23,13 +23,17 @@ from overwork import views
 
 urlpatterns = [
     url(r'^overwork/', include('overwork.urls')),
-    url(r'^admin/', admin.site.urls),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^', include(router.urls)),
+    url(r'^rest/', include(router.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^action/(?P<action>[0-9a-zA-Z]+)/(?P<param>[0-9a-zA-Z]+)$', views.action, name='action'),
     url(r'^accept/(?P<param>[0-9a-zA-Z]+)$', views.accept),
     url(r'^deny/(?P<param>[0-9a-zA-Z]+)$', views.deny),
     url(r'^register/(?P<param>[0-9a-zA-Z]+)$', views.register),
     url(r'^register_overwork/(?P<date>[0-9\.]+)/(?P<interval>[0-9]+)/(?P<person_id>[0-9]+)/(?P<comment>.*)/',
         views.register_overwork),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    url(r'^(?!ng/).*$', views.main),
+    url(r'^main/', views.main),
+] + static(settings.ANGULAR_URL, document_root=settings.ANGULAR_ROOT)
+
+#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

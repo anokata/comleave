@@ -43,7 +43,13 @@ export class Interval {
 
 @Component({
     selector: 'my-app',
-    template: `<div class='users'>
+    template: `
+        <nav>
+          <a routerLink="/sum" routerLinkActive="active">Summmary</a>
+        </nav>
+        <router-outlet></router-outlet>
+
+    <div class='users'>
     <table>
     <thead>
     <th>ФИО</th>
@@ -104,7 +110,7 @@ export class Interval {
     </select>
     <button class="btn" (click)="register_overwork()">Зарегестрировать</button>
                </div>`,
-    providers: [HttpService]
+    providers: [HttpService],
 })
 
 

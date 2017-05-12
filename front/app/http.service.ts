@@ -4,24 +4,26 @@ import { HttpModule } from '@angular/http';
  
 @Injectable()
 export class HttpService{
-    host = '';
+    host = 'http://localhost:8000/';
+    base = 'rest';
+    prefix = this.host + this.base;
  
     constructor(private http: Http){ }
      
     getData() {
-        return this.http.get('http://localhost:8000/persons/?format=json');
+        return this.http.get(this.prefix + '/persons/?format=json');
     }
 
     getOvers() {
-        return this.http.get('http://localhost:8000/overs/?format=json');
+        return this.http.get(this.prefix + '/overs/?format=json');
     }
 
     getSum() {
-        return this.http.get('http://localhost:8000/sum/?format=json');
+        return this.http.get(this.prefix + '/sum/?format=json');
     }
 
     getReqs() {
-        return this.http.get('http://localhost:8000/reqs/?format=json');
+        return this.http.get(this.prefix + '/reqs/?format=json');
     }
 
     getUrl(url: string) {

@@ -5,6 +5,5 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.test, name='test'),
     url(r'^person$', views.person, name='persons'),
 ]
