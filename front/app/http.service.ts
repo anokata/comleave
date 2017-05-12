@@ -36,8 +36,12 @@ export class HttpService{
         return this.http.get('http://localhost:8000/accept/' + id.toString());
     }
 
-    register_overwork(comment: string) {
-        return this.http.get('http://localhost:8000/register_overwork' + 
+    register_overwork(date: string, interval: number, 
+        person_id: number, comment: string) {
+        return this.http.get('http://localhost:8000/register_overwork/' + 
+            date + '/' + 
+            interval + '/' + 
+            person_id + '/' + 
             comment + '/' );
     }
 }

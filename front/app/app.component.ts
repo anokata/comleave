@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
 
     //in_person: string;
     comment: string;
-    interval: Interval;
+    interval: number;
     date: string;
     person_id: number;
      
@@ -128,6 +128,7 @@ export class AppComponent implements OnInit {
         let datep: any;
         datep = $("#datepicker");
         datep.datepicker();
+        this.comment = '';
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {
@@ -184,8 +185,10 @@ export class AppComponent implements OnInit {
     register_overwork() {
         let datep: any;
         datep = $("#datepicker");
-        this.date = datep.val();
-
+        this.date = datep.val().replace(/\//g, '.');;
+        this.httpService.register_overwork(this.date, this.interval, 
+            this.person_id, this.comment)
+            .subscribe((data) => { console.log('registred'); });
         console.log(this.comment);
         console.log(this.interval);
         console.log(this.date);
