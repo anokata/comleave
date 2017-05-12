@@ -28,4 +28,6 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^action/(?P<action>[0-9a-zA-Z]+)/(?P<param>[0-9a-zA-Z]+)$', views.action, name='action'),
     url(r'^accept/(?P<param>[0-9a-zA-Z]+)$', views.accept),
+    url(r'^deny/(?P<param>[0-9a-zA-Z]+)$', views.deny),
+    url(r'^register/(?P<param>[0-9a-zA-Z]+)$', views.register),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

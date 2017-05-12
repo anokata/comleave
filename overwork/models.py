@@ -13,6 +13,9 @@ class Person(models.Model):
 
 
 class Overs(models.Model):
+    ACCEPT = 'A'
+    DENIED = 'D'
+    REGISTRED = 'R'
     STATUS_CHOISES = (
         ('R', 'Registred'),
         ('D', 'Denied'),

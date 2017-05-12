@@ -23,7 +23,26 @@ def person(request):
     return HttpResponse(template.render({}))
 
 def action(request, action, param):
+    #TEST
     return HttpResponse('act:' + action + ' param:' + param)
 
 def accept(request, param):
+    over = Overs.objects.filter(pk=param).first()
+    if over:
+        over.status = Overs.ACCEPT
+        over.save()
+    return HttpResponse(' param:' + param)
+
+def deny(request, param):
+    over = Overs.objects.filter(pk=param).first()
+    if over:
+        over.status = Overs.DENIED
+        over.save()
+    return HttpResponse(' param:' + param)
+
+def register(request, param):
+    over = Overs.objects.filter(pk=param).first()
+    if over:
+        over.status = Overs.REGISTRED
+        over.save()
     return HttpResponse(' param:' + param)
