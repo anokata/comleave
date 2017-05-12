@@ -1,0 +1,30 @@
+{% load static %}
+
+<html>
+    <head>
+    <base href="/">
+    <title>UpDownWork (UDW)</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{{ ANGULAR_URL }}node_modules/core-js/client/shim.min.js"></script>
+    <script src="{{ ANGULAR_URL }}node_modules/zone.js/dist/zone.js"></script>
+    <script src="{{ ANGULAR_URL }}node_modules/systemjs/dist/system.src.js"></script>
+    <script src="{{ ANGULAR_URL }}systemjs.config.js"></script>
+    <link rel="stylesheet" href="{{ ANGULAR_URL }}jquery-ui.css">
+    <script src="{{ ANGULAR_URL }}jquery-1.12.4.js"></script>
+    <script src="{{ ANGULAR_URL }}jquery-ui.js"></script>
+    <script>
+      window.STATIC_URL = "{{ ANGULAR_URL }}";
+      System.import('/ng/app/main').catch(function(err){
+          console.error(err);
+      });
+          $( function() {
+            $( "#datepicker" ).datepicker();
+          } );
+        </script>
+    </head>
+    <body>
+        <my-app>Загрузка...</my-app>
+    </body>
+</html>
