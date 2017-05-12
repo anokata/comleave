@@ -6,6 +6,8 @@ import { RouterModule }   from '@angular/router';
 
 import { AppComponent }  from './app.component';
 import { SummaryComponent }  from './summary.component';
+import { RegistredComponent }  from './registred.component';
+import { PresentComponent }  from './present.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -17,11 +19,20 @@ import { SummaryComponent }  from './summary.component';
           {
             path: 'sum',
             component: SummaryComponent
-          }
+          },
+          {
+            path: 'reg',
+            component: RegistredComponent
+          },
+          {
+            path: 'sent',
+            component: PresentComponent
+          },
         ])
     
     ],
-    declarations: [ AppComponent, SummaryComponent],
+    declarations: [ AppComponent, SummaryComponent, RegistredComponent,
+        PresentComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
