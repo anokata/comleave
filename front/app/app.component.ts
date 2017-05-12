@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
-import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 
 export class Person{
     name: string;
@@ -21,6 +20,7 @@ export class Overs {
     start: string;
     is_over: boolean;
     dework_type: string;
+    id: number;
 }
 
 export class Summarize {
@@ -68,17 +68,14 @@ export class Summarize {
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
+      <td>{{rec.id}} 
+      <button class="btn" (click)="submit(rec.id)">Принять</button>
+      </td> 
     </tr>
     </tbody>
     </table>
-<button class="btn btn-default" (click)="submit(1)">Отправить</button>
                </div>`,
-    providers: [HttpService, 
-            {
-            provide: XSRFStrategy,
-            useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
-        }
-    ]
+    providers: [HttpService]
 })
 
 export class AppComponent implements OnInit { 
@@ -120,7 +117,7 @@ export class AppComponent implements OnInit {
     }
 
     submit(id: number){
-        this.httpService.postAccept(id)
+        this.httpService.actionAccept(id)
                 .subscribe((data) => {console.log('sended');});
     }
 }

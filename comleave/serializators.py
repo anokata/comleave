@@ -29,6 +29,7 @@ class RequestsSerializer(serializers.Serializer):
     interval = serializers.IntegerField()
     comment = serializers.CharField(max_length=200)
     is_over = serializers.BooleanField()
+    id = serializers.IntegerField()
 
     def create(self, validated_data):
         return RequestsSerializer.objects.create(**validated_data)
