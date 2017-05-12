@@ -73,6 +73,7 @@ export class Summarize {
     </tr>
     </tbody>
     </table>
+    <input type="text" id="datepicker">
                </div>`,
     providers: [HttpService]
 })
@@ -87,6 +88,11 @@ export class AppComponent implements OnInit {
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
+        let datep: any;
+        datep = $("#datepicker");
+        datep.datepicker();
+        
+
         this.httpService.getData().subscribe(
             (data: Response) => {
                 return this.user=data.json();
