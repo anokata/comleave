@@ -35,4 +35,9 @@ export class HttpService{
     actionAccept(id: number) {
         return this.http.get('http://localhost:8000/accept/' + id.toString());
     }
+
+    register_overwork(comment: string) {
+        return this.http.get('http://localhost:8000/register_overwork' + 
+            comment + '/' );
+    }
 }

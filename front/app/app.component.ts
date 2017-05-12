@@ -7,6 +7,7 @@ import { HttpService} from './http.service';
 export class Person{
     name: string;
     is_manager: boolean;
+    id: number;
 }
 
 export class Overs {
@@ -85,22 +86,23 @@ export class Interval {
     </tbody>
     </table>
     <br>
-    Дата: <input type="text" id="datepicker">
+    Дата: <input type="text" id="datepicker" >
     <br>
     Срок:
-    <select>
-        <option *ngFor="let opt of intervals">
+    <select [(ngModel)]="interval">
+        <option *ngFor="let opt of intervals" [value]="opt.value">
         {{opt.title}}
         </option>
     </select>
     <br>
-    Комментарий: <input type=text >
+    Комментарий: <input type=text [(ngModel)]="comment">
     <br>
-    <select>
-    <option *ngFor="let person of persons">
-    {{person.name}}
-    </option>
+    <select [(ngModel)]="person_id">
+        <option *ngFor="let person of persons" [value]="person.id">
+            {{person.name}}
+        </option>
     </select>
+    <button class="btn" (click)="register_overwork()">Зарегестрировать</button>
                </div>`,
     providers: [HttpService]
 })
@@ -115,6 +117,10 @@ export class AppComponent implements OnInit {
     intervals: Interval[];
 
     //in_person: string;
+    comment: string;
+    interval: Interval;
+    date: string;
+    person_id: number;
      
     constructor(private httpService: HttpService){}
      
@@ -173,5 +179,16 @@ export class AppComponent implements OnInit {
         this.httpService.action('deny', id)
                 .subscribe((data) => {console.log('sended');});
                 this.remove(id);
+    }
+
+    register_overwork() {
+        let datep: any;
+        datep = $("#datepicker");
+        this.date = datep.val();
+
+        console.log(this.comment);
+        console.log(this.interval);
+        console.log(this.date);
+        console.log(this.person_id);
     }
 }
