@@ -29,6 +29,17 @@ export class Summarize {
     total: number;
 }
 
+export class Interval {
+    public title: string;
+
+    constructor (public value:number) {
+        this.title = Math.floor(value / 60).toString() + ' hour ';
+        if ((value % 60) != 0) {
+            this.title += (value % 60).toString() + ' min';
+        }
+    }
+}
+
 @Component({
     selector: 'my-app',
     template: `<div class='users'>
@@ -55,7 +66,7 @@ export class Summarize {
     <th>ФИО</th>
     <th>Тип</th>
     <th>Дата начала</th>
-    <th>Часов</th>
+    <th>Срок</th>
     <th>Коментарий</th>
     <th>Дата регистрации заявки</th>
     </thead>
@@ -74,9 +85,16 @@ export class Summarize {
     </tbody>
     </table>
     <input type="text" id="datepicker">
+    Срок:
+    <select>
+        <option *ngFor="let opt of intervals">
+        {{opt.title}}
+        </option>
+    </select>
                </div>`,
     providers: [HttpService]
 })
+
 
 export class AppComponent implements OnInit { 
   
@@ -84,6 +102,7 @@ export class AppComponent implements OnInit {
     overs: Overs;
     sums: Array<Summarize>;
     reqs: Array<Overs>;
+    intervals: Interval[];
      
     constructor(private httpService: HttpService){}
      
@@ -92,6 +111,10 @@ export class AppComponent implements OnInit {
         datep = $("#datepicker");
         datep.datepicker();
         
+        this.intervals = Array();
+        for (let i = 60; i < 60 * 24; i += 30) {
+            this.intervals.push(new Interval(i));
+        }
 
         this.httpService.getData().subscribe(
             (data: Response) => {
