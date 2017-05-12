@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -46,3 +47,14 @@ def register(request, param):
         over.status = Overs.REGISTRED
         over.save()
     return HttpResponse(' param:' + param)
+
+def register_overwork(request, date, interval, person_id, comment):
+    person = Person.objects.filter(pk=person_id).first()
+    if not person: return 'no person'
+    date = datetime.datetime.strptime(date, "%m.%d.%Y")
+    now = datetime.datetime.now()
+    over = Overs(start_date=date, reg_date=now, comment=comment, 
+            interval=interval, person=person, is_over=True)
+    over.save()
+    return HttpResponse(str(date) + ' ' + interval + ' ' + person.name + str(over))
+

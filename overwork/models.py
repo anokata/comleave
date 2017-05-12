@@ -23,18 +23,18 @@ class Overs(models.Model):
     )
     reg_date = models.DateTimeField('date registred', auto_now_add=True)
     start_date = models.DateField('start date')
-    interval = models.IntegerField()
+    interval = models.IntegerField(default=1)
     status = models.CharField(max_length=100,
                                   choices=STATUS_CHOISES,
                                   default='R')
     comment = models.CharField(max_length=512, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
-    is_over = models.BooleanField("is overwork?(else unworked)")
+    is_over = models.BooleanField("is overwork?(else unworked)", default=False)
 
     def __str__(self):
         return self.reg_date.strftime("%Y.%m.%d") + ' ' \
                 + self.get_status_display() + '  ' \
-                + str(self.interval) + ' hours ' \
+                + str(self.interval) + ' minutes ' \
                 + self.person.name + ' '\
                 + ('(UP)' if self.is_over else '(DN)')
 
