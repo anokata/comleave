@@ -28,11 +28,11 @@ export class HttpService{
         return this.http.get(url);
     }
 
-    postAccept(id: number) {
-        return this.http.post('http://localhost:8000/action', id.toString());
+    action(action: string, id: number) {
+        return this.http.get('http://localhost:8000/' + action + '/' + id.toString());
     }
 
     actionAccept(id: number) {
-        return this.http.get('http://localhost:8000/action/accept/' + id.toString());
+        return this.http.get('http://localhost:8000/accept/' + id.toString());
     }
 }

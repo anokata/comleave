@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include(router.urls)),
-    url(r'^action$', views.action, name='action'),
     url(r'^action/(?P<action>[0-9a-zA-Z]+)/(?P<param>[0-9a-zA-Z]+)$', views.action, name='action'),
+    url(r'^accept/(?P<param>[0-9a-zA-Z]+)$', views.accept),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

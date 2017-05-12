@@ -24,3 +24,6 @@ def person(request):
 
 def action(request, action, param):
     return HttpResponse('act:' + action + ' param:' + param)
+
+def accept(request, param):
+    return HttpResponse(' param:' + param)

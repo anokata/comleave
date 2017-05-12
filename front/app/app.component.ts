@@ -19,7 +19,6 @@ export class Overs {
     name: string;
     start: string;
     is_over: boolean;
-    dework_type: string;
     id: number;
 }
 
@@ -63,14 +62,14 @@ export class Summarize {
     <tbody>
     <tr *ngFor="let rec of reqs">
       <td>{{rec.name}}</td> 
-      <td>{{rec.dework_type}}</td> 
+      <td *ngIf="rec.is_over">Переработка</td>
+      <td *ngIf="!rec.is_over">Отгул</td>
       <td>{{rec.start}}</td> 
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
-      <td>{{rec.id}} 
-      <button class="btn" (click)="submit(rec.id)">Принять</button>
-      </td> 
+      <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
+      <td><button class="btn" (click)="deny(rec.id)">Отклонить</button> </td> 
     </tr>
     </tbody>
     </table>
@@ -110,14 +109,28 @@ export class AppComponent implements OnInit {
             this.reqs=data.json();
             this.reqs.map((e:Overs) => {
                 e.start = new Date(e.start_date)['toLocaleFormat']('%d.%m.%Y');
-                e.dework_type = e.is_over ? 'переработка' : 'отгул';
                 return e;
             });
         });
     }
 
-    submit(id: number){
+    remove(id: number) {
+        let idx = -1;
+        this.reqs.map((e, i) => {if (e.id == id) { idx = i; }});
+        if (idx >= 0) {
+            this.reqs.splice(idx, 1);
+        }
+    }
+
+    accept(id: number){
         this.httpService.actionAccept(id)
                 .subscribe((data) => {console.log('sended');});
+                this.remove(id);
+    }
+
+    deny(id: number){
+        this.httpService.action('deny', id)
+                .subscribe((data) => {console.log('sended');});
+                this.remove(id);
     }
 }
