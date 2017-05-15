@@ -11,6 +11,7 @@ import { HttpService} from './http.service';
           <a routerLink="/sum" routerLinkActive="active">Сводка</a>
           <a routerLink="/reg" routerLinkActive="active">Зарегестрированные</a>
           <a routerLink="/denied" routerLinkActive="active">Отклонённые</a>
+          <a routerLink="/accepted" routerLinkActive="active">Принятые</a>
           <a routerLink="/sent" routerLinkActive="active">Заререстрировать переработку</a>
           <a routerLink="/downwork" routerLinkActive="active">Заререстрировать отгул</a>
         </nav>

@@ -7,9 +7,10 @@ import { RouterModule }   from '@angular/router';
 import { AppComponent }  from './app.component';
 import { SummaryComponent }  from './summary.component';
 import { RegistredComponent }  from './registred.component';
+import { DeniedComponent }  from './denied.component';
+import { AcceptedComponent }  from './accepted.component';
 import { PresentComponent }  from './present.component';
 import { DownworkComponent }  from './downwork.component';
-import { DeniedComponent }  from './denied.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -38,11 +39,16 @@ import { DeniedComponent }  from './denied.component';
             path: 'denied',
             component: DeniedComponent
           },
+          {
+            path: 'accepted',
+            component: AcceptedComponent
+          },
         ])
     
     ],
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
-        PresentComponent, DownworkComponent, DeniedComponent],
+        PresentComponent, DownworkComponent, DeniedComponent, 
+        AcceptedComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

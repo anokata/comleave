@@ -38,3 +38,7 @@ class RequestsViewSet(viewsets.ModelViewSet):
 class DeniedViewSet(viewsets.ModelViewSet):
     queryset = Overs.objects.raw(overwork_query('D'))
     serializer_class = RequestsSerializer
+
+class AcceptedViewSet(viewsets.ModelViewSet):
+    queryset = Overs.objects.raw(overwork_query('A'))
+    serializer_class = RequestsSerializer
