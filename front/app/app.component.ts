@@ -14,7 +14,9 @@ import { HttpService} from './http.service';
           <a routerLink="/accepted" routerLinkActive="active">Принятые</a>
           <a routerLink="/sent" routerLinkActive="active">Зарегестрировать переработку</a>
           <a routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
-          <div *ngIf="!is_logged"> <a href="accounts/login/">Login</a> </div>
+          <div *ngIf="!is_logged"> <a href="accounts/login/">Login</a> 
+              <a href="accounts/register/">Register</a> 
+          </div>
           <div *ngIf="is_logged"> <a href="accounts/logout/">Logout</a> </div>
         </nav>
         <router-outlet></router-outlet>

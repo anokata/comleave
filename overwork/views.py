@@ -11,7 +11,17 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib import auth
 
 from .models import Overs, Person
+from django import forms 
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.contrib.auth.forms import UserCreationForm
 
+def register_user(request):
+    form = UserCreationForm(data=request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/')
+    return render(request, 'register.html', {'form': form})
 
 def logout(request):
     auth.logout(request)
