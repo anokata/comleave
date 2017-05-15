@@ -33,7 +33,13 @@ import { Overs } from './overs';
     </tr>
     </tbody>
     </table>
-               </div>`,
+   </div>
+   <div class='messages users'>
+    <div *ngFor="let msg of messages">
+        {{msg}}
+    </div>
+   </div>
+   `,
     providers: [HttpService],
 })
 
@@ -41,10 +47,13 @@ import { Overs } from './overs';
 export class RegistredComponent implements OnInit { 
   
     reqs: Array<Overs>;
+    messages: string[];
 
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
+        this.messages = Array();
+
         this.httpService.getReqs().subscribe(
         (data: Response) => {
             this.reqs=data.json();
@@ -65,13 +74,19 @@ export class RegistredComponent implements OnInit {
 
     accept(id: number){
         this.httpService.actionAccept(id)
-                .subscribe((data) => {console.log('sended');});
+            .subscribe((data) => {
+                console.log('sended');
+                this.messages.push("Принята заявка #" + id);
+            });
                 this.remove(id);
     }
 
     deny(id: number){
         this.httpService.action('deny', id)
-                .subscribe((data) => {console.log('sended');});
+            .subscribe((data) => {
+                console.log('sended');
+                this.messages.push("Отклонена заявка #" + id);
+            });
                 this.remove(id);
     }
 }

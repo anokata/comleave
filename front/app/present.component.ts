@@ -29,7 +29,14 @@ import { Interval } from './interval';
     </select>
     </div>
     <button class="btn" (click)="register_overwork()">Зарегестрировать переработку</button>
-               </div>`,
+               </div>
+               
+   <div class='messages users'>
+    <div *ngFor="let msg of messages">
+        {{msg}}
+    </div>
+   </div>
+               `,
     providers: [HttpService],
 })
 
@@ -42,6 +49,7 @@ export class PresentComponent implements OnInit {
     person_id: number;
     intervals: Interval[];
     persons: Person;
+    messages: string[];
      
     constructor(private httpService: HttpService){}
      
@@ -50,6 +58,7 @@ export class PresentComponent implements OnInit {
         datep = $("#datepicker");
         datep.datepicker();
         this.comment = '';
+        this.messages = Array();
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {
@@ -68,7 +77,11 @@ export class PresentComponent implements OnInit {
         this.date = datep.val().replace(/\//g, '.');;
         this.httpService.register_overwork(this.date, this.interval, 
             this.person_id, this.comment)
-            .subscribe((data) => { console.log('registred'); });
+            .subscribe((data) => { 
+                console.log('registred');
+                this.messages.push("Зарегестрирована переработка на " + this.interval 
+                    + " минут ");
+            });
     }
 }
 
