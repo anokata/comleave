@@ -3,25 +3,8 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
-
-export class Person{
-    name: string;
-    is_manager: boolean;
-    id: number;
-}
-
-export class Overs {
-    reg_date: Date;
-    start_date: string;
-    interval: number;
-    status: string;
-    comment: string;
-    person: Person;
-    name: string;
-    start: string;
-    is_over: boolean;
-    id: number;
-}
+import { Person } from './person';
+import { Overs } from './overs';
 
 @Component({
     selector: 'my-app',
