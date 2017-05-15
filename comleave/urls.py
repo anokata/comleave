@@ -24,7 +24,7 @@ from overwork import views
 
 urlpatterns = [
     url(r'^accounts/login/$',  login),
-    url(r'^accounts/logout/$', logout),
+    url(r'^accounts/logout/$', views.logout),
     url(r'^overwork/', include('overwork.urls')),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^rest/', include(router.urls)),

@@ -3,19 +3,26 @@ from __future__ import unicode_literals
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.views.generic import TemplateView, View
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib import auth
 
 from .models import Overs, Person
+
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect("/")
 
 def main(request):
     template = loader.get_template('route.html')
     return HttpResponse(template.render({
         'ANGULAR_URL' : settings.ANGULAR_URL,
         'is_staff': request.user.is_staff,
+        'is_logged': request.user.is_authenticated(),
         }))
 
 def persons_(request):

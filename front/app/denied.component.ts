@@ -28,9 +28,11 @@ import { Overs } from './overs';
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
+      <div *ngIf="is_staff">
       <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
       <td><button class="btn" (click)="register(rec.id)">Зарегестрировать</button> </td> 
       <td><button class="btn" (click)="delete(rec.id)">Удалить</button> </td> 
+      </div>
     </tr>
     </tbody>
     </table>
@@ -42,10 +44,12 @@ import { Overs } from './overs';
 export class DeniedComponent implements OnInit { 
   
     reqs: Array<Overs>;
+    is_staff: boolean;
 
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
+        this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
         this.httpService.getRest('denied').subscribe(
         (data: Response) => {
             this.reqs=data.json();
