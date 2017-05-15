@@ -12,7 +12,7 @@ import { Interval } from './interval';
     template: `
     <div class='users'>
     <h4>Регистрация переработки </h4>
-    <div class='form_margin'>Дата: <input type="text" id="datepicker" >
+    <div class='form_margin'>Дата: <input type="text" id="datepicker" [(ngModel)]="date">
     Срок:
     <select [(ngModel)]="interval">
         <option *ngFor="let opt of intervals" [value]="opt.value">
@@ -44,8 +44,8 @@ import { Interval } from './interval';
 export class PresentComponent implements OnInit { 
   
     comment: string;
-    interval: number;
-    date: string;
+    interval: number = 60;
+    date: string = '01.01.2000';
     person_id: number;
     intervals: Interval[];
     persons: Person;
@@ -67,7 +67,9 @@ export class PresentComponent implements OnInit {
 
         this.httpService.getData().subscribe(
             (data: Response) => {
-                return this.persons=data.json();
+                this.persons=data.json();
+                this.person_id = this.persons[0].id;
+                return this.persons;
             });
     }
 
