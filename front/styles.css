@@ -36,11 +36,16 @@ tr:nth-child(even) td { background: #E1E1FF; }
 
 tr:nth-child(odd) td { background: #EEEEFF; }
 
-button {
+button, input[type=submit] {
     background-color: #ddf;
     border: 1px solid;
     padding: 0.5em;
     width: 100%;
+}
+
+input {
+    padding: 0.5em;
+    border: 1px solid;
 }
 
 .w100 {
@@ -65,4 +70,20 @@ nav a {
     text-decoration: none;
     display: block;
     margin-bottom: 0.5em;
+}
+
+form {
+    margin: auto;
+    width: 70%;
+
+}
+
+.form_input {
+    width: 40%;
+    padding: 1em;
+    text-align: right;
+}
+
+.form_input label {
+    width: 30%;
 }
