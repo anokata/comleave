@@ -46,4 +46,13 @@ export class HttpService{
             person_id + '/' + 
             comment + '/' );
     }
+
+    register_unwork(date: string, interval: number, 
+        person_id: number, comment: string) {
+        return this.http.get('http://localhost:8000/register_unwork/' + 
+            date + '/' + 
+            interval + '/' + 
+            person_id + '/' + 
+            comment + '/' );
+    }
 }

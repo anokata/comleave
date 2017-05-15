@@ -30,8 +30,8 @@ urlpatterns = [
     url(r'^accept/(?P<param>[0-9a-zA-Z]+)$', views.accept),
     url(r'^deny/(?P<param>[0-9a-zA-Z]+)$', views.deny),
     url(r'^register/(?P<param>[0-9a-zA-Z]+)$', views.register),
-    url(r'^register_overwork/(?P<date>[0-9\.]+)/(?P<interval>[0-9]+)/(?P<person_id>[0-9]+)/(?P<comment>.*)/',
-        views.register_overwork),
+    url(r'^register_overwork/(?P<date>[0-9\.]+)/(?P<interval>[0-9]+)/(?P<person_id>[0-9]+)/(?P<comment>.*)/', views.register_overwork),
+    url(r'^register_unwork/(?P<date>[0-9\.]+)/(?P<interval>[0-9]+)/(?P<person_id>[0-9]+)/(?P<comment>.*)/', views.register_unwork),
     url(r'^(?!ng/).*$', views.main),
     url(r'^main/', views.main),
 ] + static(settings.ANGULAR_URL, document_root=settings.ANGULAR_ROOT)

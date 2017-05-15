@@ -43,3 +43,22 @@ button {
     width: 100%;
 }
 
+.w100 {
+    width: 100%;
+}
+
+.form_margin {
+    padding: 1em;
+    background-color: #ddf;
+}
+
+nav {
+    margin-top: 1em;
+}
+
+nav a {
+    padding: 0.5em;
+    background-color: aliceblue;
+    border: 2px solid cadetblue;
+    text-decoration: none;
+}

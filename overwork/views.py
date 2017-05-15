@@ -54,12 +54,18 @@ def register(request, param):
     return HttpResponse(' param:' + param)
 
 def register_overwork(request, date, interval, person_id, comment):
+    return register_interval(request, date, interval, person_id, comment, True)
+
+def register_unwork(request, date, interval, person_id, comment):
+    return register_interval(request, date, interval, person_id, comment, False)
+
+def register_interval(request, date, interval, person_id, comment, is_over):
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person'
     date = datetime.datetime.strptime(date, "%m.%d.%Y")
     now = datetime.datetime.now()
     over = Overs(start_date=date, reg_date=now, comment=comment, 
-            interval=interval, person=person, is_over=True)
+            interval=interval, person=person, is_over=is_over)
     over.save()
     return HttpResponse(str(date) + ' ' + interval + ' ' + person.name + str(over))
 

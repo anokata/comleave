@@ -6,12 +6,11 @@ import { HttpService} from './http.service';
 import { Person } from './person';
 import { Interval } from './interval';
 
-
 @Component({
     selector: 'my-app',
     template: `
     <div class='users'>
-    <h4>Регистрация переработки </h4>
+    <h4>Регистрация отгула </h4>
     <div class='form_margin'>Дата: <input type="text" id="datepicker" >
     Срок:
     <select [(ngModel)]="interval">
@@ -28,13 +27,13 @@ import { Interval } from './interval';
         </option>
     </select>
     </div>
-    <button class="btn" (click)="register_overwork()">Зарегестрировать переработку</button>
+    <button class="btn" (click)="register()">Зарегестрировать отгул</button>
                </div>`,
     providers: [HttpService],
 })
 
 
-export class PresentComponent implements OnInit { 
+export class DownworkComponent implements OnInit { 
   
     comment: string;
     interval: number;
@@ -62,11 +61,11 @@ export class PresentComponent implements OnInit {
             });
     }
 
-    register_overwork() {
+    register() {
         let datep: any;
         datep = $("#datepicker");
         this.date = datep.val().replace(/\//g, '.');;
-        this.httpService.register_overwork(this.date, this.interval, 
+        this.httpService.register_unwork(this.date, this.interval, 
             this.person_id, this.comment)
             .subscribe((data) => { console.log('registred'); });
     }

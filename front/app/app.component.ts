@@ -8,9 +8,10 @@ import { HttpService} from './http.service';
     selector: 'my-app',
     template: `
         <nav>
-          <a routerLink="/sum" routerLinkActive="active">Summmary</a>
-          <a routerLink="/reg" routerLinkActive="active">Registred</a>
-          <a routerLink="/sent" routerLinkActive="active">Add new reg</a>
+          <a routerLink="/sum" routerLinkActive="active">Сводка</a>
+          <a routerLink="/reg" routerLinkActive="active">Зарегестрированные</a>
+          <a routerLink="/sent" routerLinkActive="active">Заререстрировать переработку</a>
+          <a routerLink="/downwork" routerLinkActive="active">Заререстрировать отгул</a>
         </nav>
         <router-outlet></router-outlet>
                `,

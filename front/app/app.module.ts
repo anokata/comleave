@@ -8,6 +8,7 @@ import { AppComponent }  from './app.component';
 import { SummaryComponent }  from './summary.component';
 import { RegistredComponent }  from './registred.component';
 import { PresentComponent }  from './present.component';
+import { DownworkComponent }  from './downwork.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -28,11 +29,15 @@ import { PresentComponent }  from './present.component';
             path: 'sent',
             component: PresentComponent
           },
+          {
+            path: 'downwork',
+            component: DownworkComponent
+          },
         ])
     
     ],
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
-        PresentComponent],
+        PresentComponent, DownworkComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
