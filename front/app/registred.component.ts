@@ -28,8 +28,10 @@ import { Overs } from './overs';
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
+      <div *ngIf="is_staff">
       <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
       <td><button class="btn" (click)="deny(rec.id)">Отклонить</button> </td> 
+      </div>
     </tr>
     </tbody>
     </table>
@@ -48,11 +50,13 @@ export class RegistredComponent implements OnInit {
   
     reqs: Array<Overs>;
     messages: string[];
+    is_staff: boolean;
 
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
         this.messages = Array();
+        this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
 
         this.httpService.getReqs().subscribe(
         (data: Response) => {

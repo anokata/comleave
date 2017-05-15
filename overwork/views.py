@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.views.generic import TemplateView, View
 from django.conf import settings
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import Overs, Person
 
@@ -14,6 +15,7 @@ def main(request):
     template = loader.get_template('route.html')
     return HttpResponse(template.render({
         'ANGULAR_URL' : settings.ANGULAR_URL,
+        'is_staff': request.user.is_staff,
         }))
 
 def persons_(request):
@@ -38,6 +40,10 @@ def changeStatus(over_id, status):
         over.status = status
         over.save()
 
+def user_is_staff(user):
+    return user.is_authenticated() and user.is_staff
+
+@user_passes_test(user_is_staff, login_url="/accounts/login/")
 def accept(request, param):
     changeStatus(param, Overs.ACCEPT)
     return HttpResponse(' param:' + param)

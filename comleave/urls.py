@@ -17,11 +17,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth.views import login, logout
 
 from .restrouters import router
 from overwork import views
 
 urlpatterns = [
+    url(r'^accounts/login/$',  login),
+    url(r'^accounts/logout/$', logout),
     url(r'^overwork/', include('overwork.urls')),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^rest/', include(router.urls)),
