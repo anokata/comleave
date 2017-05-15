@@ -25,10 +25,16 @@ class SummaryViewSet(viewsets.ModelViewSet):
     queryset = Overs.objects.raw(q)
     serializer_class = SummarySerializer
 
-class RequestsViewSet(viewsets.ModelViewSet):
-    q = "select overwork_overs.id, reg_date, start_date, interval, comment, name, is_over "\
+def overwork_query(status):
+    return "select overwork_overs.id, reg_date, start_date, interval, comment, name, is_over "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
-        "where overwork_overs.status='R'"
-    queryset = Overs.objects.raw(q)
+        "where overwork_overs.status='" + status + "'"
+
+class RequestsViewSet(viewsets.ModelViewSet):
+    queryset = Overs.objects.raw(overwork_query('R'))
+    serializer_class = RequestsSerializer
+
+class DeniedViewSet(viewsets.ModelViewSet):
+    queryset = Overs.objects.raw(overwork_query('D'))
     serializer_class = RequestsSerializer
