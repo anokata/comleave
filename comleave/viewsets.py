@@ -29,7 +29,7 @@ def overwork_query(status):
     return "select overwork_overs.id, reg_date, start_date, interval, comment, name, is_over "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
-        "where overwork_overs.status='" + status + "'"
+        "where overwork_overs.status='" + status + "' order by reg_date desc"
 
 class RequestsViewSet(viewsets.ModelViewSet):
     queryset = Overs.objects.raw(overwork_query('R'))

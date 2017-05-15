@@ -9,6 +9,7 @@ import { SummaryComponent }  from './summary.component';
 import { RegistredComponent }  from './registred.component';
 import { PresentComponent }  from './present.component';
 import { DownworkComponent }  from './downwork.component';
+import { DeniedComponent }  from './denied.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -33,11 +34,15 @@ import { DownworkComponent }  from './downwork.component';
             path: 'downwork',
             component: DownworkComponent
           },
+          {
+            path: 'denied',
+            component: DeniedComponent
+          },
         ])
     
     ],
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
-        PresentComponent, DownworkComponent],
+        PresentComponent, DownworkComponent, DeniedComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

@@ -29,7 +29,7 @@ import { Overs } from './overs';
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
       <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
-      <td><button class="btn" (click)="deny(rec.id)">Отклонить</button> </td> 
+      <td><button class="btn" (click)="register(rec.id)">Зарегестрировать</button> </td> 
     </tr>
     </tbody>
     </table>
@@ -45,7 +45,7 @@ export class DeniedComponent implements OnInit {
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
-        this.httpService.getReqs().subscribe(
+        this.httpService.getRest('denied').subscribe(
         (data: Response) => {
             this.reqs=data.json();
             this.reqs.map((e:Overs) => {
@@ -69,8 +69,8 @@ export class DeniedComponent implements OnInit {
                 this.remove(id);
     }
 
-    deny(id: number){
-        this.httpService.action('deny', id)
+    register(id: number){
+        this.httpService.action('register', id)
                 .subscribe((data) => {console.log('sended');});
                 this.remove(id);
     }

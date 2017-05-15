@@ -26,6 +26,10 @@ export class HttpService{
         return this.http.get(this.prefix + '/reqs/?format=json');
     }
 
+    getRest(req: string) {
+        return this.http.get(this.prefix + '/' + req + '/?format=json');
+    }
+
     getUrl(url: string) {
         return this.http.get(url);
     }
