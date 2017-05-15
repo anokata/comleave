@@ -30,6 +30,7 @@ import { Overs } from './overs';
       <td>{{rec.reg_date}}</td> 
       <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
       <td><button class="btn" (click)="register(rec.id)">Зарегестрировать</button> </td> 
+      <td><button class="btn" (click)="delete(rec.id)">Удалить</button> </td> 
     </tr>
     </tbody>
     </table>
@@ -71,6 +72,12 @@ export class DeniedComponent implements OnInit {
 
     register(id: number){
         this.httpService.action('register', id)
+                .subscribe((data) => {console.log('sended');});
+                this.remove(id);
+    }
+
+    delete(id: number){
+        this.httpService.action('delete', id)
                 .subscribe((data) => {console.log('sended');});
                 this.remove(id);
     }

@@ -66,3 +66,6 @@ def register_interval(request, date, interval, person_id, comment, is_over):
     over.save()
     return HttpResponse(str(date) + ' ' + interval + ' ' + person.name + str(over))
 
+def delete(request, over_id):
+    Overs.objects.get(id=over_id).delete()
+    return HttpResponse(' param:' + over_id)
