@@ -32,25 +32,22 @@ def action(request, action, param):
     #TEST
     return HttpResponse('act:' + action + ' param:' + param)
 
-def accept(request, param):
-    over = Overs.objects.filter(pk=param).first()
+def changeStatus(over_id, status):
+    over = Overs.objects.filter(pk=over_id).first()
     if over:
-        over.status = Overs.ACCEPT
+        over.status = status
         over.save()
+
+def accept(request, param):
+    changeStatus(param, Overs.ACCEPT)
     return HttpResponse(' param:' + param)
 
 def deny(request, param):
-    over = Overs.objects.filter(pk=param).first()
-    if over:
-        over.status = Overs.DENIED
-        over.save()
+    changeStatus(param, Overs.DENIED)
     return HttpResponse(' param:' + param)
 
 def register(request, param):
-    over = Overs.objects.filter(pk=param).first()
-    if over:
-        over.status = Overs.REGISTRED
-        over.save()
+    changeStatus(param, Overs.REGISTRED)
     return HttpResponse(' param:' + param)
 
 def register_overwork(request, date, interval, person_id, comment):
