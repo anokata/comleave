@@ -7,6 +7,7 @@ import { Person } from './person';
 import { Overs } from './overs';
 import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
+import { MessagesComponent } from './messages.component';
 
 @Component({
     selector: 'my-app',
@@ -62,7 +63,7 @@ export class RegistredComponent implements OnInit {
     intervals: Interval[];
     selected_interval: number;
     is_change: boolean = false;
-    @ViewChild('msg') msg: any;
+    @ViewChild('msg') msg: MessagesComponent;
 
     constructor(private httpService: HttpService){}
      

@@ -6,6 +6,7 @@ import { HttpService} from './http.service';
 import { Person } from './person';
 import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
+import { MessagesComponent } from './messages.component';
 
 @Component({
     selector: 'my-app',
@@ -44,7 +45,7 @@ export class DownworkComponent implements OnInit {
     person_id: number;
     intervals: Interval[];
     persons: Person;
-    @ViewChild('msg') msg: any;
+    @ViewChild('msg') msg: MessagesComponent;
      
     constructor(private httpService: HttpService){}
      

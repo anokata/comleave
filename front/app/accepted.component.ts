@@ -6,6 +6,7 @@ import { HttpService} from './http.service';
 import { Person } from './person';
 import { Overs } from './overs';
 import {ViewChild} from '@angular/core';
+import { MessagesComponent } from './messages.component';
 
 @Component({
     selector: 'my-app',
@@ -47,7 +48,7 @@ export class AcceptedComponent implements OnInit {
   
     reqs: Array<Overs>;
     is_staff: boolean;
-    @ViewChild('msg') msg: any;
+    @ViewChild('msg') msg: MessagesComponent;
 
     constructor(private httpService: HttpService){}
      

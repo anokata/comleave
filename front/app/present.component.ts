@@ -6,6 +6,7 @@ import { HttpService} from './http.service';
 import { Person } from './person';
 import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
+import { MessagesComponent } from './messages.component';
 
 @Component({
     selector: 'my-app',
@@ -46,7 +47,7 @@ export class PresentComponent implements OnInit {
     intervals: Interval[];
     persons: Person[];
     login: string;
-    @ViewChild('msg') msg: any;
+    @ViewChild('msg') msg: MessagesComponent;
      
     constructor(private httpService: HttpService){}
      
