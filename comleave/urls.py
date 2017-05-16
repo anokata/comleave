@@ -12,6 +12,7 @@ from overwork import views
 urlpatterns = [
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', views.logout),
+    url(r'^persons/$', views.persons),
     url(r'^accounts/register/$', views.register_user),
     url(r'^overwork/', include('overwork.urls')),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),

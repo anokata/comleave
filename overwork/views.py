@@ -9,6 +9,8 @@ from django.views.generic import TemplateView, View
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import auth
+from django.http import JsonResponse
+from django.core import serializers
 
 from .models import Overs, Person
 from django import forms 
@@ -124,3 +126,9 @@ def register_interval(request, date, interval, person_id, comment, is_over):
 def delete(request, over_id):
     Overs.objects.get(id=over_id).delete()
     return HttpResponse(' param:' + over_id)
+
+def persons(request):
+    persons = Person.objects.all()
+    data = [{'id': p.pk, 'name':p.name, 
+        'is_manager':p.is_manager, 'login':p.login} for p in persons]
+    return JsonResponse(data, safe=False)
