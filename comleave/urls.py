@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.views import login, logout
 
-from .restrouters import router
 from overwork import views
 
 urlpatterns = [
@@ -15,12 +14,11 @@ urlpatterns = [
     url(r'^persons/$', views.persons),
     url(r'^summarize/$', views.summarize),
     url(r'^registred/$', views.registred),
+    url(r'^accepted/$', views.accepted),
+    url(r'^denied/$', views.denied),
     url(r'^accounts/register/$', views.register_user),
     url(r'^overwork/', include('overwork.urls')),
-    url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^rest/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    #url(r'^action/(?P<action>[0-9a-zA-Z]+)/(?P<param>[0-9a-zA-Z]+)$', views.action, name='action'),
     url(r'^accept/(?P<over_id>[0-9a-zA-Z]+)/(?P<interval>[0-9]+)$', views.accept),
     url(r'^deny/(?P<param>[0-9a-zA-Z]+)$', views.deny),
     url(r'^register/(?P<param>[0-9a-zA-Z]+)$', views.register),

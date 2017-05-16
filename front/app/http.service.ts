@@ -23,7 +23,7 @@ export class HttpService{
     }
 
     getRest(req: string) {
-        return this.http.get(this.prefix + '/' + req + '/?format=json');
+        return this.http.get(this.host + req + '/');
     }
 
     getUrl(url: string) {
