@@ -61,21 +61,6 @@ def main(request):
         'login': request.user.username,
         }))
 
-def persons_(request):
-    persons = Person.objects.order_by('name')
-    template = loader.get_template('overwork/index.html')
-    context = {
-        'persons': persons,
-    }
-    return HttpResponse(template.render(context))
-
-def person(request):
-    template = loader.get_template('overwork/persons.html')
-    return HttpResponse(template.render({}))
-
-#def action(request, action, param):
-    #return HttpResponse('act:' + action + ' param:' + param)
-
 def changeStatus(over_id, status):
     over = Overs.objects.filter(pk=over_id).first()
     if over:

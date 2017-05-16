@@ -5,8 +5,6 @@ import { HttpModule } from '@angular/http';
 @Injectable()
 export class HttpService{
     host = 'http://localhost:8000/';
-    base = 'rest';
-    prefix = this.host + this.base;
  
     constructor(private http: Http){ }
      
