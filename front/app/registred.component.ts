@@ -36,7 +36,7 @@ import { Interval } from './interval';
     </tr>
     </tbody>
     </table>
-    <div>
+    <div *ngIf="is_staff">
        <div class='int_chg'>
        Принять с изменением срока
        <input type="checkbox" [(ngModel)]="is_change">

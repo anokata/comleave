@@ -72,6 +72,7 @@ def accept(request, over_id, interval):
         changeStatus(over_id, Overs.ACCEPT)
     return HttpResponse('ok')
 
+@user_passes_test(user_is_staff, login_url="/accounts/login/")
 def deny(request, param):
     changeStatus(param, Overs.DENIED)
     return HttpResponse(' param:' + param)
@@ -96,6 +97,7 @@ def register_interval(request, date, interval, person_id, comment, is_over):
     over.save()
     return HttpResponse(str(date) + ' ' + interval + ' ' + person.name + str(over))
 
+@user_passes_test(user_is_staff, login_url="/accounts/login/")
 def delete(request, over_id):
     Overs.objects.get(id=over_id).delete()
     return HttpResponse(' param:' + over_id)
