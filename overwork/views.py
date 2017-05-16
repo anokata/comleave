@@ -15,12 +15,35 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+from django.contrib.auth import authenticate, login
+class RegistrationForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "username" )
+
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=False)
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+        person = Person(login=user.username, 
+                name=user.first_name + ' ' + user.last_name,
+                is_manager=False)
+        if commit:
+            user.save()
+            person.save()
+        return user
 
 def register_user(request):
-    form = UserCreationForm(data=request.POST or None)
+    form = RegistrationForm(data=request.POST or None)
     if request.method == 'POST' and form.is_valid():
-        form.save()
-        return HttpResponseRedirect('/')
+        user = form.save()
+        login(request, user)
+        return HttpResponseRedirect('/accounts/login')
     return render(request, 'register.html', {'form': form})
 
 def logout(request):
