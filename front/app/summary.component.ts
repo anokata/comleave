@@ -23,7 +23,7 @@ export class Summarize {
     </thead>
     <tbody>
     <tr *ngFor="let rec of sums">
-      <td>{{rec.name}}</td> 
+      <td>{{rec.name}} ({{rec.login}})</td> 
       <td>{{rec.unwork}}</td> 
       <td>{{rec.overwork}}</td> 
       <td>{{rec.total}}</td> 

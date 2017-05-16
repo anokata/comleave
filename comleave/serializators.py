@@ -17,6 +17,7 @@ class SummarySerializer(serializers.Serializer):
     overwork = serializers.IntegerField()
     unwork = serializers.IntegerField()
     name = serializers.CharField(max_length=200)
+    login = serializers.CharField(max_length=200)
 
     def create(self, validated_data):
         return SummarySerializer.objects.create(**validated_data)

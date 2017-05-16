@@ -14,7 +14,7 @@ class OverworkViewSet(viewsets.ModelViewSet):
 
 
 class SummaryViewSet(viewsets.ModelViewSet):
-    q = "select oo.id, oo.name, "\
+    q = "select oo.id, oo.name, oo.login, "\
         "coalesce((select sum(interval) as downwork "\
         "from overwork_overs "\
         "where status='A' AND is_over='f' and person_id=oo.id ) , 0) as unwork, "\
