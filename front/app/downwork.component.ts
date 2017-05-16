@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { Person } from './person';
 import { Interval } from './interval';
+import {ViewChild} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -28,7 +29,9 @@ import { Interval } from './interval';
     </select>
     </div>
     <button class="btn" (click)="register()">Зарегестрировать отгул</button>
-               </div>`,
+    </div>
+    <messages #msg></messages>
+    `,
     providers: [HttpService],
 })
 
@@ -41,6 +44,7 @@ export class DownworkComponent implements OnInit {
     person_id: number;
     intervals: Interval[];
     persons: Person;
+    @ViewChild('msg') msg: any;
      
     constructor(private httpService: HttpService){}
      
@@ -69,7 +73,9 @@ export class DownworkComponent implements OnInit {
         this.date = datep.val().replace(/\//g, '.');;
         this.httpService.register_unwork(this.date, this.interval, 
             this.person_id, this.comment)
-            .subscribe((data) => { console.log('registred'); });
+            .subscribe((data) => { 
+                this.msg.send("Зарегестрирован отгул");
+            });
     }
 }
 

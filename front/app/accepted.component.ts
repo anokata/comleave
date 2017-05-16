@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { Person } from './person';
 import { Overs } from './overs';
+import {ViewChild} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -36,11 +37,7 @@ import { Overs } from './overs';
     </tbody>
     </table>
    </div>
-   <div class='messages users'>
-    <div *ngFor="let msg of messages">
-        {{msg}}
-    </div>
-   </div>
+   <messages #msg></messages>
    `,
     providers: [HttpService],
 })
@@ -49,13 +46,12 @@ import { Overs } from './overs';
 export class AcceptedComponent implements OnInit { 
   
     reqs: Array<Overs>;
-    messages: string[];
     is_staff: boolean;
+    @ViewChild('msg') msg: any;
 
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
-        this.messages = Array();
         this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
 
         this.httpService.getRest('accepted').subscribe(
@@ -79,7 +75,7 @@ export class AcceptedComponent implements OnInit {
     deny(id: number){
         this.httpService.action('deny', id)
             .subscribe((data) => {
-                this.messages.push("Отклонена заявка #" + id);
+                this.msg.send("Отклонена заявка #" + id);
             });
                 this.remove(id);
     }
@@ -87,7 +83,7 @@ export class AcceptedComponent implements OnInit {
     register(id: number){
         this.httpService.action('register', id)
             .subscribe((data) => {
-                this.messages.push("заявка #" + id + " зарегестрирована");
+                this.msg.send("заявка #" + id + " зарегестрирована");
             });
                 this.remove(id);
     }

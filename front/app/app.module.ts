@@ -11,6 +11,7 @@ import { DeniedComponent }  from './denied.component';
 import { AcceptedComponent }  from './accepted.component';
 import { PresentComponent }  from './present.component';
 import { DownworkComponent }  from './downwork.component';
+import { MessagesComponent }  from './messages.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -48,7 +49,7 @@ import { DownworkComponent }  from './downwork.component';
     ],
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
         PresentComponent, DownworkComponent, DeniedComponent, 
-        AcceptedComponent],
+        AcceptedComponent, MessagesComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

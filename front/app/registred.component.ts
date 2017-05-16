@@ -6,6 +6,7 @@ import { HttpService} from './http.service';
 import { Person } from './person';
 import { Overs } from './overs';
 import { Interval } from './interval';
+import {ViewChild} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -48,11 +49,7 @@ import { Interval } from './interval';
         </select>
    </div>
    </div>
-   <div class='messages users'>
-    <div *ngFor="let msg of messages">
-        {{msg}}
-    </div>
-   </div>
+   <messages #msg></messages>
    `,
     providers: [HttpService],
 })
@@ -61,16 +58,15 @@ import { Interval } from './interval';
 export class RegistredComponent implements OnInit { 
   
     reqs: Array<Overs>;
-    messages: string[];
     is_staff: boolean;
     intervals: Interval[];
     selected_interval: number;
     is_change: boolean = false;
+    @ViewChild('msg') msg: any;
 
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
-        this.messages = Array();
         this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
 
         this.intervals = Array();
@@ -101,7 +97,7 @@ export class RegistredComponent implements OnInit {
             this.selected_interval = 0;
         }
         this.httpService.actionAccept(id, this.selected_interval).subscribe((data) => {
-                this.messages.push("Принята заявка #" + id);
+                this.msg.send("Принята заявка #" + id);
                 this.remove(id);
             });
     }
@@ -109,7 +105,7 @@ export class RegistredComponent implements OnInit {
     deny(id: number){
         this.httpService.action('deny', id)
             .subscribe((data) => {
-                this.messages.push("Отклонена заявка #" + id);
+                this.msg.send("Отклонена заявка #" + id);
             });
                 this.remove(id);
     }

@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { Person } from './person';
 import { Overs } from './overs';
+import {ViewChild} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -36,7 +37,9 @@ import { Overs } from './overs';
     </tr>
     </tbody>
     </table>
-               </div>`,
+   </div>
+   <messages #msg></messages>
+   `,
     providers: [HttpService],
 })
 
@@ -45,6 +48,7 @@ export class DeniedComponent implements OnInit {
   
     reqs: Array<Overs>;
     is_staff: boolean;
+    @ViewChild('msg') msg: any;
 
     constructor(private httpService: HttpService){}
      
@@ -70,19 +74,26 @@ export class DeniedComponent implements OnInit {
 
     accept(id: number){
         this.httpService.actionAccept(id)
-                .subscribe((data) => {console.log('sended');});
+            .subscribe((data) => {
+                this.msg.send("Принята заявка #" + id);
+            });
                 this.remove(id);
     }
 
     register(id: number){
         this.httpService.action('register', id)
-                .subscribe((data) => {console.log('sended');});
+            .subscribe((data) => {
+                this.msg.send("Зарегестрирована заявка #" + id);
+            });
                 this.remove(id);
     }
 
     delete(id: number){
         this.httpService.action('delete', id)
-                .subscribe((data) => {console.log('sended');});
+            .subscribe((data) => {
+                this.msg.send("Удалена заявка #" + id);
+            
+            });
                 this.remove(id);
     }
 }

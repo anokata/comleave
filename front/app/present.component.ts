@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { Person } from './person';
 import { Interval } from './interval';
-
+import {ViewChild} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -31,12 +31,8 @@ import { Interval } from './interval';
     <button class="btn" (click)="register_overwork()">Зарегестрировать переработку</button>
                </div>
                
-   <div class='messages users'>
-    <div *ngFor="let msg of messages">
-        {{msg}}
-    </div>
-   </div>
-               `,
+   <messages #msg></messages>
+   `,
     providers: [HttpService],
 })
 
@@ -49,8 +45,8 @@ export class PresentComponent implements OnInit {
     person_id: number;
     intervals: Interval[];
     persons: Person[];
-    messages: string[];
     login: string;
+    @ViewChild('msg') msg: any;
      
     constructor(private httpService: HttpService){}
      
@@ -60,7 +56,6 @@ export class PresentComponent implements OnInit {
         datep = $("#datepicker");
         datep.datepicker();
         this.comment = '';
-        this.messages = Array();
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {
@@ -87,8 +82,7 @@ export class PresentComponent implements OnInit {
         this.httpService.register_overwork(this.date, this.interval, 
             this.person_id, this.comment)
             .subscribe((data) => { 
-                console.log('registred');
-                this.messages.push("Зарегестрирована переработка на " + this.interval 
+                this.msg.send("Зарегестрирована переработка на " + this.interval 
                     + " минут ");
             });
     }
