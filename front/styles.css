@@ -7,6 +7,7 @@ body {
 .users {
     margin: auto;
     width: 60%;
+    text-align: right;
 }
 
 
@@ -86,4 +87,8 @@ form {
 
 .form_input label {
     width: 30%;
+}
+
+.int_chg {
+    padding: 1em;
 }

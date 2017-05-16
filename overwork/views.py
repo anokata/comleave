@@ -61,9 +61,16 @@ def user_is_staff(user):
     return user.is_authenticated() and user.is_staff
 
 @user_passes_test(user_is_staff, login_url="/accounts/login/")
-def accept(request, param):
-    changeStatus(param, Overs.ACCEPT)
-    return HttpResponse(' param:' + param)
+def accept(request, over_id, interval):
+    if int(interval) == 0:
+        changeStatus(over_id, Overs.ACCEPT)
+    else:
+        over = Overs.objects.filter(pk=over_id).first()
+        if over:
+            over.interval = interval
+            over.save()
+        changeStatus(over_id, Overs.ACCEPT)
+    return HttpResponse('ok')
 
 def deny(request, param):
     changeStatus(param, Overs.DENIED)

@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { Person } from './person';
 import { Overs } from './overs';
+import { Interval } from './interval';
 
 @Component({
     selector: 'my-app',
@@ -25,7 +26,7 @@ import { Overs } from './overs';
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>
       <td>{{rec.start}}</td> 
-      <td>{{rec.interval}}</td> 
+      <td>{{rec.interval}} </td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
       <div *ngIf="is_staff">
@@ -35,6 +36,17 @@ import { Overs } from './overs';
     </tr>
     </tbody>
     </table>
+    <div>
+       <div class='int_chg'>
+       Принять с изменением срока
+       <input type="checkbox" [(ngModel)]="is_change">
+       </div>
+        <select [(ngModel)]="selected_interval">
+            <option *ngFor="let opt of intervals" [value]="opt.value">
+            {{opt.title}}
+            </option>
+        </select>
+   </div>
    </div>
    <div class='messages users'>
     <div *ngFor="let msg of messages">
@@ -51,12 +63,20 @@ export class RegistredComponent implements OnInit {
     reqs: Array<Overs>;
     messages: string[];
     is_staff: boolean;
+    intervals: Interval[];
+    selected_interval: number;
+    is_change: boolean = false;
 
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
         this.messages = Array();
         this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
+
+        this.intervals = Array();
+        for (let i = 60; i < 60 * 24; i += 30) {
+            this.intervals.push(new Interval(i));
+        }
 
         this.httpService.getReqs().subscribe(
         (data: Response) => {
@@ -77,18 +97,18 @@ export class RegistredComponent implements OnInit {
     }
 
     accept(id: number){
-        this.httpService.actionAccept(id)
-            .subscribe((data) => {
-                console.log('sended');
+        if (!this.is_change) {
+            this.selected_interval = 0;
+        }
+        this.httpService.actionAccept(id, this.selected_interval).subscribe((data) => {
                 this.messages.push("Принята заявка #" + id);
-            });
                 this.remove(id);
+            });
     }
 
     deny(id: number){
         this.httpService.action('deny', id)
             .subscribe((data) => {
-                console.log('sended');
                 this.messages.push("Отклонена заявка #" + id);
             });
                 this.remove(id);
