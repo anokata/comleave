@@ -19,7 +19,7 @@ export class HttpService{
     }
 
     getSum() {
-        return this.http.get(this.prefix + '/sum/?format=json');
+        return this.http.get(this.host + 'summarize/');
     }
 
     getReqs() {

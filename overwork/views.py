@@ -132,3 +132,21 @@ def persons(request):
     data = [{'id': p.pk, 'name':p.name, 
         'is_manager':p.is_manager, 'login':p.login} for p in persons]
     return JsonResponse(data, safe=False)
+
+def summarize(request):
+    q = "select oo.id, oo.name, oo.login, "\
+        "coalesce((select sum(interval) as downwork "\
+        "from overwork_overs "\
+        "where status='A' AND is_over='f' and person_id=oo.id ) , 0) as unwork, "\
+        "coalesce((select sum(interval) as upwork "\
+        "from overwork_overs join overwork_person on overwork_overs.person_id=overwork_person.id "\
+        "where status='A' AND is_over='t' and person_id=oo.id), 0) as overwork "\
+        "from overwork_person as oo;";
+    qd = Overs.objects.raw(q)
+    data = [{
+        'overwork': q.overwork, 
+        'name':q.name, 
+        'unwork':q.unwork, 
+        'login':q.login
+        } for q in qd]
+    return JsonResponse(data, safe=False)
