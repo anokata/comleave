@@ -14,16 +14,12 @@ export class HttpService{
         return this.http.get(this.host + 'persons/');
     }
 
-    getOvers() {
-        return this.http.get(this.prefix + '/overs/?format=json');
-    }
-
     getSum() {
         return this.http.get(this.host + 'summarize/');
     }
 
     getReqs() {
-        return this.http.get(this.prefix + '/reqs/?format=json');
+        return this.http.get(this.host + 'registred/');
     }
 
     getRest(req: string) {

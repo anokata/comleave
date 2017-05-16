@@ -150,3 +150,22 @@ def summarize(request):
         'login':q.login
         } for q in qd]
     return JsonResponse(data, safe=False)
+
+def overwork_query(status):
+    return "select overwork_overs.id, reg_date, start_date, interval, comment, name, is_over "\
+        "from overwork_overs inner join overwork_person "\
+        "on overwork_overs.person_id=overwork_person.id "\
+        "where overwork_overs.status='" + status + "' order by reg_date desc"
+
+def registred(request):
+    qd = Overs.objects.raw(overwork_query('R'))
+    data = [{
+        'id': q.id, 
+        'name':q.name, 
+        'is_over':q.is_over, 
+        'comment':q.comment,
+        'interval':q.interval,
+        'start_date':q.start_date,
+        'reg_date':q.reg_date,
+        } for q in qd]
+    return JsonResponse(data, safe=False)
