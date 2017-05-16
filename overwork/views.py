@@ -43,7 +43,7 @@ def register_user(request):
     if request.method == 'POST' and form.is_valid():
         user = form.save()
         login(request, user)
-        return HttpResponseRedirect('/accounts/login')
+        return HttpResponseRedirect('/accounts/login/')
     return render(request, 'register.html', {'form': form})
 
 def logout(request):
@@ -56,6 +56,7 @@ def main(request):
         'ANGULAR_URL' : settings.ANGULAR_URL,
         'is_staff': request.user.is_staff,
         'is_logged': request.user.is_authenticated(),
+        'login': request.user.username,
         }))
 
 def persons_(request):
@@ -70,9 +71,8 @@ def person(request):
     template = loader.get_template('overwork/persons.html')
     return HttpResponse(template.render({}))
 
-def action(request, action, param):
-    #TEST
-    return HttpResponse('act:' + action + ' param:' + param)
+#def action(request, action, param):
+    #return HttpResponse('act:' + action + ' param:' + param)
 
 def changeStatus(over_id, status):
     over = Overs.objects.filter(pk=over_id).first()
@@ -118,7 +118,7 @@ def register_interval(request, date, interval, person_id, comment, is_over):
     over = Overs(start_date=date, reg_date=now, comment=comment, 
             interval=interval, person=person, is_over=is_over)
     over.save()
-    return HttpResponse(str(date) + ' ' + interval + ' ' + person.name + str(over))
+    return HttpResponse('ok')
 
 @user_passes_test(user_is_staff, login_url="/accounts/login/")
 def delete(request, over_id):

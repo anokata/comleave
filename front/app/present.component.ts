@@ -48,12 +48,14 @@ export class PresentComponent implements OnInit {
     date: string = '01.01.2000';
     person_id: number;
     intervals: Interval[];
-    persons: Person;
+    persons: Person[];
     messages: string[];
+    login: string;
      
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
+        this.login = (<HTMLInputElement>document.getElementById('login')).value;
         let datep: any;
         datep = $("#datepicker");
         datep.datepicker();
@@ -69,6 +71,11 @@ export class PresentComponent implements OnInit {
             (data: Response) => {
                 this.persons=data.json();
                 this.person_id = this.persons[0].id;
+                this.persons.forEach((e: Person) => {
+                    if (e.login == this.login) {
+                        this.person_id = e.id;
+                    }
+                });
                 return this.persons;
             });
     }

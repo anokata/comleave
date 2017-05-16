@@ -4,7 +4,7 @@ from rest_framework import serializers
 class PersonSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Person
-        fields = ('id', 'name', 'is_manager')
+        fields = ('id', 'name', 'is_manager', 'login')
 
 
 class OverworkSerializer(serializers.HyperlinkedModelSerializer):

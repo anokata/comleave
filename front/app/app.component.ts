@@ -7,6 +7,7 @@ import { HttpService} from './http.service';
 @Component({
     selector: 'my-app',
     template: `
+    <h4>Hello {{ login }}</h4>
         <nav>
           <a routerLink="/sum" routerLinkActive="active">Сводка</a>
           <a routerLink="/reg" routerLinkActive="active">Зарегестрированные</a>
@@ -27,11 +28,13 @@ import { HttpService} from './http.service';
 
 export class AppComponent implements OnInit { 
     is_logged: boolean;
+    login: string;
   
     constructor(private httpService: HttpService){}
      
     ngOnInit(){
         this.is_logged = (<HTMLInputElement>document.getElementById('is_logged')).value == 'True';
+        this.login = (<HTMLInputElement>document.getElementById('login')).value;
     }
 
 }

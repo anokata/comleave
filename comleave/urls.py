@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^rest/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^action/(?P<action>[0-9a-zA-Z]+)/(?P<param>[0-9a-zA-Z]+)$', views.action, name='action'),
+    #url(r'^action/(?P<action>[0-9a-zA-Z]+)/(?P<param>[0-9a-zA-Z]+)$', views.action, name='action'),
     url(r'^accept/(?P<over_id>[0-9a-zA-Z]+)/(?P<interval>[0-9]+)$', views.accept),
     url(r'^deny/(?P<param>[0-9a-zA-Z]+)$', views.deny),
     url(r'^register/(?P<param>[0-9a-zA-Z]+)$', views.register),
