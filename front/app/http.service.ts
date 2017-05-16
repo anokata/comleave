@@ -11,7 +11,7 @@ export class HttpService{
     constructor(private http: Http){ }
      
     getData() {
-        return this.http.get(this.prefix + '/persons/?format=json');
+        return this.http.get(this.host + 'persons/');
     }
 
     getOvers() {
