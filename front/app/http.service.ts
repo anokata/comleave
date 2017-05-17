@@ -33,7 +33,7 @@ export class HttpService{
     }
 
     actionAccept(id: number, new_interval: number = 0) {
-        return this.http.get(this.host + id.toString() + '/' +
+        return this.http.get(this.host + '/accept/' + id.toString() + '/' +
             new_interval);
     }
 
