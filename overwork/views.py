@@ -189,10 +189,10 @@ def summarize(request):
     q = "select oo.id, oo.name, oo.login, "\
         "coalesce((select sum(overwork_overs.interval) as downwork "\
         "from overwork_overs "\
-        "where status='A' AND is_over='f' and person_id=oo.id ) , 0) as unwork, "\
+        "where status='A' AND is_over='0' and person_id=oo.id ) , 0) as unwork, "\
         "coalesce((select sum(overwork_overs.interval) as upwork "\
         "from overwork_overs join overwork_person on overwork_overs.person_id=overwork_person.id "\
-        "where status='A' AND is_over='t' and person_id=oo.id), 0) as overwork "\
+        "where status='A' AND is_over='1' and person_id=oo.id), 0) as overwork "\
         "from overwork_person as oo;";
     qd = Overs.objects.raw(q)
     data = [{
