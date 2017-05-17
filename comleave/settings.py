@@ -24,6 +24,7 @@ SECRET_KEY = 'zz^iomp+*u&oz6uh*$7*zm0tpr(+9il=61nq_@bnp_g=u#wthg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+PROD = False
 
 ALLOWED_HOSTS = []
 
@@ -76,17 +77,25 @@ WSGI_APPLICATION = 'comleave.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.mysql',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'django_comleave',
         'USER': 'test',
         'PASSWORD': 'test',
         'HOST': '127.0.0.1',
-        #'HOST': 'quartenium.mysql.pythonanywhere-services.com',
         'PORT': '5432',
-        #'PORT': '3306',
     }
 }
+if PROD:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'django_comleave',
+            'USER': 'quartenium',
+            'PASSWORD': '%1|>#!~C$*&|jYT',
+            'HOST': 'quartenium.mysql.pythonanywhere-services.com',
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation
@@ -134,8 +143,12 @@ STATICFILES_DIRS = (
 ANGULAR_URL = '/ng/'
 ANGULAR_ROOT = os.path.join(BASE_DIR, 'front/')
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email settings
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 587
