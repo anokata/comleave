@@ -123,31 +123,36 @@ def register(request, param):
 def interval2hours(i):
     return str(int(i) / 60) + ' hours ' + str(int(i) % 60) + ' minutes'
 
-def make_mail_body(person_id, date, interval, comment):
+def make_mail_body(person_id, date, interval, comment, is_over):
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person' # Exception
-    body = u'Запрос переработки от ' + person.name + ' на '
+    if is_over:
+        body = u'Запрос переработки от ' 
+    else: 
+        body = u'Запрос на отгул от ' 
+    body += person.name + ' на '
     body += interval2hours(interval)
     body += u' на ' + date
     body += u' \nComment:\n' + comment
     return body
 
-# need get staff emails -> 
-# email at registration enter need and save
-# email change at profile need
-def register_overwork(request, date, interval, person_id, comment):
-    # get mail
-    #request.user.email
+def mail_register_udwork(mail, person_id, date, interval, comment, is_over):
     send_mail(
-        'Registred overwork @ ' + str(date) + ' TO ' + interval2hours(interval),
-        make_mail_body(person_id, date, interval, comment),
+        'Registred overwork' if is_over else 'Registred unwork',
+        make_mail_body(person_id, date, interval, comment, is_over),
         'djangomosreg@mail.ru',
-        ['tikhomirovsvl@mosreg.ru'], # from user manager?
+        [mail],
         fail_silently=False,
     )
+
+def register_overwork(request, date, interval, person_id, comment):
+    manager = User.objects.filter(is_staff=True).exclude(is_superuser=True).first()
+    manager_email = manager.email
+    mail_register_udwork(manager_email, person_id, date, interval, comment, True)
     return register_interval(request, date, interval, person_id, comment, True)
 
 def register_unwork(request, date, interval, person_id, comment):
+    mail_register_udwork(request.user.email, person_id, date, interval, comment, False)
     return register_interval(request, date, interval, person_id, comment, False)
 
 def register_interval(request, date, interval, person_id, comment, is_over):
