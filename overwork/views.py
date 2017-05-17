@@ -136,6 +136,8 @@ def make_mail_body(person_id, date, interval, comment):
 # email at registration enter need and save
 # email change at profile need
 def register_overwork(request, date, interval, person_id, comment):
+    # get mail
+    #request.user.email
     send_mail(
         'Registred overwork @ ' + str(date) + ' TO ' + interval2hours(interval),
         make_mail_body(person_id, date, interval, comment),
@@ -171,10 +173,10 @@ def persons(request):
 
 def summarize(request):
     q = "select oo.id, oo.name, oo.login, "\
-        "coalesce((select sum(interval) as downwork "\
+        "coalesce((select sum(overwork_overs.interval) as downwork "\
         "from overwork_overs "\
         "where status='A' AND is_over='f' and person_id=oo.id ) , 0) as unwork, "\
-        "coalesce((select sum(interval) as upwork "\
+        "coalesce((select sum(overwork_overs.interval) as upwork "\
         "from overwork_overs join overwork_person on overwork_overs.person_id=overwork_person.id "\
         "where status='A' AND is_over='t' and person_id=oo.id), 0) as overwork "\
         "from overwork_person as oo;";
@@ -188,7 +190,7 @@ def summarize(request):
     return JsonResponse(data, safe=False)
 
 def overwork_query(status):
-    query = "select overwork_overs.id, reg_date, start_date, interval, comment, name, is_over "\
+    query = "select overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
         "where overwork_overs.status='" + status + "' order by reg_date desc"

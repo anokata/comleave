@@ -77,12 +77,14 @@ WSGI_APPLICATION = 'comleave.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
+        #'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'django_comleave',
         'USER': 'test',
         'PASSWORD': 'test',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        #'PORT': '5432',
+        'PORT': '3306',
     }
 }
 
