@@ -136,7 +136,9 @@ def make_mail_body(person_id, date, interval, comment, is_over):
     body += u' \nComment:\n' + comment
     return body
 
-def mail_register_udwork(mail, person_id, date, interval, comment, is_over):
+def mail_register_udwork(person_id, date, interval, comment, is_over):
+    manager = User.objects.filter(is_staff=True).exclude(is_superuser=True).first()
+    mail = manager.email
     send_mail(
         'Registred overwork' if is_over else 'Registred unwork',
         make_mail_body(person_id, date, interval, comment, is_over),
@@ -146,13 +148,11 @@ def mail_register_udwork(mail, person_id, date, interval, comment, is_over):
     )
 
 def register_overwork(request, date, interval, person_id, comment):
-    manager = User.objects.filter(is_staff=True).exclude(is_superuser=True).first()
-    manager_email = manager.email
-    mail_register_udwork(manager_email, person_id, date, interval, comment, True)
+    mail_register_udwork(person_id, date, interval, comment, True)
     return register_interval(request, date, interval, person_id, comment, True)
 
 def register_unwork(request, date, interval, person_id, comment):
-    mail_register_udwork(request.user.email, person_id, date, interval, comment, False)
+    mail_register_udwork(person_id, date, interval, comment, False)
     return register_interval(request, date, interval, person_id, comment, False)
 
 def register_interval(request, date, interval, person_id, comment, is_over):
