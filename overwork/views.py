@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from __future__ import print_function
 import datetime
 
 from django.shortcuts import render
@@ -142,6 +143,9 @@ def make_mail_body(person_id, date, interval, comment, is_over):
 
 def mail_register_udwork(person_id, date, interval, comment, is_over):
     manager = User.objects.filter(is_staff=True).exclude(is_superuser=True).first()
+    if not manager: 
+        logging.error("manager not found")
+        return
     mail = manager.email
     send_mail(
         'Registred overwork' if is_over else 'Registred unwork',
