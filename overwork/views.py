@@ -22,17 +22,19 @@ from django.core.mail import send_mail
 
 from django.contrib.auth import authenticate, login
 class RegistrationForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
+    first_name = forms.CharField(max_length=40)
+    last_name = forms.CharField(max_length=40)
+    email = forms.CharField(max_length=50)
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "username" )
+        fields = ("first_name", "last_name", "username", "email" )
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.first_name = self.cleaned_data["first_name"]
         user.last_name = self.cleaned_data["last_name"]
+        user.email = self.cleaned_data["email"]
         person = Person(login=user.username, 
                 name=user.first_name + ' ' + user.last_name,
                 is_manager=False)
