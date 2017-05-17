@@ -18,6 +18,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 
 from django.contrib.auth import authenticate, login
 class RegistrationForm(UserCreationForm):
@@ -91,7 +92,30 @@ def register(request, param):
     changeStatus(param, Overs.REGISTRED)
     return HttpResponse(' param:' + param)
 
+# util
+def interval2hours(i):
+    return str(int(i) / 60) + ' hours ' + str(int(i) % 60) + ' minutes'
+
+def make_mail_body(person_id, date, interval, comment):
+    person = Person.objects.filter(pk=person_id).first()
+    if not person: return 'no person' # Exception
+    body = u'Запрос переработки от ' + person.name + ' на '
+    body += interval2hours(interval)
+    body += u' на ' + date
+    body += u' \nComment:\n' + comment
+    return body
+
+# need get staff emails -> 
+# email at registration enter need and save
+# email change at profile need
 def register_overwork(request, date, interval, person_id, comment):
+    send_mail(
+        'Registred overwork @ ' + str(date) + ' TO ' + interval2hours(interval),
+        make_mail_body(person_id, date, interval, comment),
+        'djangomosreg@mail.ru',
+        ['tikhomirovsvl@mosreg.ru'], # from user manager?
+        fail_silently=False,
+    )
     return register_interval(request, date, interval, person_id, comment, True)
 
 def register_unwork(request, date, interval, person_id, comment):

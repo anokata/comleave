@@ -141,3 +141,10 @@ REST_FRAMEWORK = {
 ANGULAR_URL = '/ng/'
 ANGULAR_ROOT = os.path.join(BASE_DIR, 'front/')
 
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'djangomosreg@mail.ru'
+EMAIL_HOST_PASSWORD = 'Tr1xJz2A8Y,1jZm'
