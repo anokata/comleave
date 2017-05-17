@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
  
 @Injectable()
 export class HttpService{
-    host = 'http://localhost:8000/';
+    host = '';
  
     constructor(private http: Http){ }
      
@@ -29,17 +29,17 @@ export class HttpService{
     }
 
     action(action: string, id: number) {
-        return this.http.get('http://localhost:8000/' + action + '/' + id.toString());
+        return this.http.get(this.host + action + '/' + id.toString());
     }
 
     actionAccept(id: number, new_interval: number = 0) {
-        return this.http.get('http://localhost:8000/accept/' + id.toString() + '/' +
+        return this.http.get(this.host + id.toString() + '/' +
             new_interval);
     }
 
     register_overwork(date: string, interval: number, 
         person_id: number, comment: string) {
-        return this.http.get('http://localhost:8000/register_overwork/' + 
+        return this.http.get(this.host + '/register_overwork/' + 
             date + '/' + 
             interval + '/' + 
             person_id + '/' + 
@@ -48,7 +48,7 @@ export class HttpService{
 
     register_unwork(date: string, interval: number, 
         person_id: number, comment: string) {
-        return this.http.get('http://localhost:8000/register_unwork/' + 
+        return this.http.get(this.host + '/register_unwork/' + 
             date + '/' + 
             interval + '/' + 
             person_id + '/' + 
