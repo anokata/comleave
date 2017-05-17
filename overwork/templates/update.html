@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Обновление данных профайла</h4>
+  <form action="." method="post">
+    {% csrf_token %}
+    {% if form.error_dict %}
+      <p class="error">Пожалуйста исправьте нижеприведённые ошибки.</p>
+    {% endif %}
+
+    <div class='form_input'>
+    Имя: 
+    <label for="first_name"></label> {{ form.first_name }}
+    </div>
+    <div class='form_input'>
+    Фамилия: 
+    <label for="last_name"></label> {{ form.last_name }}
+    </div>
+    <div class='form_input'>
+    Email: 
+    <label for="email"></label> {{ form.email }}
+    </div>
+
+    <div class='form_input'>
+    <input type="submit" value="Обновить" />
+    </div>
+  </form>
+{% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', views.logout),
     url(r'^accounts/register/$', views.register_user),
+    url(r'^accounts/update/$', views.update_user),
     url(r'^admin/', admin.site.urls),
     url(r'^(?!ng/).*$', views.main), # Frontend must be last
 ] + static(settings.ANGULAR_URL, document_root=settings.ANGULAR_ROOT)

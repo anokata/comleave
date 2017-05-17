@@ -26,6 +26,13 @@ class RegistrationForm(UserCreationForm):
     last_name = forms.CharField(max_length=40)
     email = forms.CharField(max_length=50)
 
+    def __init__(self, user=None, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        if user != None:
+            self.fields['first_name'].initial = user.first_name
+            self.fields['last_name'].initial = user.last_name
+            self.fields['email'].initial = user.email
+
     class Meta:
         model = User
         fields = ("first_name", "last_name", "username", "email" )
@@ -43,6 +50,17 @@ class RegistrationForm(UserCreationForm):
             person.save()
         return user
 
+    def update(self, user):
+        user.first_name = self.data["first_name"]
+        user.last_name = self.data["last_name"]
+        user.email = self.data["email"]
+        user.save()
+        person = Person.objects.filter(login=user.username).first()
+        person.name = self.data["first_name"] + ' ' + self.data["last_name"]
+        person.email = self.data["email"]
+        person.save()
+        return user
+
 def register_user(request):
     form = RegistrationForm(data=request.POST or None)
     if request.method == 'POST' and form.is_valid():
@@ -50,6 +68,13 @@ def register_user(request):
         login(request, user)
         return HttpResponseRedirect('/accounts/login/')
     return render(request, 'register.html', {'form': form})
+
+def update_user(request):
+    form = RegistrationForm(data=request.POST or None, user=request.user)
+    if request.method == 'POST':
+        user = form.update(request.user)
+        return HttpResponseRedirect('/accounts/update/')
+    return render(request, 'update.html', {'form': form})
 
 def logout(request):
     auth.logout(request)

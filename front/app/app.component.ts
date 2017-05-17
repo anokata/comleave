@@ -18,7 +18,10 @@ import { HttpService} from './http.service';
           <div *ngIf="!is_logged"> <a href="accounts/login/">Login</a> 
               <a href="accounts/register/">Register</a> 
           </div>
-          <div *ngIf="is_logged"> <a href="accounts/logout/">Logout</a> </div>
+          <div *ngIf="is_logged"> 
+              <a href="accounts/logout/">Logout</a> 
+              <a href="accounts/update/">Update</a> 
+              </div>
         </nav>
         <router-outlet></router-outlet>
                `,
