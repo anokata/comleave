@@ -89,7 +89,7 @@ if PROD:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'django_comleave',
+            'NAME': 'quartenium$django_comleave',
             'USER': 'quartenium',
             'PASSWORD': '%1|>#!~C$*&|jYT',
             'HOST': 'quartenium.mysql.pythonanywhere-services.com',
