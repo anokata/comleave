@@ -20,6 +20,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
+import logging
+logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
+logging.debug('Start of program')
+
 from django.contrib.auth import authenticate, login
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=40)
@@ -148,6 +152,7 @@ def mail_register_udwork(person_id, date, interval, comment, is_over):
     )
 
 def register_overwork(request, date, interval, person_id, comment):
+    logging.debug('register_overwork')
     mail_register_udwork(person_id, date, interval, comment, True)
     return register_interval(request, date, interval, person_id, comment, True)
 
