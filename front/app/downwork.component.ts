@@ -39,7 +39,7 @@ import { MessagesComponent } from './messages.component';
 
 export class DownworkComponent implements OnInit { 
   
-    comment: string;
+    comment: string = '-';
     interval: number = 60;
     date: string = '01.01.2000';
     person_id: number;

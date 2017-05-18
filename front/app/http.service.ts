@@ -39,6 +39,9 @@ export class HttpService{
 
     register_overwork(date: string, interval: number, 
         person_id: number, comment: string) {
+        if (!comment) {
+            comment = '-';
+        }
         return this.http.get(this.host + '/register_overwork/' + 
             date + '/' + 
             interval + '/' + 
@@ -48,6 +51,9 @@ export class HttpService{
 
     register_unwork(date: string, interval: number, 
         person_id: number, comment: string) {
+        if (!comment) {
+            comment = '-';
+        }
         return this.http.get(this.host + '/register_unwork/' + 
             date + '/' + 
             interval + '/' + 
