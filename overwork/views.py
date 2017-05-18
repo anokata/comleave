@@ -169,6 +169,8 @@ def register_interval(request, date, interval, person_id, comment, is_over):
     if not person: return 'no person'
     date = datetime.datetime.strptime(date, "%m.%d.%Y")
     now = datetime.datetime.now()
+    if not comment:
+        comment = '-'
     over = Overs(start_date=date, reg_date=now, comment=comment, 
             interval=interval, person=person, is_over=is_over)
     over.save()
