@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 import { RouterModule }   from '@angular/router';
+import { ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
+import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 
 import { AppComponent }  from './app.component';
 import { SummaryComponent }  from './summary.component';
@@ -55,7 +57,14 @@ import { RegistrationComponent }  from './registration.component';
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
         PresentComponent, DownworkComponent, DeniedComponent, 
         AcceptedComponent, MessagesComponent, RegistrationComponent],
-    bootstrap:    [ AppComponent ]
+    bootstrap:    [ AppComponent ],
+    providers: [
+        {
+            provide: XSRFStrategy,
+            useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
+        }
+    ]
+
 })
 export class AppModule { }
 

@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { ViewChild } from '@angular/core';
 import { MessagesComponent } from './messages.component';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'my-app',
@@ -53,14 +54,16 @@ import { MessagesComponent } from './messages.component';
 export class RegistrationComponent implements OnInit { 
   
     @ViewChild('msg') msg: MessagesComponent;
-    id_username: string = '';
-    password1: string = '';
-    password2: string = '';
+    id_username: string = 'name';
+    password1: string = 'some12345';
+    password2: string = 'some12345';
     first_name: string = '';
     last_name: string = '';
     email: string = '';
+    user: any = {};
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+        private router: Router){}
     ngOnInit(){}
      
     register() {
@@ -80,6 +83,28 @@ export class RegistrationComponent implements OnInit {
             return;
         }
         this.msg.send("Пробую зарегестрировать...");
+        this.user.username = this.id_username;
+        this.user.password = this.password1;
+        this.user.first_name = this.first_name;
+        this.user.last_name = this.last_name;
+        this.user.email = this.email;
+        this.httpService.postData(this.user).subscribe(
+            (data: Response) => {
+                if (data.text() == 'exist') {
+                    this.msg.send("Пользователь уже существует");
+                    return;
+                }
+                if (data.text() == 'not') {
+                    this.msg.send("Какая то ошибка ¯\_(-_-)_/¯");
+                    this.msg.send(data.text());
+                    return;
+                }
+                if (data.text() == 'ok') {
+                    this.msg.send("Успешно");
+                    this.router.navigateByUrl('sum');
+                    return;
+                }
+            });
     }
 
 }

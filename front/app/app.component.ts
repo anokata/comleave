@@ -17,7 +17,6 @@ import { HttpService} from './http.service';
           <a routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
           <div *ngIf="!is_logged"> 
               <a href="accounts/login/">Login</a> 
-              <a href="accounts/register/">Register</a> 
               <a routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
           </div>
           <div *ngIf="is_logged"> 

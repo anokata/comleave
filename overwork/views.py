@@ -74,6 +74,34 @@ def register_user(request):
         return HttpResponseRedirect('/accounts/login/')
     return render(request, 'register.html', {'form': form})
 
+def register_new_user(request):
+    if request.method == 'POST':
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        last_name = request.POST.get("last_name", "")
+        first_name = request.POST.get("first_name", "")
+        email = request.POST.get("email", "")
+        if User.objects.filter(username=username).first():
+            return HttpResponse('exist')
+
+        try:
+            user = User.objects.create_user(
+                    username,
+                    email=email,
+                    password=password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            person = Person(login=username, 
+                name=first_name + ' ' + last_name,
+                is_manager=False)
+            person.save()
+        except e:
+            return HttpResponse(str(e))
+        login(request, user)
+        return HttpResponse('ok')
+    return HttpResponse('not')
+
 def update_user(request):
     form = RegistrationForm(data=request.POST or None, user=request.user)
     if request.method == 'POST':

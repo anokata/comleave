@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import { HttpModule } from '@angular/http';
+import {Response, Headers, URLSearchParams} from '@angular/http';
  
 @Injectable()
 export class HttpService{
@@ -59,5 +60,16 @@ export class HttpService{
             interval + '/' + 
             person_id + '/' + 
             comment + '/' );
+    }
+
+    postData(obj: any){
+        var params = new URLSearchParams();
+        params.set('username', obj['username']);
+        params.set('password', obj['password']);
+        params.set('last_name', obj['last_name']);
+        params.set('first_name', obj['first_name']);
+        params.set('email', obj['email']);
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
+        return this.http.post(this.host + '/register_user/',  params.toString(), { headers: headers });
     }
 }
