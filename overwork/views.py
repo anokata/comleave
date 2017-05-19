@@ -96,7 +96,7 @@ def register_new_user(request):
                 name=first_name + ' ' + last_name,
                 is_manager=False)
             person.save()
-        except e:
+        except Exception as e:
             return HttpResponse(str(e))
         login(request, user)
         return HttpResponse('ok')
@@ -108,6 +108,37 @@ def update_user(request):
         user = form.update(request.user)
         return HttpResponseRedirect('/accounts/update/')
     return render(request, 'update.html', {'form': form})
+
+def get_user(request):
+    data = {
+            'username': request.user.username,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'email': request.user.email,
+            'is_staff': request.user.is_staff,
+            'is_authenticated': request.user.is_authenticated(),
+            }
+    return JsonResponse(data, safe=False)
+
+def update_current_user(request):
+    if request.method == 'POST':
+        try:
+            last_name = request.POST.get("last_name", "")
+            first_name = request.POST.get("first_name", "")
+            email = request.POST.get("email", "")
+            request.user.last_name = last_name
+            request.user.first_name = first_name
+            request.user.email = email
+            request.user.save()
+            person = Person.objects.filter(login=request.user.username).first()
+            if person:
+                person.name = first_name + ' ' + last_name
+                person.email = email
+                person.save()
+        except Exception as e:
+            return HttpResponse(str(e))
+        return HttpResponse('ok')
+    return HttpResponse('not')
 
 def logout(request):
     auth.logout(request)

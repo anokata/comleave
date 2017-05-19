@@ -11,21 +11,8 @@ import {Router} from '@angular/router';
     selector: 'my-app',
     template: `
     <div class='users'>
-    <h4> Регистрация пользователя </h4>
+    <h4> Обновить  пользователя </h4>
     <form action="." method="post">
-
-    <div class='form_input'>
-    Имя пользователя (логин):
-    <input type=text  [(ngModel)]="id_username" name="id_username">
-    </div>
-    <div class='form_input'>
-    Пароль
-    <input type=password [(ngModel)]="password1" name="password1">
-    </div>
-    <div class='form_input'>
-    Повторите пароль
-    <input type=password [(ngModel)]="password2" name="password2">
-    </div>
 
     <div class='form_input'>
     Имя: 
@@ -41,7 +28,7 @@ import {Router} from '@angular/router';
     </div>
 
     <div class='form_input'>
-    <input type=submit name=submit (click)=register() value='Зарегестрировать'>
+    <input type=submit name=submit (click)=update() value='Обновить'>
     </div>
     </form>
     <messages #msg></messages>
@@ -51,12 +38,9 @@ import {Router} from '@angular/router';
 })
 
 
-export class RegistrationComponent implements OnInit { 
+export class UpdateComponent implements OnInit { 
   
     @ViewChild('msg') msg: MessagesComponent;
-    id_username: string = 'name';
-    password1: string = 'some12345';
-    password2: string = 'some12345';
     first_name: string = '';
     last_name: string = '';
     email: string = '';
@@ -64,37 +48,24 @@ export class RegistrationComponent implements OnInit {
 
     constructor(private httpService: HttpService,
         private router: Router){}
-    ngOnInit(){}
+    ngOnInit(){
+        this.httpService.getUser().subscribe(
+            (data: Response) => {
+                this.user = data.json();
+                this.first_name = this.user.first_name;
+                this.last_name = this.user.last_name;
+                this.email = this.user.email;
+            });
+    }
      
-    register() {
+    update() {
         this.msg.clear();
-        if (!this.id_username) {
-            this.msg.send("Не введено имя пользователя.");
-            return;
-        }
-        if (!this.password1) {
-            this.msg.send("Необходимо ввести пароль");
-            return;
-        }
-        if (this.password1 !== this.password2) {
-            this.msg.send("Пароли не совпадают");
-            this.password1 = '';
-            this.password2 = '';
-            return;
-        }
-        this.msg.send("Пробую зарегестрировать...");
-        this.user.username = this.id_username;
-        this.user.password = this.password1;
         this.user.first_name = this.first_name;
         this.user.last_name = this.last_name;
         this.user.email = this.email;
-        this.httpService.postData(this.user, '/register_user/').subscribe(
+        this.httpService.postData(this.user, '/update/').subscribe(
             (data: Response) => {
-                if (data.text() == 'exist') {
-                    this.msg.send("Пользователь уже существует");
-                    return;
-                }
-                if (data.text() == 'not') {
+                if (data.text() != 'ok') {
                     this.msg.send("Какая то ошибка ¯\_(-_-)_/¯");
                     this.msg.send(data.text());
                     return;

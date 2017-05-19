@@ -62,7 +62,7 @@ export class HttpService{
             comment + '/' );
     }
 
-    postData(obj: any){
+    postData(obj: any, action: string){
         var params = new URLSearchParams();
         params.set('username', obj['username']);
         params.set('password', obj['password']);
@@ -70,6 +70,10 @@ export class HttpService{
         params.set('first_name', obj['first_name']);
         params.set('email', obj['email']);
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
-        return this.http.post(this.host + '/register_user/',  params.toString(), { headers: headers });
+        return this.http.post(this.host + action,  params.toString(), { headers: headers });
+    }
+
+    getUser() {
+        return this.http.get(this.host + 'user' + '/');
     }
 }

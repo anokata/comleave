@@ -15,6 +15,7 @@ import { PresentComponent }  from './present.component';
 import { DownworkComponent }  from './downwork.component';
 import { MessagesComponent }  from './messages.component';
 import { RegistrationComponent }  from './registration.component';
+import { UpdateComponent }  from './update.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -51,12 +52,17 @@ import { RegistrationComponent }  from './registration.component';
             path: 'register',
             component: RegistrationComponent
           },
+          {
+            path: 'update',
+            component: UpdateComponent
+          },
         ])
     
     ],
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
         PresentComponent, DownworkComponent, DeniedComponent, 
-        AcceptedComponent, MessagesComponent, RegistrationComponent],
+        AcceptedComponent, MessagesComponent, RegistrationComponent, 
+        UpdateComponent],
     bootstrap:    [ AppComponent ],
     providers: [
         {
