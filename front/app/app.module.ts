@@ -12,6 +12,7 @@ import { AcceptedComponent }  from './accepted.component';
 import { PresentComponent }  from './present.component';
 import { DownworkComponent }  from './downwork.component';
 import { MessagesComponent }  from './messages.component';
+import { RegistrationComponent }  from './registration.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -44,12 +45,16 @@ import { MessagesComponent }  from './messages.component';
             path: 'accepted',
             component: AcceptedComponent
           },
+          {
+            path: 'register',
+            component: RegistrationComponent
+          },
         ])
     
     ],
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
         PresentComponent, DownworkComponent, DeniedComponent, 
-        AcceptedComponent, MessagesComponent],
+        AcceptedComponent, MessagesComponent, RegistrationComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

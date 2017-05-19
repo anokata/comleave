@@ -80,7 +80,7 @@ form {
 }
 
 .form_input {
-    width: 40%;
+    width: 60%;
     padding: 1em;
     text-align: right;
 }
@@ -91,4 +91,8 @@ form {
 
 .int_chg {
     padding: 1em;
+}
+
+h4 {
+    text-align: center;
 }

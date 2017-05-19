@@ -17,10 +17,14 @@ export class MessagesComponent implements OnInit {
     constructor(){}
      
     ngOnInit(){
-        this.messages = Array();
+        this.clear();
     }
 
     public send(msg: string) {
         this.messages.push(msg);
+    }
+
+    public clear() {
+        this.messages = Array();
     }
 }
