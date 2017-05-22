@@ -64,13 +64,14 @@ nav {
     position: absolute;
 }
 
-nav a {
+nav a, .nav {
     padding: 0.5em;
     background-color: aliceblue;
     border: 2px solid #66a;
     text-decoration: none;
     display: block;
     margin-bottom: 0.5em;
+    cursor: pointer;
 }
 
 form {

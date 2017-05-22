@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { UserService} from './user.service';
 import { User } from './user';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'my-app',
@@ -22,7 +23,7 @@ import { User } from './user';
               <a routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
           </div>
           <div *ngIf="userService.user.is_authenticated"> 
-              <a href="accounts/logout/">Выйти</a> 
+              <div class='nav' (click)=logout()>Выйти</div>
               <a routerLink="/update" routerLinkActive="active">Обновить</a>
               </div>
         </nav>
@@ -35,10 +36,19 @@ import { User } from './user';
 export class AppComponent implements OnInit { 
   
     constructor(private httpService: HttpService,
-                private userService: UserService){}
+                private userService: UserService,
+                private router: Router){}
      
     ngOnInit(){
         this.userService.update();
+    }
+
+    logout() {
+        this.httpService.getUrl('logout/').subscribe(
+            (data: Response) => {
+                this.userService.update();
+                this.router.navigateByUrl('login');
+            });
     }
 
 }

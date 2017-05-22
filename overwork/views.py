@@ -151,6 +151,10 @@ def update_current_user(request):
         return HttpResponse('ok')
     return HttpResponse('not')
 
+def logout_user(request):
+    auth.logout(request)
+    return HttpResponse('ok')
+
 def login_user(request):
     if request.method == 'POST':
         try:
