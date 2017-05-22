@@ -14,10 +14,8 @@ from django.http import JsonResponse
 from django.core import serializers
 
 from .models import Overs, Person
-from django import forms 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
@@ -26,53 +24,6 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 logging.debug('Start of program')
 
 from django.contrib.auth import authenticate, login
-class RegistrationForm(UserCreationForm):
-    first_name = forms.CharField(max_length=40)
-    last_name = forms.CharField(max_length=40)
-    email = forms.CharField(max_length=50)
-
-    def __init__(self, user=None, *args, **kwargs):
-        super(UserCreationForm, self).__init__(*args, **kwargs)
-        if user != None:
-            self.fields['first_name'].initial = user.first_name
-            self.fields['last_name'].initial = user.last_name
-            self.fields['email'].initial = user.email
-
-    class Meta:
-        model = User
-        fields = ("first_name", "last_name", "username", "email" )
-
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.first_name = self.cleaned_data["first_name"]
-        user.last_name = self.cleaned_data["last_name"]
-        user.email = self.cleaned_data["email"]
-        person = Person(login=user.username, 
-                name=user.first_name + ' ' + user.last_name,
-                is_manager=False)
-        if commit:
-            user.save()
-            person.save()
-        return user
-
-    def update(self, user):
-        user.first_name = self.data["first_name"]
-        user.last_name = self.data["last_name"]
-        user.email = self.data["email"]
-        user.save()
-        person = Person.objects.filter(login=user.username).first()
-        person.name = self.data["first_name"] + ' ' + self.data["last_name"]
-        person.email = self.data["email"]
-        person.save()
-        return user
-
-def register_user(request):
-    form = RegistrationForm(data=request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        user = form.save()
-        login(request, user)
-        return HttpResponseRedirect('/accounts/login/')
-    return render(request, 'register.html', {'form': form})
 
 def register_new_user(request):
     if request.method == 'POST':
@@ -101,13 +52,6 @@ def register_new_user(request):
         login(request, user)
         return HttpResponse('ok')
     return HttpResponse('not')
-
-def update_user(request):
-    form = RegistrationForm(data=request.POST or None, user=request.user)
-    if request.method == 'POST':
-        user = form.update(request.user)
-        return HttpResponseRedirect('/accounts/update/')
-    return render(request, 'update.html', {'form': form})
 
 def get_user(request):
     if request.user.is_authenticated():
@@ -171,10 +115,6 @@ def login_user(request):
             return HttpResponse(str(e))
     return HttpResponse('not')
 
-
-def logout(request):
-    auth.logout(request)
-    return HttpResponseRedirect("/")
 
 def main(request):
     template = loader.get_template('route.html')
