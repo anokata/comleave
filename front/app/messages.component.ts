@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'messages',
     template: `
    <div class='messages users'>
-    <div *ngFor="let msg of messages">
+    <div *ngFor="let msg of messages" class="alert alert-success" role="alert">
         {{msg}}
     </div>
    </div>

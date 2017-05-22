@@ -1,16 +1,32 @@
+/*
 body {
     background-color: #aac;
     color: #003;
     font-family: Geneva, sans-serif;
 }
 
+*/
 .users {
     margin: auto;
-    width: 60%;
+    width: 70%;
     text-align: right;
 }
 
+.users-c {
+    margin: auto;
+    width: 70%;
+    text-align: center;
+}
 
+td, th{
+text-align: center;
+}
+
+.nav-content {
+    display: contents;
+}
+
+/*
 table {
     margin-top: 1em;
     border-collapse: collapse;
@@ -27,16 +43,15 @@ background: #03035F;
 font-weight: bold; 
 color: #CCF;
 border: 0px;
-}
-
-td {
 text-align: center;
 }
 
 tr:nth-child(even) td { background: #E1E1FF; }
 
 tr:nth-child(odd) td { background: #EEEEFF; }
+*/
 
+/*
 button, input[type=submit] {
     background-color: #ddf;
     border: 1px solid;
@@ -48,6 +63,7 @@ input {
     padding: 0.5em;
     border: 1px solid;
 }
+*/
 
 .w100 {
     width: 100%;
@@ -55,9 +71,9 @@ input {
 
 .form_margin {
     padding: 1em;
-    background-color: #ddf;
 }
 
+/*
 nav {
     margin-top: 1em;
     width: 15%;
@@ -73,6 +89,14 @@ nav a, .nav {
     margin-bottom: 0.5em;
     cursor: pointer;
 }
+*/
+.my-nav-btn {
+    cursor: pointer;
+}
+
+a {
+   outline: 0;
+}
 
 form {
     margin: auto;
@@ -83,7 +107,7 @@ form {
 .form_input {
     width: 60%;
     padding: 1em;
-    text-align: right;
+    text-align: left;
 }
 
 .form_input label {

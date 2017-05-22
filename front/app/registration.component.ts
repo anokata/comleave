@@ -16,33 +16,33 @@ import { UserService} from './user.service';
     <form action="." method="post">
 
     <div class='form_input'>
-    Имя пользователя (логин):
-    <input type=text  [(ngModel)]="id_username" name="id_username">
+    <label for='username'>Имя пользователя</label>
+    <input id='username' class="form-control" placeholder="login" type=text  [(ngModel)]="id_username" name="id_username">
     </div>
     <div class='form_input'>
     Пароль
-    <input type=password [(ngModel)]="password1" name="password1">
+    <input class="form-control" placeholder="password" type=password [(ngModel)]="password1" name="password1">
     </div>
     <div class='form_input'>
     Повторите пароль
-    <input type=password [(ngModel)]="password2" name="password2">
+    <input class="form-control" placeholder="password again" type=password [(ngModel)]="password2" name="password2">
     </div>
 
     <div class='form_input'>
-    Имя: 
-    <input type=text [(ngModel)]="first_name" name="first_name">
+    Имя 
+    <input class="form-control" placeholder="First name" type=text [(ngModel)]="first_name" name="first_name">
     </div>
     <div class='form_input'>
-    Фамилия: 
-    <input type=text [(ngModel)]="last_name" name="last_name">
+    Фамилия 
+    <input class="form-control" placeholder="Last name" type=text [(ngModel)]="last_name" name="last_name">
     </div>
     <div class='form_input'>
-    Email: 
-    <input type=text [(ngModel)]="email" name="email">
+    Email 
+    <input class="form-control" placeholder="Email" type=text [(ngModel)]="email" name="email">
     </div>
 
     <div class='form_input'>
-    <input type=submit name=submit (click)=register() value='Зарегестрировать'>
+    <input class="form-control btn btn-primary" type=submit name=submit (click)=register() value='Зарегестрировать'>
     </div>
     </form>
     <messages #msg></messages>
@@ -55,9 +55,9 @@ import { UserService} from './user.service';
 export class RegistrationComponent implements OnInit { 
   
     @ViewChild('msg') msg: MessagesComponent;
-    id_username: string = 'name';
-    password1: string = 'some12345';
-    password2: string = 'some12345';
+    id_username: string = '';
+    password1: string = '';
+    password2: string = '';
     first_name: string = '';
     last_name: string = '';
     email: string = '';

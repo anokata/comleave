@@ -12,9 +12,9 @@ import { MessagesComponent } from './messages.component';
 @Component({
     selector: 'my-app',
     template: `
-    <div class='users'>
-    <table>
-    <thead>
+    <div class='users table-responsive'>
+    <table class="table table-striped table-hover table-sm">
+    <thead class="thead-inverse">
     <th>ФИО</th>
     <th>Тип</th>
     <th>Дата начала</th>
@@ -32,9 +32,9 @@ import { MessagesComponent } from './messages.component';
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
       <div *ngIf="userService.user.is_staff">
-      <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
-      <td><button class="btn" (click)="register(rec.id)">Зарегестрировать</button> </td> 
-      <td><button class="btn" (click)="delete(rec.id)">Удалить</button> </td> 
+      <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
+      <td><button class="btn btn-info" (click)="register(rec.id)">Зарегестрировать</button> </td> 
+      <td><button class="btn btn-danger" (click)="delete(rec.id)">Удалить</button> </td> 
       </div>
     </tr>
     </tbody>

@@ -14,21 +14,21 @@ import {Router} from '@angular/router';
     <h4> Обновить  пользователя </h4>
     <form action="." method="post">
 
-    <div class='form_input'>
+    <div class='form_input from-group'>
     Имя: 
-    <input type=text [(ngModel)]="first_name" name="first_name">
+    <input class='form-control' type=text [(ngModel)]="first_name" name="first_name">
     </div>
-    <div class='form_input'>
+    <div class='form_input from-group'>
     Фамилия: 
-    <input type=text [(ngModel)]="last_name" name="last_name">
+    <input class='form-control' type=text [(ngModel)]="last_name" name="last_name">
     </div>
-    <div class='form_input'>
+    <div class='form_input from-group'>
     Email: 
-    <input type=text [(ngModel)]="email" name="email">
+    <input class='form-control' type=text [(ngModel)]="email" name="email">
     </div>
 
-    <div class='form_input'>
-    <input type=submit name=submit (click)=update() value='Обновить'>
+    <div class='form_input from-group'>
+    <input class='btn btn-warning' type=submit name=submit (click)=update() value='Обновить'>
     </div>
     </form>
     <messages #msg></messages>

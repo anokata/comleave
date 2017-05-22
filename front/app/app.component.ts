@@ -10,22 +10,44 @@ import {Router} from '@angular/router';
 @Component({
     selector: 'my-app',
     template: `
-    <h4>Hello {{ userService.user.username }} </h4>
-        <nav>
-          <a routerLink="/sum" routerLinkActive="active">Сводка</a>
-          <a routerLink="/reg" routerLinkActive="active">Зарегестрированные</a>
-          <a routerLink="/denied" routerLinkActive="active">Отклонённые</a>
-          <a routerLink="/accepted" routerLinkActive="active">Принятые</a>
-          <a routerLink="/sent" routerLinkActive="active">Зарегестрировать переработку</a>
-          <a routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
-          <div *ngIf="!userService.user.is_authenticated"> 
-              <a routerLink="/login" routerLinkActive="active">Войти</a>
-              <a routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
-          </div>
-          <div *ngIf="userService.user.is_authenticated"> 
-              <div class='nav' (click)=logout()>Выйти</div>
-              <a routerLink="/update" routerLinkActive="active">Обновить</a>
-              </div>
+    <h4>Hello {{ userService.user.first_name }} aka {{ userService.user.username }} </h4>
+    <nav class="navbar navbar-inverse bg-primary navbar-toggleable-md navbar-light bg-faded">
+ <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+  <a class="nav-link"  routerLink="/sum" routerLinkActive="active">Сводка</a> </li>
+      <li class="nav-item">
+  <a class="nav-link"  routerLink="/reg" routerLinkActive="active">Зарегестрированные</a> </li>
+      <li class="nav-item">
+  <a class="nav-link"  routerLink="/denied" routerLinkActive="active">Отклонённые</a> </li>
+    <li class="nav-item">
+  <a class="nav-link"  routerLink="/accepted" routerLinkActive="active">Принятые</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"  routerLink="/sent" routerLinkActive="active">Зарегестрировать переработку</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link"  routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
+    </li>
+
+      <span class='nav-content' *ngIf="!userService.user.is_authenticated"> 
+<li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Войти</a>
+    </li>
+    <li class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
+    </li>
+      </span>
+      <span class='nav-content' *ngIf="userService.user.is_authenticated"> 
+    <li class="nav-item">
+          <div class='nav-link my-nav-btn' (click)=logout()>Выйти</div>
+    </li>
+    <li class="nav-item">
+          <a class="nav-link" routerLink="/update" routerLinkActive="active">Обновить</a>
+    </li>
+          </span>
+    </ul>
+  </div>
         </nav>
         <router-outlet></router-outlet>
                `,

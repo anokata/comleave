@@ -13,9 +13,10 @@ export class Summarize {
 
 @Component({
     selector: 'my-app',
-    template: `<div class='users'>
-    <table>
-    <thead>
+    template: `
+    <div class='users table-responsive'>
+    <table class="table table-striped table-hover table-sm">
+    <thead class="thead-inverse">
     <th>ФИО</th>
     <th>Отгул</th>
     <th>Переработка</th>

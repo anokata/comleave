@@ -13,9 +13,22 @@ import { MessagesComponent } from './messages.component';
 @Component({
     selector: 'my-app',
     template: `
-    <div class='users'>
-    <table>
-    <thead>
+  <div *ngIf="userService.user.is_staff">
+   <div class='int_chg form-group from-check'>
+      <label class="form-check-label">
+       <input class="form-check-input" type="checkbox" [(ngModel)]="is_change">
+       Принять с изменением срока
+       </label>
+        <select class="form-control" [(ngModel)]="selected_interval">
+            <option *ngFor="let opt of intervals" [value]="opt.value">
+            {{opt.title}}
+            </option>
+        </select>
+       </div>
+   </div>
+    <div class='users table-responsive'>
+    <table class="table table-striped table-hover table-sm">
+    <thead class="thead-inverse">
     <th>ФИО</th>
     <th>Тип</th>
     <th>Дата начала</th>
@@ -33,23 +46,12 @@ import { MessagesComponent } from './messages.component';
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
   <div *ngIf="userService.user.is_staff">
-      <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
-      <td><button class="btn" (click)="deny(rec.id)">Отклонить</button> </td> 
+      <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
+      <td><button class="btn btn-warning" (click)="deny(rec.id)">Отклонить</button> </td> 
       </div>
     </tr>
     </tbody>
     </table>
-  <div *ngIf="userService.user.is_staff">
-       <div class='int_chg'>
-       Принять с изменением срока
-       <input type="checkbox" [(ngModel)]="is_change">
-       </div>
-        <select [(ngModel)]="selected_interval">
-            <option *ngFor="let opt of intervals" [value]="opt.value">
-            {{opt.title}}
-            </option>
-        </select>
-   </div>
    </div>
    <messages #msg></messages>
    `,

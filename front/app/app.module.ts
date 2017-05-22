@@ -1,4 +1,5 @@
 import { NgModule }      from '@angular/core';
+//import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
@@ -64,6 +65,7 @@ import { HttpService} from './http.service';
             path: 'login',
             component: LoginComponent
           },
+            //NgbModule.forRoot()
         ])
     
     ],
@@ -78,7 +80,7 @@ import { HttpService} from './http.service';
             useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
         },
         UserService, HttpService
-    ]
+    ],
 
 })
 export class AppModule { }

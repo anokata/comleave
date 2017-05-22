@@ -12,25 +12,25 @@ import { UserService} from './user.service';
 @Component({
     selector: 'my-app',
     template: `
-    <div class='users'>
+    <div class='users-c'>
     <h4>Регистрация переработки </h4>
-    <div class='form_margin'>Дата: <input type="text" id="datepicker" [(ngModel)]="date">
-    Срок:
-    <select [(ngModel)]="interval">
+    <div class='form_margin form-group'>Дата: <input type="text" id="datepicker" [(ngModel)]="date">
+    <label>Срок:
+    <select class='form-control' [(ngModel)]="interval">
         <option *ngFor="let opt of intervals" [value]="opt.value">
         {{opt.title}}
         </option>
-    </select>
+    </select></label>
     </div>
-    <div class='form_margin'>Комментарий: <input class='w100' type=text [(ngModel)]="comment"> </div>
+    <div class='form_margin form-control'>Комментарий: <input class='form-control w100' type=text [(ngModel)]="comment"> </div>
     <div class='form_margin'>Сотрудник: 
-    <select [(ngModel)]="person_id">
+    <select class='form-control' [(ngModel)]="person_id">
         <option *ngFor="let person of persons" [value]="person.id">
             {{person.name}}
         </option>
     </select>
     </div>
-    <button class="btn" (click)="register_overwork()">Зарегестрировать переработку</button>
+    <button class="btn btn-primary" (click)="register_overwork()">Зарегестрировать переработку</button>
                </div>
                
    <messages #msg></messages>
@@ -59,6 +59,8 @@ export class PresentComponent implements OnInit {
         datep.datepicker();
         this.comment = '';
         this.login = this.userService.user.username;
+        let date: Date = new Date();
+        this.date = (date.getMonth() + 1) + '.' + date.getDate() + '.' + date.getFullYear();
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {
