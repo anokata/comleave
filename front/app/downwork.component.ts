@@ -8,6 +8,7 @@ import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import { UserService} from './user.service';
+import { Util } from './util';
 
 @Component({
     selector: 'my-app',
@@ -51,15 +52,12 @@ export class DownworkComponent implements OnInit {
      
     constructor(private httpService: HttpService,
                 private userService: UserService){}
+
      
     ngOnInit(){
-        let datep: any;
-        datep = $("#datepicker");
-        datep.datepicker();
         this.comment = '';
         this.login = this.userService.user.username;
-        let date: Date = new Date();
-        this.date = (date.getMonth() + 1) + '.' + date.getDate() + '.' + date.getFullYear();
+        this.date = Util.setupDate();
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {

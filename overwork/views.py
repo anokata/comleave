@@ -197,7 +197,7 @@ def register_unwork(request, date, interval, person_id, comment):
 def register_interval(request, date, interval, person_id, comment, is_over):
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person'
-    date = datetime.datetime.strptime(date, "%m.%d.%Y")
+    date = datetime.datetime.strptime(date, "%d.%m.%Y")
     now = datetime.datetime.now()
     if not comment:
         comment = '-'
