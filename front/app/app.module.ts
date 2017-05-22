@@ -15,6 +15,7 @@ import { PresentComponent }  from './present.component';
 import { DownworkComponent }  from './downwork.component';
 import { MessagesComponent }  from './messages.component';
 import { RegistrationComponent }  from './registration.component';
+import { LoginComponent }  from './login.component';
 import { UpdateComponent }  from './update.component';
 
 @NgModule({
@@ -56,13 +57,17 @@ import { UpdateComponent }  from './update.component';
             path: 'update',
             component: UpdateComponent
           },
+          {
+            path: 'login',
+            component: LoginComponent
+          },
         ])
     
     ],
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
         PresentComponent, DownworkComponent, DeniedComponent, 
         AcceptedComponent, MessagesComponent, RegistrationComponent, 
-        UpdateComponent],
+        UpdateComponent, LoginComponent],
     bootstrap:    [ AppComponent ],
     providers: [
         {

@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^denied/$', views.denied),
     url(r'^register_user/$', views.register_new_user),
     url(r'^update/$', views.update_current_user),
+    url(r'^login/$', views.login_user),
     url(r'^user/$', views.get_user),
     url(r'^accept/(?P<over_id>[0-9a-zA-Z]+)/(?P<interval>[0-9]+)$', views.accept),
     url(r'^deny/(?P<param>[0-9a-zA-Z]+)$', views.deny),

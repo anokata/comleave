@@ -16,11 +16,11 @@ import { HttpService} from './http.service';
           <a routerLink="/sent" routerLinkActive="active">Зарегестрировать переработку</a>
           <a routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
           <div *ngIf="!is_logged"> 
-              <a href="accounts/login/">Login</a> 
+              <a routerLink="/login" routerLinkActive="active">Войти</a>
               <a routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
           </div>
           <div *ngIf="is_logged"> 
-              <a href="accounts/logout/">Logout</a> 
+              <a href="accounts/logout/">Выйти</a> 
               <a routerLink="/update" routerLinkActive="active">Обновить</a>
               </div>
         </nav>

@@ -140,6 +140,23 @@ def update_current_user(request):
         return HttpResponse('ok')
     return HttpResponse('not')
 
+def login_user(request):
+    if request.method == 'POST':
+        try:
+            username = request.POST["username"]
+            password = request.POST["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponse('ok')
+            else:
+                return HttpResponse('not')
+
+        except Exception as e:
+            return HttpResponse(str(e))
+    return HttpResponse('not')
+
+
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
