@@ -18,6 +18,9 @@ import { RegistrationComponent }  from './registration.component';
 import { LoginComponent }  from './login.component';
 import { UpdateComponent }  from './update.component';
 
+import { UserService} from './user.service';
+import { HttpService} from './http.service';
+
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
         RouterModule.forRoot([
@@ -73,7 +76,8 @@ import { UpdateComponent }  from './update.component';
         {
             provide: XSRFStrategy,
             useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
-        }
+        },
+        UserService, HttpService
     ]
 
 })

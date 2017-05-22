@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
+import { UserService} from './user.service';
 import { Person } from './person';
 import { Overs } from './overs';
 import { Interval } from './interval';
@@ -31,14 +32,14 @@ import { MessagesComponent } from './messages.component';
       <td>{{rec.interval}} </td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
-      <div *ngIf="is_staff">
+  <div *ngIf="userService.user.is_staff">
       <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
       <td><button class="btn" (click)="deny(rec.id)">Отклонить</button> </td> 
       </div>
     </tr>
     </tbody>
     </table>
-    <div *ngIf="is_staff">
+  <div *ngIf="userService.user.is_staff">
        <div class='int_chg'>
        Принять с изменением срока
        <input type="checkbox" [(ngModel)]="is_change">
@@ -59,16 +60,15 @@ import { MessagesComponent } from './messages.component';
 export class RegistredComponent implements OnInit { 
   
     reqs: Array<Overs>;
-    is_staff: boolean;
     intervals: Interval[];
     selected_interval: number;
     is_change: boolean = false;
     @ViewChild('msg') msg: MessagesComponent;
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+                private userService: UserService){}
      
     ngOnInit(){
-        this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
 
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {

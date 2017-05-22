@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import {Response, Headers, URLSearchParams} from '@angular/http';
+import { User } from './user';
  
 @Injectable()
 export class HttpService{

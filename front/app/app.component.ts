@@ -3,11 +3,13 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
+import { UserService} from './user.service';
+import { User } from './user';
 
 @Component({
     selector: 'my-app',
     template: `
-    <h4>Hello {{ login }}</h4>
+    <h4>Hello {{ userService.user.username }} </h4>
         <nav>
           <a routerLink="/sum" routerLinkActive="active">Сводка</a>
           <a routerLink="/reg" routerLinkActive="active">Зарегестрированные</a>
@@ -15,11 +17,11 @@ import { HttpService} from './http.service';
           <a routerLink="/accepted" routerLinkActive="active">Принятые</a>
           <a routerLink="/sent" routerLinkActive="active">Зарегестрировать переработку</a>
           <a routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
-          <div *ngIf="!is_logged"> 
+          <div *ngIf="!userService.user.is_authenticated"> 
               <a routerLink="/login" routerLinkActive="active">Войти</a>
               <a routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
           </div>
-          <div *ngIf="is_logged"> 
+          <div *ngIf="userService.user.is_authenticated"> 
               <a href="accounts/logout/">Выйти</a> 
               <a routerLink="/update" routerLinkActive="active">Обновить</a>
               </div>
@@ -31,14 +33,12 @@ import { HttpService} from './http.service';
 
 
 export class AppComponent implements OnInit { 
-    is_logged: boolean;
-    login: string;
   
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+                private userService: UserService){}
      
     ngOnInit(){
-        this.is_logged = (<HTMLInputElement>document.getElementById('is_logged')).value == 'True';
-        this.login = (<HTMLInputElement>document.getElementById('login')).value;
+        this.userService.update();
     }
 
 }

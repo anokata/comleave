@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { HttpModule } from '@angular/http';
+import { UserService} from './user.service';
 import { HttpService} from './http.service';
 import { Person } from './person';
 import { Overs } from './overs';
@@ -30,7 +31,7 @@ import { MessagesComponent } from './messages.component';
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
-      <div *ngIf="is_staff">
+      <div *ngIf="userService.user.is_staff">
       <td><button class="btn" (click)="accept(rec.id)">Принять</button> </td> 
       <td><button class="btn" (click)="register(rec.id)">Зарегестрировать</button> </td> 
       <td><button class="btn" (click)="delete(rec.id)">Удалить</button> </td> 
@@ -48,13 +49,12 @@ import { MessagesComponent } from './messages.component';
 export class DeniedComponent implements OnInit { 
   
     reqs: Array<Overs>;
-    is_staff: boolean;
     @ViewChild('msg') msg: MessagesComponent;
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+                private userService: UserService){}
      
     ngOnInit(){
-        this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
         this.httpService.getRest('denied').subscribe(
         (data: Response) => {
             this.reqs=data.json();

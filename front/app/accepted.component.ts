@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
+import { UserService} from './user.service';
 import { Person } from './person';
 import { Overs } from './overs';
 import {ViewChild} from '@angular/core';
@@ -30,7 +31,7 @@ import { MessagesComponent } from './messages.component';
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
       <td>{{rec.reg_date}}</td> 
-      <div *ngIf="is_staff">
+      <div *ngIf="userService.user.is_staff">
       <td><button class="btn" (click)="register(rec.id)">Зарегестрировать</button> </td> 
       <td><button class="btn" (click)="deny(rec.id)">Отклонить</button> </td> 
       </div>
@@ -47,13 +48,12 @@ import { MessagesComponent } from './messages.component';
 export class AcceptedComponent implements OnInit { 
   
     reqs: Array<Overs>;
-    is_staff: boolean;
     @ViewChild('msg') msg: MessagesComponent;
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+                private userService: UserService){}
      
     ngOnInit(){
-        this.is_staff = (<HTMLInputElement>document.getElementById('is_staff')).value == 'True';
 
         this.httpService.getRest('accepted').subscribe(
         (data: Response) => {

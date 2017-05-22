@@ -110,15 +110,26 @@ def update_user(request):
     return render(request, 'update.html', {'form': form})
 
 def get_user(request):
-    data = {
-            'username': request.user.username,
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
-            'email': request.user.email,
-            'is_staff': request.user.is_staff,
-            'is_authenticated': request.user.is_authenticated(),
-            }
-    return JsonResponse(data, safe=False)
+    if request.user.is_authenticated():
+        data = {
+                'username': request.user.username,
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'email': request.user.email,
+                'is_staff': request.user.is_staff,
+                'is_authenticated': request.user.is_authenticated(),
+                }
+        return JsonResponse(data, safe=False)
+    else:
+        return JsonResponse({
+                'username': 'anonymous',
+                'first_name': '',
+                'last_name': '',
+                'email': '',
+                'is_staff': False,
+                'is_authenticated': False,
+            }, safe=False)
+
 
 def update_current_user(request):
     if request.method == 'POST':
