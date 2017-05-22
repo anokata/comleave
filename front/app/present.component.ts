@@ -7,6 +7,7 @@ import { Person } from './person';
 import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
+import { UserService} from './user.service';
 
 @Component({
     selector: 'my-app',
@@ -46,17 +47,18 @@ export class PresentComponent implements OnInit {
     person_id: number;
     intervals: Interval[];
     persons: Person[];
-    login: string;
+    login: string = '';
     @ViewChild('msg') msg: MessagesComponent;
      
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+                private userService: UserService){}
      
     ngOnInit(){
-        this.login = (<HTMLInputElement>document.getElementById('login')).value;
         let datep: any;
         datep = $("#datepicker");
         datep.datepicker();
         this.comment = '';
+        this.login = this.userService.user.username;
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {

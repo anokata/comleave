@@ -7,6 +7,7 @@ import { Person } from './person';
 import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
+import { UserService} from './user.service';
 
 @Component({
     selector: 'my-app',
@@ -44,16 +45,19 @@ export class DownworkComponent implements OnInit {
     date: string = '01.01.2000';
     person_id: number;
     intervals: Interval[];
-    persons: Person;
+    persons: Person[];
+    login: string = '';
     @ViewChild('msg') msg: MessagesComponent;
      
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+                private userService: UserService){}
      
     ngOnInit(){
         let datep: any;
         datep = $("#datepicker");
         datep.datepicker();
         this.comment = '';
+        this.login = this.userService.user.username;
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {
@@ -64,6 +68,11 @@ export class DownworkComponent implements OnInit {
             (data: Response) => {
                 this.persons=data.json();
                 this.person_id = this.persons[0].id;
+                this.persons.forEach((e: Person) => {
+                    if (e.login == this.login) {
+                        this.person_id = e.id;
+                    }
+                });
                 return this.persons;
             });
     }

@@ -6,6 +6,7 @@ import { HttpService} from './http.service';
 import { ViewChild } from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import {Router} from '@angular/router';
+import { UserService} from './user.service';
 
 @Component({
     selector: 'my-app',
@@ -63,7 +64,8 @@ export class RegistrationComponent implements OnInit {
     user: any = {};
 
     constructor(private httpService: HttpService,
-        private router: Router){}
+        private router: Router,
+        private userService: UserService){}
     ngOnInit(){}
      
     register() {
@@ -101,6 +103,7 @@ export class RegistrationComponent implements OnInit {
                 }
                 if (data.text() == 'ok') {
                     this.msg.send("Успешно");
+                    this.userService.update();
                     this.router.navigateByUrl('sum');
                     return;
                 }

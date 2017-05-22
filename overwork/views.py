@@ -49,7 +49,9 @@ def register_new_user(request):
             person.save()
         except Exception as e:
             return HttpResponse(str(e))
-        login(request, user)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
         return HttpResponse('ok')
     return HttpResponse('not')
 
@@ -120,9 +122,6 @@ def main(request):
     template = loader.get_template('route.html')
     return HttpResponse(template.render({
         'ANGULAR_URL' : settings.ANGULAR_URL,
-        'is_staff': request.user.is_staff,
-        'is_logged': request.user.is_authenticated(),
-        'login': request.user.username,
         }))
 
 def changeStatus(over_id, status):
