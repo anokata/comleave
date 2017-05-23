@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.views.generic import TemplateView, View
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import auth
 from django.http import JsonResponse
 from django.core import serializers
@@ -228,11 +228,13 @@ def mail_user_udwork(over, status):
     except Exception as ex:
         logging.error(str(ex))
 
+@login_required
 def register_overwork(request, date, interval, person_id, comment):
     logging.debug('register_overwork')
     mail_register_udwork(person_id, date, interval, comment, True)
     return register_interval(request, date, interval, person_id, comment, True)
 
+@login_required
 def register_unwork(request, date, interval, person_id, comment):
     mail_register_udwork(person_id, date, interval, comment, False)
     return register_interval(request, date, interval, person_id, comment, False)

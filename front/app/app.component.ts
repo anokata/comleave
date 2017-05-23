@@ -23,12 +23,14 @@ import {Router} from '@angular/router';
     <li class="nav-item">
   <a class="nav-link"  routerLink="/accepted" routerLinkActive="active">Принятые</a>
     </li>
+  <span class='nav-content' *ngIf="userService.user.is_authenticated"> 
     <li class="nav-item">
       <a class="nav-link"  routerLink="/sent" routerLinkActive="active">Зарегестрировать переработку</a>
     </li>
     <li class="nav-item">
       <a class="nav-link"  routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
     </li>
+    </span>
 
       <span class='nav-content' *ngIf="!userService.user.is_authenticated"> 
 <li class="nav-item">
