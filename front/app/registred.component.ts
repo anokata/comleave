@@ -9,6 +9,7 @@ import { Overs } from './overs';
 import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
+import { Util } from './util';
 
 @Component({
     selector: 'my-app',
@@ -81,7 +82,7 @@ export class RegistredComponent implements OnInit {
         (data: Response) => {
             this.reqs=data.json();
             this.reqs.map((e:Overs) => {
-                e.start = new Date(e.start_date)['toLocaleFormat']('%d.%m.%Y');
+                e.start = Util.dateToStr(new Date(e.start_date));
                 return e;
             });
         });
