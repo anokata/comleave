@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.views.generic import TemplateView, View
+from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
@@ -144,12 +145,11 @@ def restore(request):
             pass
     return HttpResponse('not')
 
-
+@csrf_protect
 def main(request):
-    template = loader.get_template('route.html')
-    return HttpResponse(template.render({
+    return render(request, 'route.html', {
         'ANGULAR_URL' : settings.ANGULAR_URL,
-        }))
+        })
 
 def changeStatus(over_id, status):
     over = Overs.objects.filter(pk=over_id).first()
