@@ -57,14 +57,14 @@ def register_new_user(request):
     return HttpResponse('not')
 
 def get_user(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         data = {
                 'username': request.user.username,
                 'first_name': request.user.first_name,
                 'last_name': request.user.last_name,
                 'email': request.user.email,
                 'is_staff': request.user.is_staff,
-                'is_authenticated': request.user.is_authenticated(),
+                'is_authenticated': True,
                 }
         return JsonResponse(data, safe=False)
     else:
@@ -134,7 +134,7 @@ def changeStatus(over_id, status):
         over.save()
 
 def user_is_staff(user):
-    return user.is_authenticated() and user.is_staff
+    return user.is_authenticated and user.is_staff
 
 @user_passes_test(user_is_staff, login_url="/accounts/login/")
 def accept(request, over_id, interval):
