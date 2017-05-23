@@ -16,6 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -28,6 +29,13 @@ PROD = False
 
 ALLOWED_HOSTS = ["*"]
 
+if os.environ.get('DJANGO_DEBUG'):
+    print("Debug is enabled.")
+    DEBUG = True
+else:
+    DEBUG = False
+
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -135,7 +143,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/ng/'
-STATIC_ROOT = BASE_DIR + '/ng/'
+#STATIC_ROOT = BASE_DIR + '/ng/'
+STATIC_ROOT = '/var/www/ng'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "front"),
 )

@@ -1,5 +1,6 @@
 run:
-	python manage.py runserver
+	#python manage.py runserver
+	DJANGO_DEBUG=1 python -Wall manage.py runserver
 
 frontinit:
 	npm install
@@ -35,3 +36,6 @@ deploy:
 	npm run tsc
 	cd ..
 	python manage.py collectstatic
+
+uwsgie:
+	sudo uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
