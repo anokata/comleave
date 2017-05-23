@@ -118,6 +118,18 @@ def login_user(request):
             return HttpResponse(str(e))
     return HttpResponse('not')
 
+def restore(request):
+    if request.method == 'POST':
+        username = request.POST["username"]
+        email = request.POST["email"]
+        user_byname = User.objects.filter(username=username).first()
+        user_bymail = User.objects.filter(email=email).first()
+        if not user_bymail and not user_byname:
+            return HttpResponse('not')
+        else:
+            pass
+    return HttpResponse('not')
+
 
 def main(request):
     template = loader.get_template('route.html')

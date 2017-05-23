@@ -18,6 +18,7 @@ import { MessagesComponent }  from './messages.component';
 import { RegistrationComponent }  from './registration.component';
 import { LoginComponent }  from './login.component';
 import { UpdateComponent }  from './update.component';
+import { RestorePwdComponent }  from './restore-pwd.component';
 
 import { UserService} from './user.service';
 import { HttpService} from './http.service';
@@ -65,6 +66,10 @@ import { HttpService} from './http.service';
             path: 'login',
             component: LoginComponent
           },
+          {
+            path: 'restore',
+            component: RestorePwdComponent
+          },
             //NgbModule.forRoot()
         ])
     
@@ -72,7 +77,7 @@ import { HttpService} from './http.service';
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
         PresentComponent, DownworkComponent, DeniedComponent, 
         AcceptedComponent, MessagesComponent, RegistrationComponent, 
-        UpdateComponent, LoginComponent],
+        UpdateComponent, LoginComponent, RestorePwdComponent],
     bootstrap:    [ AppComponent ],
     providers: [
         {

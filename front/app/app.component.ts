@@ -32,14 +32,18 @@ import {Router} from '@angular/router';
     </li>
     </span>
 
-      <span class='nav-content' *ngIf="!userService.user.is_authenticated"> 
-<li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active">Войти</a>
-    </li>
-    <li class="nav-item">
-          <a class="nav-link" routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
-    </li>
-      </span>
+<span class='nav-content nav-right' *ngIf="!userService.user.is_authenticated"> 
+<div class="dropdown ">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Пользователь
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item" routerLink="/login" routerLinkActive="active">Войти</a>
+      <a class="dropdown-item" routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
+    <a class="dropdown-item" routerLink="/restore" routerLinkActive="active">Восстановить пароль</a>
+  </div>
+  </div>
+</span>
 
       <span class='nav-content nav-right' *ngIf="userService.user.is_authenticated"> 
 

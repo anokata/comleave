@@ -106,4 +106,5 @@ bootstrap grids
 learn bootstrap and use it
 приделать ldap
 надо бы делать тестирование в дебаг режиме автоматом каждый раз!
+сделать на сервер почты python -m smtpd -n -c DebuggingServer localhost:1025
 
