@@ -40,18 +40,25 @@ import {Router} from '@angular/router';
           <a class="nav-link" routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
     </li>
       </span>
-      <span class='nav-content' *ngIf="userService.user.is_authenticated"> 
-    <li class="nav-item">
-          <div class='nav-link my-nav-btn' (click)=logout()>Выйти</div>
-    </li>
-    <li class="nav-item">
-          <a class="nav-link" routerLink="/update" routerLinkActive="active">Обновить</a>
-    </li>
-          </span>
+
+      <span class='nav-content nav-right' *ngIf="userService.user.is_authenticated"> 
+
+<div class="dropdown ">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Пользователь
+  </button>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" routerLink="/update" routerLinkActive="active">Обновить</a>
+    <a class='my-nav-btn dropdown-item' (click)=logout()>Выйти</a>
+  </div>
+</div>
+
+    </span>
     </ul>
   </div>
-        </nav>
-        <router-outlet></router-outlet>
+</nav>
+<router-outlet></router-outlet>
                `,
     providers: [HttpService],
 })

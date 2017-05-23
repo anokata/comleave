@@ -26,6 +26,11 @@ text-align: center;
     display: inherit;
 }
 
+.nav-right {
+    position: absolute;
+    right: 1em;
+}
+
 /*
 table {
     margin-top: 1em;
