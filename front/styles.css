@@ -23,7 +23,7 @@ text-align: center;
 }
 
 .nav-content {
-    display: contents;
+    display: inherit;
 }
 
 /*

@@ -8,6 +8,7 @@ class Person(models.Model):
     name = models.CharField(max_length=200)
     is_manager = models.BooleanField()
     login = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
 
     def __str__(self):
         return self.login + ' # ' + self.name  + (' (+)' if self.is_manager else ' (-)')

@@ -45,7 +45,8 @@ def register_new_user(request):
             user.save()
             person = Person(login=username, 
                 name=first_name + ' ' + last_name,
-                is_manager=False)
+                is_manager=False,
+                email=email)
             person.save()
         except Exception as e:
             return HttpResponse(str(e))
@@ -127,6 +128,8 @@ def main(request):
 def changeStatus(over_id, status):
     over = Overs.objects.filter(pk=over_id).first()
     if over:
+        if status != Overs.REGISTRED:
+            mail_user_udwork(over, status)
         over.status = status
         over.save()
 
@@ -171,19 +174,59 @@ def make_mail_body(person_id, date, interval, comment, is_over):
     body += u' \nComment:\n' + comment
     return body
 
+
+def make_mail_acc_body(over, is_acc, user):
+    body = ''
+    body += 'Уважаемый '
+    body += user.name + '\n'
+    body += 'Ваша заявка '
+    body += "на переработку " if over.is_over else "на отгул "
+
+    body += str(over.start_date) + ' ('
+    body += str(over.interval) + ' min) '
+
+    body += "была принята " if is_acc else "была отклонена "
+
+    return body
+
 def mail_register_udwork(person_id, date, interval, comment, is_over):
     manager = User.objects.filter(is_staff=True).exclude(is_superuser=True).first()
     if not manager: 
         logging.error("manager not found")
         return
     mail = manager.email
-    send_mail(
-        'Registred overwork' if is_over else 'Registred unwork',
-        make_mail_body(person_id, date, interval, comment, is_over),
-        'djangomosreg@mail.ru',
-        [mail],
-        fail_silently=False,
-    )
+    logging.debug('mail to' + mail)
+    try:
+        send_mail(
+            'Registred overwork' if is_over else 'Registred unwork',
+            make_mail_body(person_id, date, interval, comment, is_over),
+            'djangomosreg@mail.ru',
+            [mail],
+            fail_silently=False,
+        )
+    except Exception as ex:
+        logging.error(str(ex))
+
+#DRY
+def mail_user_udwork(over, status):
+    is_acc = status == Overs.ACCEPT
+    user = Person.objects.filter(pk=over.person_id).first()
+    logging.debug(user)
+    if not user: 
+        logging.error("user not found")
+        return
+    mail = user.email
+    logging.debug('mail to' + mail)
+    try:
+        send_mail(
+            'Accepted ' if is_acc else 'Denied ',
+            make_mail_acc_body(over, is_acc, user),
+            'djangomosreg@mail.ru',
+            [mail],
+            fail_silently=False,
+        )
+    except Exception as ex:
+        logging.error(str(ex))
 
 def register_overwork(request, date, interval, person_id, comment):
     logging.debug('register_overwork')

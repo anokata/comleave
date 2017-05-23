@@ -21,3 +21,17 @@ migrate:
 # init db
 # create user
 # config static
+uwsgi:
+	uwsgi comleave_uwsgi.ini
+
+install:
+	python manage.py createsuperuser
+	#create manager
+
+deploy:
+	python manage.py migrate
+	cd front
+	npm install
+	npm run tsc
+	cd ..
+	python manage.py collectstatic
