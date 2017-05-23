@@ -8,22 +8,47 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.views.generic import TemplateView, View
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test, login_required
-from django.contrib import auth
 from django.http import JsonResponse
-from django.core import serializers
-
-from .models import Overs, Person
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib import auth
+from django.core import serializers
 from django.core.mail import send_mail
+
+from .models import Overs, Person
 
 import logging
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
-logging.debug('Start of program')
+logging.debug('Start of webapp comleave')
 
-from django.contrib.auth import authenticate, login
+def ensure_manager_exist():
+    user = User.objects.filter(username='manager').first()
+    if user:
+        logging.debug('manager exist. OK')
+    else:
+        logging.debug('manager do not exist')
+        add_user('manager', password=settings.MANAGER_PWD, is_staff=True)
+        logging.debug('manager created')
+
+def add_user(username, email='', password='', first_name='', last_name='', is_staff=False):
+    user = User.objects.create_user(
+            username,
+            email=email,
+            password=password)
+    user.first_name = first_name
+    user.last_name = last_name
+    user.is_staff = is_staff
+    user.save()
+    person = Person(login=username, 
+        name=first_name + ' ' + last_name,
+        is_manager=is_staff,
+        email=email)
+    person.save()
+
+
 
 def register_new_user(request):
     if request.method == 'POST':
@@ -36,18 +61,7 @@ def register_new_user(request):
             return HttpResponse('exist')
 
         try:
-            user = User.objects.create_user(
-                    username,
-                    email=email,
-                    password=password)
-            user.first_name = first_name
-            user.last_name = last_name
-            user.save()
-            person = Person(login=username, 
-                name=first_name + ' ' + last_name,
-                is_manager=False,
-                email=email)
-            person.save()
+            add_user(username, email, password, first_name, last_name)
         except Exception as e:
             return HttpResponse(str(e))
         user = authenticate(request, username=username, password=password)
@@ -317,3 +331,5 @@ def accepted(request):
 
 def denied(request):
     return JsonResponse(overwork_query('D'), safe=False)
+
+ensure_manager_exist()

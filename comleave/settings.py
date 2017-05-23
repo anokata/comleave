@@ -37,6 +37,8 @@ else:
 
 ALLOWED_HOSTS = ["*"]
 
+MANAGER_PWD = 'man12345'
+
 # Application definition
 
 INSTALLED_APPS = [
