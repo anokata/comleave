@@ -10,25 +10,41 @@ import {Router} from '@angular/router';
 @Component({
     selector: 'my-app',
     template: `
-    <div class='users'>
+    <div class='container'>
+    <div class='row justify-content-center'><div class='col-4 form_input from-group'>
     <h4> Обновить  пользователя </h4>
-    <form action="." method="post">
+    </div></div>
 
-    <div class='form_input from-group'>
-    Имя: 
+    <form class='' action="." method="post">
+
+    <div class='row justify-content-center'>
+    <div class='col-4 form_input from-group'>
+    <label>Имя: 
     <input class='form-control' type=text [(ngModel)]="first_name" name="first_name">
+    </label>
     </div>
-    <div class='form_input from-group'>
-    Фамилия: 
-    <input class='form-control' type=text [(ngModel)]="last_name" name="last_name">
-    </div>
-    <div class='form_input from-group'>
-    Email: 
-    <input class='form-control' type=text [(ngModel)]="email" name="email">
     </div>
 
-    <div class='form_input from-group'>
+    <div class='row justify-content-center'>
+    <div class='col-4 form_input from-group'>
+    <label>Фамилия: 
+    <input class='form-control' type=text [(ngModel)]="last_name" name="last_name">
+    </label>
+    </div>
+    </div>
+
+    <div class='row justify-content-center'>
+    <div class='col-4 form_input from-group'>
+    <label>Email: 
+    <input class='form-control' type=text [(ngModel)]="email" name="email">
+    </label>
+    </div>
+    </div>
+
+    <div class='row justify-content-center'>
+    <div class='col-4 form_input from-group'>
     <input class='btn btn-warning' type=submit name=submit (click)=update() value='Обновить'>
+    </div>
     </div>
     </form>
     <messages #msg></messages>

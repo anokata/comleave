@@ -109,6 +109,11 @@ form {
 
 }
 
+.mt-3 {
+    margin-top: 1em;
+}
+
+/*
 .form_input {
     width: 60%;
     padding: 1em;
@@ -118,6 +123,7 @@ form {
 .form_input label {
     width: 30%;
 }
+/*
 
 .int_chg {
     padding: 1em;

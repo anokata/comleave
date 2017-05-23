@@ -11,21 +11,27 @@ import { UserService} from './user.service';
 @Component({
     selector: 'my-app',
     template: `
-    <div class='users'>
-    <h4> Вход </h4>
+    <div class='container'>
+    <div class='row justify-content-center'><div class='col-4 form_input from-group'>
+    <h4 class='text-center'> Вход </h4>
+    </div></div>
     <form action="." method="post">
 
-    <div class='form_input'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
     Имя пользователя (логин):
     <input class="form-control" placeholder="Username" type=text  [(ngModel)]="id_username" name="id_username">
     </div>
-    <div class='form_input'>
+    </div>
+
+    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
     Пароль
     <input class="form-control" placeholder="password" type=password [(ngModel)]="password" name="password">
     </div>
+    </div>
     
-    <div class='form_input'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
     <input class='btn btn-primary form-control' type=submit name=submit (click)=register() value='Войти'>
+    </div>
     </div>
     </form>
     <messages #msg></messages>
