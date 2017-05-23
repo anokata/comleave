@@ -39,3 +39,10 @@ deploy:
 
 uwsgie:
 	sudo uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+
+start:
+	systemctl start emperor.uwsgi
+
+restart:
+	systemctl restart emperor.uwsgi
+
