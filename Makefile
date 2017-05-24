@@ -31,10 +31,7 @@ install:
 
 deploy:
 	python manage.py migrate
-	cd front
-	npm install
-	npm run tsc
-	cd ..
+	(cd front; npm run tsc)
 	python manage.py collectstatic
 
 uwsgie:
