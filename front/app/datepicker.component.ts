@@ -7,13 +7,14 @@ import {ViewChild} from '@angular/core';
     template: `
         <div class='col mt-3 form-group'> <div>
         {{title}}
-        <input #getDate class='form-control datepicker' type="text" id="datepicker" [(ngModel)]="date" >
+        <input #getDate class='form-control datepicker' type="text" [(ngModel)]="date" >
         </div> </div>
    `,
 })
 export class DatepickerComponent implements OnInit { 
     public date: string;
     @Input() title: string;
+    @Input() name: string = 'name';
     @ViewChild('getDate') public getDate: any;
 
     constructor() {};

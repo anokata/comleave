@@ -10,6 +10,14 @@ export class Util {
         return day + '.' + month + '.' + date.getFullYear();
     }
 
+    public static strToDate(date: any) {
+        let l = date.split('.');
+        let day = parseInt(l[0]);
+        let month = parseInt(l[1]);
+        let year = parseInt(l[2]);
+        return new Date(year, month - 1, day);
+    }
+
     public static setupDate() {
         let datep: JQuery;
         datep = $(".datepicker");

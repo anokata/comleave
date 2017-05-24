@@ -12,7 +12,7 @@ import { MessagesComponent } from './messages.component';
 import { Util } from './util';
 import { PersonsComponent } from './persons.component';
 import { WorktypeComponent } from './worktype.component';
-import { DatepickerComponent} from './datepicker.component';
+import { DoubleDateComponent} from './doubledate.component';
 
 @Component({
     selector: 'my-app',
@@ -37,8 +37,8 @@ import { DatepickerComponent} from './datepicker.component';
     <div class='container'> <div class='row justify-content-center'>
         <persons #person></persons>
         <worktypes #worktype></worktypes>
-        <datepicker #dateFrom [title]="dateTitleFrom"></datepicker>
-        <datepicker #dateTo [title]="dateTitleTo"></datepicker>
+        <doubledate #date [titleOne]="dateTitleFrom" 
+        [titleTwo]="dateTitleTo"></doubledate>
     </div> </div>
 
     <div class='users table-responsive'>
@@ -52,7 +52,7 @@ import { DatepickerComponent} from './datepicker.component';
     <th>Дата регистрации заявки</th>
     </thead>
     <tbody>
-    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype ">
+        <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
       <td>{{rec.name}}</td> 
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>
@@ -84,8 +84,7 @@ export class RegistredComponent implements OnInit {
 
     dateTitleFrom: string = 'С';
     dateTitleTo: string = 'По';
-    @ViewChild('dateFrom') dateFrom: DatepickerComponent;
-    @ViewChild('dateTo') dateTo: DatepickerComponent;
+    @ViewChild('date') date: DoubleDateComponent;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
@@ -100,8 +99,8 @@ export class RegistredComponent implements OnInit {
         this.httpService.getReqs().subscribe(
         (data: Response) => {
             this.reqs=data.json();
-            this.dateFrom.date = Util.getMinDateStr(this.reqs);
-            this.dateTo.date = Util.getMaxDateStr(this.reqs);
+            this.date.dateOne = Util.getMinDateStr(this.reqs);
+            this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
 
     }
