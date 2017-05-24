@@ -21,6 +21,8 @@ import { UpdateComponent }  from './update.component';
 import { RestorePwdComponent }  from './restore-pwd.component';
 import { PersonsComponent }  from './persons.component';
 import { PersonPipe }  from './person.pipe';
+import { WorktypeComponent }  from './worktype.component';
+import { WorktypePipe }  from './worktype.pipe';
 
 import { UserService} from './user.service';
 import { HttpService} from './http.service';
@@ -80,7 +82,7 @@ import { HttpService} from './http.service';
         PresentComponent, DownworkComponent, DeniedComponent, 
         AcceptedComponent, MessagesComponent, RegistrationComponent, 
         UpdateComponent, LoginComponent, RestorePwdComponent, PersonsComponent,
-        PersonPipe],
+        PersonPipe, WorktypeComponent, WorktypePipe],
     bootstrap:    [ AppComponent ],
     providers: [
         {

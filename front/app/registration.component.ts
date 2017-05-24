@@ -12,49 +12,49 @@ import { UserService} from './user.service';
     selector: 'my-app',
     template: `
     <div class='container'>
-    <div class='row justify-content-center'><div class='col-4 form_input from-group'>
+    <div class='row justify-content-center'><div class='col-4 form_input form-group'>
     <h4 class='text-center'> Регистрация пользователя </h4>
     </div></div>
 
     <form action="." method="post">
 
-    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
     <label for='username'>Имя пользователя</label>
     <input id='username' class="form-control" placeholder="login" type=text  [(ngModel)]="id_username" name="id_username">
     </div>
     </div>
 
-    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
     Пароль
     <input class="form-control" placeholder="password" type=password [(ngModel)]="password1" name="password1">
     </div>
     </div>
 
-    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
     Повторите пароль
     <input class="form-control" placeholder="password again" type=password [(ngModel)]="password2" name="password2">
     </div>
     </div>
 
-    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
     Имя 
     <input class="form-control" placeholder="First name" type=text [(ngModel)]="first_name" name="first_name">
     </div>
     </div>
 
-    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
     Фамилия 
     <input class="form-control" placeholder="Last name" type=text [(ngModel)]="last_name" name="last_name">
     </div>
     </div>
 
-    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
     Email 
     <input class="form-control" placeholder="Email" type=text [(ngModel)]="email" name="email">
     </div>
     </div>
 
-    <div class='row justify-content-center'><div class='col-4 mt-3 from-group'>
+    <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
     <input class="form-control btn btn-primary" type=submit name=submit (click)=register() value='Зарегестрировать'>
     </div>
     </div>

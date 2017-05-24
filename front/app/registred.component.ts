@@ -11,11 +11,17 @@ import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import { Util } from './util';
 import { PersonsComponent } from './persons.component';
+import { WorktypeComponent } from './worktype.component';
 
 @Component({
     selector: 'my-app',
     template: `
-    <persons #person></persons>
+    <div class='container'>
+    <div class='row justify-content-center'>
+        <persons #person></persons>
+        <worktypes #worktype></worktypes>
+    </div>
+    </div>
   <div *ngIf="userService.user.is_staff">
    <div class='int_chg form-group from-check'>
       <label class="form-check-label">
@@ -40,7 +46,7 @@ import { PersonsComponent } from './persons.component';
     <th>Дата регистрации заявки</th>
     </thead>
     <tbody>
-    <tr *ngFor="let rec of reqs | personp:person.person_id ">
+    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype ">
       <td>{{rec.name}}</td> 
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>

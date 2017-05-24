@@ -6,7 +6,8 @@ import { HttpService } from './http.service';
 @Component({
     selector: 'persons',
     template: `
-    <div class='form_margin'>Сотрудник: 
+    <div class='col mt-3 form-group'>
+    Сотрудник: 
     <select class='form-control' [(ngModel)]="person_id">
         <option *ngFor="let person of persons" [value]="person.id">
             {{person.name}}
