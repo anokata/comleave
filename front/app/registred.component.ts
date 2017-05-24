@@ -12,6 +12,7 @@ import { MessagesComponent } from './messages.component';
 import { Util } from './util';
 import { PersonsComponent } from './persons.component';
 import { WorktypeComponent } from './worktype.component';
+import { DatepickerComponent} from './datepicker.component';
 
 @Component({
     selector: 'my-app',
@@ -36,6 +37,8 @@ import { WorktypeComponent } from './worktype.component';
     <div class='container'> <div class='row justify-content-center'>
         <persons #person></persons>
         <worktypes #worktype></worktypes>
+        <datepicker #dateFrom [title]="dateTitleFrom"></datepicker>
+        <datepicker #dateTo [title]="dateTitleTo"></datepicker>
     </div> </div>
 
     <div class='users table-responsive'>
@@ -79,6 +82,11 @@ export class RegistredComponent implements OnInit {
     is_change: boolean = false;
     @ViewChild('msg') msg: MessagesComponent;
 
+    dateTitleFrom: string = 'С';
+    dateTitleTo: string = 'По';
+    @ViewChild('dateFrom') dateFrom: DatepickerComponent;
+    @ViewChild('dateTo') dateTo: DatepickerComponent;
+
     constructor(private httpService: HttpService,
                 private userService: UserService){}
      
@@ -92,6 +100,8 @@ export class RegistredComponent implements OnInit {
         this.httpService.getReqs().subscribe(
         (data: Response) => {
             this.reqs=data.json();
+            this.dateFrom.date = Util.getMinDateStr(this.reqs);
+            this.dateTo.date = Util.getMaxDateStr(this.reqs);
         });
 
     }

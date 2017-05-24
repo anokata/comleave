@@ -15,7 +15,7 @@ import { Util } from './util';
     template: `
     <div class='users-c' *ngIf="userService.user.is_authenticated">
     <h4>Регистрация переработки </h4>
-    <div class='form_margin form-group'>Дата: <input type="text" id="datepicker" [(ngModel)]="date">
+    <div class='form_margin form-group'>Дата: <input type="text" class="datepicker" [(ngModel)]="date">
     <label>Срок:
     <select class='form-control' [(ngModel)]="interval">
         <option *ngFor="let opt of intervals" [value]="opt.value">

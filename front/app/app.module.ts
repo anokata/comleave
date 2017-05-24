@@ -23,9 +23,11 @@ import { PersonsComponent }  from './persons.component';
 import { PersonPipe }  from './person.pipe';
 import { WorktypeComponent }  from './worktype.component';
 import { WorktypePipe }  from './worktype.pipe';
+import { DatepickerComponent }  from './datepicker.component';
 
 import { UserService} from './user.service';
 import { HttpService} from './http.service';
+
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, HttpModule,
@@ -82,7 +84,7 @@ import { HttpService} from './http.service';
         PresentComponent, DownworkComponent, DeniedComponent, 
         AcceptedComponent, MessagesComponent, RegistrationComponent, 
         UpdateComponent, LoginComponent, RestorePwdComponent, PersonsComponent,
-        PersonPipe, WorktypeComponent, WorktypePipe],
+        PersonPipe, WorktypeComponent, WorktypePipe, DatepickerComponent],
     bootstrap:    [ AppComponent ],
     providers: [
         {
