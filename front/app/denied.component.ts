@@ -28,10 +28,10 @@ import { Util } from './util';
       <td>{{rec.name}}</td> 
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>
-      <td>{{rec.start}}</td> 
+      <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
       <td>{{rec.interval}}</td> 
       <td>{{rec.comment}}</td> 
-      <td>{{rec.reg_date}}</td> 
+      <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
       <div *ngIf="userService.user.is_staff">
       <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
       <td><button class="btn btn-info" (click)="register(rec.id)">Зарегестрировать</button> </td> 
@@ -59,10 +59,6 @@ export class DeniedComponent implements OnInit {
         this.httpService.getRest('denied').subscribe(
         (data: Response) => {
             this.reqs=data.json();
-            this.reqs.map((e:Overs) => {
-                e.start = Util.dateToStr(new Date(e.start_date));
-                return e;
-            });
         });
     }
 
