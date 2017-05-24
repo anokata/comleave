@@ -24,6 +24,7 @@ import { Util } from './util';
     </select></label>
     </div>
     <div class='form_margin form-control'>Комментарий: <input class='form-control w100' type=text [(ngModel)]="comment"> </div>
+
     <div class='form_margin'>Сотрудник: 
     <select class='form-control' [(ngModel)]="person_id">
         <option *ngFor="let person of persons" [value]="person.id">
@@ -32,8 +33,7 @@ import { Util } from './util';
     </select>
     </div>
     <button class="btn btn-primary" (click)="register_overwork()">Зарегестрировать переработку</button>
-               </div>
-               
+   </div>
     <div class='users-c h5' *ngIf="!userService.user.is_authenticated">
     Вы не авторизованы для данной операции.
     </div>

@@ -19,6 +19,8 @@ import { RegistrationComponent }  from './registration.component';
 import { LoginComponent }  from './login.component';
 import { UpdateComponent }  from './update.component';
 import { RestorePwdComponent }  from './restore-pwd.component';
+import { PersonsComponent }  from './persons.component';
+import { PersonPipe }  from './person.pipe';
 
 import { UserService} from './user.service';
 import { HttpService} from './http.service';
@@ -77,7 +79,8 @@ import { HttpService} from './http.service';
     declarations: [ AppComponent, SummaryComponent, RegistredComponent,
         PresentComponent, DownworkComponent, DeniedComponent, 
         AcceptedComponent, MessagesComponent, RegistrationComponent, 
-        UpdateComponent, LoginComponent, RestorePwdComponent],
+        UpdateComponent, LoginComponent, RestorePwdComponent, PersonsComponent,
+        PersonPipe],
     bootstrap:    [ AppComponent ],
     providers: [
         {

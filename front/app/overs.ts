@@ -7,6 +7,7 @@ export class Overs {
     status: string;
     comment: string;
     person: Person;
+    person_id: number;
     name: string;
     start: string;
     is_over: boolean;

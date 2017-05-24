@@ -10,10 +10,12 @@ import { Interval } from './interval';
 import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import { Util } from './util';
+import { PersonsComponent } from './persons.component';
 
 @Component({
     selector: 'my-app',
     template: `
+    <persons #person></persons>
   <div *ngIf="userService.user.is_staff">
    <div class='int_chg form-group from-check'>
       <label class="form-check-label">
@@ -38,7 +40,7 @@ import { Util } from './util';
     <th>Дата регистрации заявки</th>
     </thead>
     <tbody>
-    <tr *ngFor="let rec of reqs">
+    <tr *ngFor="let rec of reqs | personp:person.person_id ">
       <td>{{rec.name}}</td> 
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>
@@ -62,7 +64,7 @@ import { Util } from './util';
 
 export class RegistredComponent implements OnInit { 
   
-    reqs: Array<Overs>;
+    reqs: Overs[];
     intervals: Interval[];
     selected_interval: number;
     is_change: boolean = false;
@@ -82,6 +84,7 @@ export class RegistredComponent implements OnInit {
         (data: Response) => {
             this.reqs=data.json();
         });
+
     }
 
     remove(id: number) {
