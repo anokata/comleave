@@ -33,6 +33,7 @@ deploy:
 	python manage.py migrate
 	(cd front; npm run tsc)
 	python manage.py collectstatic
+	sudo systemctl restart emperor.uwsgi
 
 uwsgie:
 	sudo uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
