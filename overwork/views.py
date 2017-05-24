@@ -26,13 +26,17 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 logging.debug('Start of webapp comleave')
 
 def ensure_manager_exist():
-    user = User.objects.filter(username='manager').first()
-    if user:
-        logging.debug('manager exist. OK')
-    else:
-        logging.debug('manager do not exist')
-        add_user('manager', password=settings.MANAGER_PWD, is_staff=True)
-        logging.debug('manager created')
+    try:
+        user = User.objects.filter(username='manager').first()
+        if user:
+            logging.debug('manager exist. OK')
+        else:
+            logging.debug('manager do not exist')
+            add_user('manager', password=settings.MANAGER_PWD, is_staff=True)
+            logging.debug('manager created')
+    except Exception as ex:
+        logging.error(str(ex))
+        return
 
 def add_user(username, email='', password='', first_name='', last_name='', is_staff=False):
     user = User.objects.create_user(
