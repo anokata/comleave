@@ -9,13 +9,16 @@ import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import { UserService} from './user.service';
 import { Util } from './util';
+import { DatepickerComponent} from './datepicker.component';
 
 @Component({
     selector: 'my-app',
     template: `
     <div class='users-c' *ngIf="userService.user.is_authenticated">
     <h4>Регистрация переработки </h4>
-    <div class='form_margin form-group'>Дата: <input type="text" class="datepicker" [(ngModel)]="date">
+    <div class='form_margin form-group'>
+
+    <datepicker #date [title]="dateTitle"></datepicker>
     <label>Срок:
     <select class='form-control' [(ngModel)]="interval">
         <option *ngFor="let opt of intervals" [value]="opt.value">
@@ -47,12 +50,13 @@ export class PresentComponent implements OnInit {
   
     comment: string = '-';
     interval: number = 60;
-    date: string = '01.01.2000';
     person_id: number;
     intervals: Interval[];
     persons: Person[];
     login: string = '';
     @ViewChild('msg') msg: MessagesComponent;
+    dateTitle: string = 'Дата:';
+    @ViewChild('date') date: DatepickerComponent;
      
     constructor(private httpService: HttpService,
                 private userService: UserService){}
@@ -60,7 +64,6 @@ export class PresentComponent implements OnInit {
     ngOnInit(){
         this.comment = '';
         this.login = this.userService.user.username;
-        this.date = Util.setupDate();
         
         this.intervals = Array();
         for (let i = 60; i < 60 * 24; i += 30) {
@@ -81,10 +84,7 @@ export class PresentComponent implements OnInit {
     }
 
     register_overwork() {
-        let datep: any;
-        datep = $("#datepicker");
-        this.date = datep.val().replace(/\//g, '.');;
-        this.httpService.register_overwork(this.date, this.interval, 
+        this.httpService.register_overwork(this.date.date, this.interval, 
             this.person_id, this.comment)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
