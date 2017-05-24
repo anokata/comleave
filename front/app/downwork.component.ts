@@ -13,7 +13,7 @@ import { Util } from './util';
 @Component({
     selector: 'my-app',
     template: `
-    <div class='users-c'>
+    <div class='users-c' *ngIf="userService.user.is_authenticated">
     <h4>Регистрация отгула </h4>
     <div class='form_margin form-group'>Дата: <input type="text" id="datepicker" [(ngModel)]="date">
     <label>Срок:
@@ -32,6 +32,9 @@ import { Util } from './util';
     </select>
     </div>
     <button class="btn btn-primary" (click)="register()">Зарегестрировать отгул</button>
+    </div>
+    <div class='users-c h5' *ngIf="!userService.user.is_authenticated">
+    Вы не авторизованы для данной операции.
     </div>
     <messages #msg></messages>
     `,
@@ -84,7 +87,11 @@ export class DownworkComponent implements OnInit {
         this.httpService.register_unwork(this.date, this.interval, 
             this.person_id, this.comment)
             .subscribe((data) => { 
-                this.msg.send("Зарегестрирован отгул");
+                if (data.text() != 'ok') {
+                    this.msg.send("Ошибка");
+                } else {
+                    this.msg.send("Зарегестрирован отгул");
+                }
             });
     }
 }
