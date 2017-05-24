@@ -17,7 +17,7 @@
     <script src="{{ ANGULAR_URL }}jquery-ui.js"></script>
     <script>
       window.STATIC_URL = "{{ ANGULAR_URL }}";
-      System.import('/ng/app/main').catch(function(err){
+      System.import('/ng/dist/main.js').catch(function(err){
           console.error(err);
       });
           $( function() {
