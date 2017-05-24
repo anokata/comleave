@@ -16,14 +16,11 @@ import { WorktypeComponent } from './worktype.component';
 @Component({
     selector: 'my-app',
     template: `
-    <div class='container'>
-    <div class='row justify-content-center'>
-        <persons #person></persons>
-        <worktypes #worktype></worktypes>
-    </div>
-    </div>
   <div *ngIf="userService.user.is_staff">
    <div class='int_chg form-group from-check'>
+    <div class='container'>
+    <div class='row justify-content-center'>
+    <div class='col mt-3 form-group'>
       <label class="form-check-label">
        <input class="form-check-input" type="checkbox" [(ngModel)]="is_change">
        Принять с изменением срока
@@ -33,8 +30,14 @@ import { WorktypeComponent } from './worktype.component';
             {{opt.title}}
             </option>
         </select>
-       </div>
+       </div> </div> </div> </div>
    </div>
+   
+    <div class='container'> <div class='row justify-content-center'>
+        <persons #person></persons>
+        <worktypes #worktype></worktypes>
+    </div> </div>
+
     <div class='users table-responsive'>
     <table class="table table-striped table-hover table-sm">
     <thead class="thead-inverse">
