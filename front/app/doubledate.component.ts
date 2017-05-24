@@ -7,11 +7,11 @@ import {ViewChild} from '@angular/core';
     template: `
         <div class='col mt-3 form-group'> <div>
         {{titleOne}}
-        <input #getDate class='form-control ' type="text" id='datepicker1' [(ngModel)]="dateOne" >
+        <input class='form-control ' type="text" id='datepicker1' [(ngModel)]="dateOne" >
         </div> </div>
         <div class='col mt-3 form-group'> <div>
         {{titleTwo}}
-        <input #getDate class='form-control ' type="text" id='datepicker2' [(ngModel)]="dateTwo" >
+        <input getDate class='form-control ' type="text" id='datepicker2' [(ngModel)]="dateTwo" >
         </div> </div>
    `,
 })

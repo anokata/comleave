@@ -18,13 +18,11 @@ export class DatePipe implements PipeTransform {
       if (endDate == null) {
           endDate = new Date('9000');
       } else {
-          console.log(endDate);
           endDate = Util.strToDate(endDate);
       }
       let result = Array();
       value.forEach((over: Overs) => {
           let date = new Date(over.start_date);
-          console.log(date, startDate, endDate);
           if (date >= startDate && date <= endDate) {
               result.push(over);
           }

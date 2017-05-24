@@ -9,10 +9,18 @@ import { Overs } from './overs';
 import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import { Util } from './util';
+import { DoubleDateComponent} from './doubledate.component';
 
 @Component({
     selector: 'my-app',
     template: `
+    <div class='container'> <div class='row justify-content-center'>
+        <persons #person></persons>
+        <worktypes #worktype></worktypes>
+        <doubledate #date [titleOne]="dateTitleFrom" 
+        [titleTwo]="dateTitleTo"></doubledate>
+    </div> </div>
+
     <div class='users table-responsive'>
     <table class="table table-striped table-hover table-sm">
     <thead class="thead-inverse">
@@ -24,7 +32,7 @@ import { Util } from './util';
     <th>Дата регистрации заявки</th>
     </thead>
     <tbody>
-    <tr *ngFor="let rec of reqs">
+    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
       <td>{{rec.name}}</td> 
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>
@@ -50,6 +58,9 @@ export class AcceptedComponent implements OnInit {
   
     reqs: Array<Overs>;
     @ViewChild('msg') msg: MessagesComponent;
+    dateTitleFrom: string = 'С';
+    dateTitleTo: string = 'По';
+    @ViewChild('date') date: DoubleDateComponent;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
@@ -59,6 +70,8 @@ export class AcceptedComponent implements OnInit {
         this.httpService.getRest('accepted').subscribe(
         (data: Response) => {
             this.reqs=data.json();
+            this.date.dateOne = Util.getMinDateStr(this.reqs);
+            this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
     }
 

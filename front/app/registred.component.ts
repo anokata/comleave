@@ -52,7 +52,7 @@ import { DoubleDateComponent} from './doubledate.component';
     <th>Дата регистрации заявки</th>
     </thead>
     <tbody>
-        <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
+    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
       <td>{{rec.name}}</td> 
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>
