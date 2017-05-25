@@ -48,6 +48,7 @@ export class Util {
                 maxDate = new Date(over.start_date);
             }
         });
+        maxDate.setDate(maxDate.getDate() + 1);
         return Util.dateToStr(maxDate);
     }
 }

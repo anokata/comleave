@@ -17,58 +17,57 @@ import { DoubleDateComponent} from './doubledate.component';
 @Component({
     selector: 'my-app',
     template: `
-  <div *ngIf="userService.user.is_staff">
-   <div class='int_chg form-group from-check'>
-    <div class='container'>
-    <div class='row justify-content-center'>
-    <div class='col mt-3 form-group'>
-      <label class="form-check-label">
+
+<div class='container'> <div class='row justify-content-center'>
+    <persons #person></persons>
+    <worktypes #worktype></worktypes>
+    <doubledate #date [titleOne]="dateTitleFrom" 
+    [titleTwo]="dateTitleTo"></doubledate>
+</div> </div>
+
+<div class='users table-responsive'>
+<table class="table table-striped table-hover table-sm">
+<thead class="thead-inverse">
+<th>ФИО</th>
+<th>Тип</th>
+<th>Дата начала</th>
+<th>Срок</th>
+<th>Коментарий</th>
+<th>Дата регистрации заявки</th>
+<th colspan=2>
+
+<div *ngIf="userService.user.is_staff">
+       <label class="form-check-label">
        <input class="form-check-input" type="checkbox" [(ngModel)]="is_change">
        Принять с изменением срока
        </label>
-        <select class="form-control" [(ngModel)]="selected_interval">
+        <select class="w-25 d-inline form-control ml-1" [(ngModel)]="selected_interval">
             <option *ngFor="let opt of intervals" [value]="opt.value">
             {{opt.title}}
             </option>
         </select>
-       </div> </div> </div> </div>
-   </div>
-   
-    <div class='container'> <div class='row justify-content-center'>
-        <persons #person></persons>
-        <worktypes #worktype></worktypes>
-        <doubledate #date [titleOne]="dateTitleFrom" 
-        [titleTwo]="dateTitleTo"></doubledate>
-    </div> </div>
+</div>
 
-    <div class='users table-responsive'>
-    <table class="table table-striped table-hover table-sm">
-    <thead class="thead-inverse">
-    <th>ФИО</th>
-    <th>Тип</th>
-    <th>Дата начала</th>
-    <th>Срок</th>
-    <th>Коментарий</th>
-    <th>Дата регистрации заявки</th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
-      <td>{{rec.name}}</td> 
-      <td *ngIf="rec.is_over">Переработка</td>
-      <td *ngIf="!rec.is_over">Отгул</td>
-      <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
-      <td>{{rec.interval}} </td> 
-      <td>{{rec.comment}}</td> 
-      <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
-  <div *ngIf="userService.user.is_staff">
-      <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
-      <td><button class="btn btn-warning" (click)="deny(rec.id)">Отклонить</button> </td> 
-      </div>
-    </tr>
-    </tbody>
-    </table>
-   </div>
-   <messages #msg></messages>
+</th>
+</thead>
+<tbody>
+<tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
+  <td>{{rec.name}}</td> 
+  <td *ngIf="rec.is_over">Переработка</td>
+  <td *ngIf="!rec.is_over">Отгул</td>
+  <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
+  <td>{{rec.interval}} </td> 
+  <td class='comment'>{{rec.comment}}</td> 
+  <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
+<div *ngIf="userService.user.is_staff">
+  <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
+  <td><button class="btn btn-warning" (click)="deny(rec.id)">Отклонить</button> </td> 
+  </div>
+</tr>
+</tbody>
+</table>
+</div>
+<messages #msg></messages>
    `,
     providers: [HttpService],
 })

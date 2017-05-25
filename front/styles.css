@@ -1,7 +1,15 @@
 .users {
     margin: auto;
-    width: 70%;
+    width: 80%;
     text-align: right;
+}
+
+table {
+    /*table-layout: fixed;*/
+}
+
+.comment {
+    word-break: break-all;
 }
 
 .users-c {

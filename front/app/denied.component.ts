@@ -38,7 +38,7 @@ import { DoubleDateComponent} from './doubledate.component';
       <td *ngIf="!rec.is_over">Отгул</td>
       <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
       <td>{{rec.interval}}</td> 
-      <td>{{rec.comment}}</td> 
+      <td class='comment'>{{rec.comment}}</td> 
       <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
       <div *ngIf="userService.user.is_staff">
       <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
