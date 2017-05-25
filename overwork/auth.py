@@ -26,7 +26,7 @@ class ActiveDirectoryBackend:
             result = l.search_ext_s(settings.AD_SEARCH_DN, ldap.SCOPE_SUBTREE,
                                 'sAMAccountName=%s' % self.username, settings.AD_SEARCH_FIELDS)[0][1]
             l.unbind_s()
-        except ldap.LDAPError as e:
+        except Exception as e:
             log.critical(e)
             raise e
 

@@ -21,13 +21,32 @@ from django.core.mail import send_mail
 
 from .models import Overs, Person
 
+
 import logging
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 logging.debug('Start of webapp comleave')
+log = logging.getLogger('main.views')
 
 import ldap
+from auth import ActiveDirectoryBackend
+import uuid
+from django.conf import settings
 def ldap():
     print('*** ldap')
+    user = 'tikhomirovsvl'
+    password = 'x'
+    try:
+        ldap_user = ActiveDirectoryBackend(username=user,
+                                           password=password).authenticate()
+    except Exception as e:
+        log.critical('LDAP Error: {}'.format(e))
+        ldap_user = None
+    if ldap_user:
+        log.info('Logged in AD-user: {}'.format(ldap_user['username']))
+        #request.session['username'] = ldap_user['username']
+        #request.session['session_key'] = uuid.uuid4().hex
+        #request.session['login_complete'] = False
+    print('ldap ***')
 
 ldap()
 
