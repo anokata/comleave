@@ -16,9 +16,22 @@ import { DatepickerComponent} from './datepicker.component';
     template: `
     <div class='users-c' *ngIf="userService.user.is_authenticated">
     <h4>Регистрация переработки </h4>
-    <div class='form_margin form-group'>
 
+    <div class='container'> <div class='row justify-content-center'>
+
+    <div class='col-md-3'>Сотрудник: 
+    <select class='form-control' [(ngModel)]="person_id">
+        <option *ngFor="let person of persons" [value]="person.id">
+            {{person.name}}
+        </option>
+    </select>
+    </div>
+
+    <div class='col-md-2 form-group'>
     <datepicker #date [title]="dateTitle"></datepicker>
+    </div>
+
+    <div class='col-md-2 form-group'>
     <label>Срок:
     <select class='form-control' [(ngModel)]="interval">
         <option *ngFor="let opt of intervals" [value]="opt.value">
@@ -26,16 +39,12 @@ import { DatepickerComponent} from './datepicker.component';
         </option>
     </select></label>
     </div>
-    <div class='form_margin form-control'>Комментарий: <input class='form-control w100' type=text [(ngModel)]="comment"> </div>
 
-    <div class='form_margin'>Сотрудник: 
-    <select class='form-control' [(ngModel)]="person_id">
-        <option *ngFor="let person of persons" [value]="person.id">
-            {{person.name}}
-        </option>
-    </select>
+    <div class='form_margin form-control'>Комментарий: <input class='form-control w100' type=text [(ngModel)]="comment"> </div>
     </div>
-    <button class="btn btn-primary" (click)="register_overwork()">Зарегестрировать переработку</button>
+    </div>
+
+    <button class="mt-3 btn btn-primary" (click)="register_overwork()">Зарегестрировать переработку</button>
    </div>
     <div class='users-c h5' *ngIf="!userService.user.is_authenticated">
     Вы не авторизованы для данной операции.

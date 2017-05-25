@@ -5,7 +5,7 @@ import {ViewChild} from '@angular/core';
 @Component({
     selector: 'datepicker',
     template: `
-        <div class='col mt-3 form-group'> <div>
+        <div class=''> <div>
         {{title}}
         <input #getDate class='form-control datepicker' type="text" [(ngModel)]="date" >
         </div> </div>
