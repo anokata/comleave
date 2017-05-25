@@ -168,7 +168,7 @@ EMAIL_HOST_USER = 'djangomosreg@mail.ru'
 EMAIL_HOST_PASSWORD = 'Tr1xJz2A8Y,1jZm'
 
 #Ldap
-AUTHENTICATION_BACKENDS = ('support.service.AD.auth.ActiveDirectoryBackend',)
+#AUTHENTICATION_BACKENDS = ('comleave.overwork.auth.ActiveDirectoryBackend',)
 AD_DNS_NAME = 'dp.mosreg.ru'
 AD_LDAP_PORT = 389
 AD_SEARCH_DN = 'DC=dp,DC=mosreg,DC=ru'
@@ -176,3 +176,4 @@ AD_SEARCH_DN = 'DC=dp,DC=mosreg,DC=ru'
 AD_NT4_DOMAIN = 'dp.mosreg.ru'
 AD_SEARCH_FIELDS = ['mail', 'givenName', 'sn', 'sAMAccountName']
 AD_LDAP_URL = 'ldap://%s:%s' % (AD_DNS_NAME, AD_LDAP_PORT)
+USE_LDAP = True

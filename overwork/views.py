@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 from __future__ import print_function
 import datetime
+import ldap
+import uuid
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -18,6 +20,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import auth
 from django.core import serializers
 from django.core.mail import send_mail
+from auth import ActiveDirectoryBackend
 
 from .models import Overs, Person
 
@@ -27,28 +30,21 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 logging.debug('Start of webapp comleave')
 log = logging.getLogger('main.views')
 
-import ldap
-from auth import ActiveDirectoryBackend
-import uuid
-from django.conf import settings
-def ldap():
-    print('*** ldap')
-    user = 'tikhomirovsvl'
-    password = 'x'
+# Login 
+def ldap_login(user, password):
+    print('*** ldap', user, password)
     try:
         ldap_user = ActiveDirectoryBackend(username=user,
                                            password=password).authenticate()
     except Exception as e:
         log.critical('LDAP Error: {}'.format(e))
         ldap_user = None
-    if ldap_user:
-        log.info('Logged in AD-user: {}'.format(ldap_user['username']))
-        #request.session['username'] = ldap_user['username']
-        #request.session['session_key'] = uuid.uuid4().hex
-        #request.session['login_complete'] = False
-    print('ldap ***')
+        return False
 
-ldap()
+    log.info('Logged in AD-user: {}'.format(ldap_user['username']))
+    print('ldap ***', ldap_user)
+    return ldap_user
+
 
 def ensure_manager_exist():
     try:
@@ -77,8 +73,6 @@ def add_user(username, email='', password='', first_name='', last_name='', is_st
         is_manager=is_staff,
         email=email)
     person.save()
-
-
 
 def register_new_user(request):
     if request.method == 'POST':
@@ -151,6 +145,19 @@ def login_user(request):
         try:
             username = request.POST["username"]
             password = request.POST["password"]
+            #ldap
+            #if person not exist
+            if settings.USE_LDAP and not Person.objects.filter(login=username).first():
+                # try ldap login
+                user = ldap_login(username, password)
+                if not user:
+                    return HttpResponse('not')
+                # if ok then create that user
+                add_user(username, user['email'], 
+                        password, user['first_name'], 
+                        user['last_name'])
+            #ldap
+
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -174,6 +181,7 @@ def restore(request):
             pass
     return HttpResponse('not')
 
+# Views
 @csrf_protect
 def main(request):
     return render(request, 'route.html', {

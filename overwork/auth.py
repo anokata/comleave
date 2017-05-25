@@ -37,6 +37,8 @@ class ActiveDirectoryBackend:
             last_name = last_name and last_name[0]
             email = result.get('mail')
             email = email and email[0]
+            first_name = first_name.decode('utf-8')
+            last_name = last_name.decode('utf-8')
 
             return {'username': self.username,
                     'first_name': first_name,
