@@ -34,9 +34,9 @@ import { DoubleDateComponent} from './doubledate.component';
 <th class="align-middle">Срок</th>
 <th class="align-middle">Коментарий</th>
 <th class="align-middle">Дата регистрации заявки</th>
-<th class="align-middle" colspan=2>
+<th class="align-middle text-right" colspan=3>
 
-<div *ngIf="userService.user.is_staff">
+<div class="text-right" *ngIf="userService.user.is_staff">
        <label class="form-check-label">
        <input class="form-check-input" type="checkbox" [(ngModel)]="is_change">
        Принять с изменением срока
@@ -59,9 +59,9 @@ import { DoubleDateComponent} from './doubledate.component';
   <td>{{rec.interval}} </td> 
   <td class='comment'>{{rec.comment}}</td> 
   <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
-<div *ngIf="userService.user.is_staff">
-  <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
-  <td><button class="btn btn-warning" (click)="deny(rec.id)">Отклонить</button> </td> 
+<div class="text-right" *ngIf="userService.user.is_staff">
+  <td class="d-inline"><button class="btn btn-info m5" (click)="accept(rec.id)">Принять</button> </td> 
+  <td class="d-inline"><button class="btn btn-warning m5" (click)="deny(rec.id)">Отклонить</button> </td> 
   </div>
 </tr>
 </tbody>

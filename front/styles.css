@@ -8,6 +8,14 @@ table {
     /*table-layout: fixed;*/
 }
 
+doubledate {
+    display: flex;
+}
+
+.m5 {
+    margin: 5px;
+}
+
 .comment {
     word-break: break-all;
 }
