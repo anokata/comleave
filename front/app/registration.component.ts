@@ -99,6 +99,13 @@ export class RegistrationComponent implements OnInit {
             this.password2 = '';
             return;
         }
+        let hasMoreThanAscii = this.password1.split("")
+            .some((char) => { return char.charCodeAt(0) > 127 });
+        if (hasMoreThanAscii) {
+            this.msg.send("Пароль не может содержать такие символы");
+            return;
+        }
+
         this.msg.send("Пробую зарегестрировать...");
         this.user.username = this.id_username;
         this.user.password = this.password1;
