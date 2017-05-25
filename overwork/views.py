@@ -25,6 +25,12 @@ import logging
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 logging.debug('Start of webapp comleave')
 
+import ldap
+def ldap():
+    print('*** ldap')
+
+ldap()
+
 def ensure_manager_exist():
     try:
         user = User.objects.filter(username='manager').first()
