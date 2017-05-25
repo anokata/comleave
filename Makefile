@@ -44,3 +44,6 @@ start:
 restart:
 	systemctl restart emperor.uwsgi
 
+guni:
+	gunicorn -w 4 -b 127.0.0.1:8004 comleave.wsgi 
+
