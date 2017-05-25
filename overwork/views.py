@@ -88,7 +88,7 @@ def register_new_user(request):
             add_user(username, email, password, first_name, last_name)
         except Exception as e:
             return HttpResponse(str(e))
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request=request, username=username, password=password)
         if user is not None:
             login(request, user)
         return HttpResponse('ok')
@@ -158,7 +158,7 @@ def login_user(request):
                         user['last_name'])
             #ldap
 
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request=request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 return HttpResponse('ok')
