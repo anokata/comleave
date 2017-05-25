@@ -24,12 +24,12 @@ import { DoubleDateComponent} from './doubledate.component';
     <div class='users table-responsive'>
     <table class="table table-striped table-hover table-sm">
     <thead class="thead-inverse">
-    <th>ФИО</th>
-    <th>Тип</th>
-    <th>Дата начала</th>
-    <th>Срок</th>
-    <th>Коментарий</th>
-    <th>Дата регистрации заявки</th>
+<th class="align-middle">ФИО</th>
+<th class="align-middle">Тип</th>
+<th class="align-middle">Дата начала</th>
+<th class="align-middle">Срок</th>
+<th class="align-middle">Коментарий</th>
+<th class="align-middle">Дата регистрации заявки</th>
     </thead>
     <tbody>
     <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
