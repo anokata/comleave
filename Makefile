@@ -50,3 +50,8 @@ restart:
 guni:
 	gunicorn -w 4 -b 127.0.0.1:8004 comleave.wsgi 
 
+deleteme:
+	python manage.py shell < deleteme.py 
+
+deleteall:
+	python manage.py shell < deleteall.py 
