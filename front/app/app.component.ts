@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
       <li class="nav-item ">
   <a class="nav-link"  routerLink="/sum" routerLinkActive="active">Сводка</a> </li>
       <li class="nav-item">
-  <a class="nav-link"  routerLink="/reg" routerLinkActive="active">Зарегестрированные</a> </li>
+  <a class="nav-link"  routerLink="/reg" routerLinkActive="active">Зарегистрированные</a> </li>
       <li class="nav-item">
   <a class="nav-link"  routerLink="/denied" routerLinkActive="active">Отклонённые</a> </li>
     <li class="nav-item">
@@ -25,10 +25,10 @@ import {Router} from '@angular/router';
     </li>
   <span class='nav-content' *ngIf="userService.user.is_authenticated"> 
     <li class="nav-item">
-      <a class="nav-link"  routerLink="/sent" routerLinkActive="active">Зарегестрировать переработку</a>
+      <a class="nav-link"  routerLink="/sent" routerLinkActive="active">Зарегистрировать переработку</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link"  routerLink="/downwork" routerLinkActive="active">Зарегестрировать отгул</a>
+      <a class="nav-link"  routerLink="/downwork" routerLinkActive="active">Зарегистрировать отгул</a>
     </li>
     </span>
 
@@ -39,7 +39,7 @@ import {Router} from '@angular/router';
   </button>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
       <a class="dropdown-item" routerLink="/login" routerLinkActive="active">Войти</a>
-      <a class="dropdown-item" routerLink="/register" routerLinkActive="active">Зарегестрироватся</a>
+      <a class="dropdown-item" routerLink="/register" routerLinkActive="active">Зарегистрироватся</a>
     <a class="dropdown-item" routerLink="/restore" routerLinkActive="active">Восстановить пароль</a>
   </div>
   </div>

@@ -55,7 +55,7 @@ import { UserService} from './user.service';
     </div>
 
     <div class='row justify-content-center'><div class='col-4 mt-3 form-group'>
-    <input class="form-control btn btn-primary" type=submit name=submit (click)=register() value='Зарегестрировать'>
+    <input class="form-control btn btn-primary" type=submit name=submit (click)=register() value='Зарегистрировать'>
     </div>
     </div>
 
@@ -106,7 +106,7 @@ export class RegistrationComponent implements OnInit {
             return;
         }
 
-        this.msg.send("Пробую зарегестрировать...");
+        this.msg.send("Пробую зарегистрировать...");
         this.user.username = this.id_username;
         this.user.password = this.password1;
         this.user.first_name = this.first_name;

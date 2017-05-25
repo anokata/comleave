@@ -32,7 +32,7 @@ import { DoubleDateComponent} from './doubledate.component';
 <th class="align-middle">Тип</th>
 <th class="align-middle">Дата начала</th>
 <th class="align-middle">Срок</th>
-<th class="align-middle">Коментарий</th>
+<th class="align-middle">Комментарий</th>
 <th class="align-middle">Дата регистрации заявки</th>
 <th class="align-middle text-right" colspan=3>
 

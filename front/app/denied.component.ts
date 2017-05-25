@@ -28,7 +28,7 @@ import { DoubleDateComponent} from './doubledate.component';
 <th class="align-middle">Тип</th>
 <th class="align-middle">Дата начала</th>
 <th class="align-middle">Срок</th>
-<th class="align-middle">Коментарий</th>
+<th class="align-middle">Комментарий</th>
 <th class="align-middle">Дата регистрации заявки</th>
     </thead>
     <tbody>
@@ -42,7 +42,7 @@ import { DoubleDateComponent} from './doubledate.component';
       <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
       <div *ngIf="userService.user.is_staff">
       <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
-      <td><button class="btn btn-info" (click)="register(rec.id)">Зарегестрировать</button> </td> 
+      <td><button class="btn btn-info" (click)="register(rec.id)">Зарегистрировать</button> </td> 
       <td><button class="btn btn-danger" (click)="delete(rec.id)">Удалить</button> </td> 
       </div>
     </tr>
@@ -94,7 +94,7 @@ export class DeniedComponent implements OnInit {
     register(id: number){
         this.httpService.action('register', id)
             .subscribe((data) => {
-                this.msg.send("Зарегестрирована заявка #" + id);
+                this.msg.send("Зарегистрирована заявка #" + id);
             });
                 this.remove(id);
     }

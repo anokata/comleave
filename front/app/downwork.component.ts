@@ -46,7 +46,7 @@ import { DatepickerComponent} from './datepicker.component';
 
 
 
-    <button class="mt-3 btn btn-primary" (click)="register()">Зарегестрировать отгул</button>
+    <button class="mt-3 btn btn-primary" (click)="register()">Зарегистрировать отгул</button>
     </div>
     <div class='users-c h5' *ngIf="!userService.user.is_authenticated">
     Вы не авторизованы для данной операции.
@@ -102,7 +102,7 @@ export class DownworkComponent implements OnInit {
                 if (data.text() != 'ok') {
                     this.msg.send("Ошибка");
                 } else {
-                    this.msg.send("Зарегестрирован отгул");
+                    this.msg.send("Зарегистрирован отгул");
                 }
             });
     }

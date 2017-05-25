@@ -44,7 +44,7 @@ import { DatepickerComponent} from './datepicker.component';
     </div>
     </div>
 
-    <button class="mt-3 btn btn-primary" (click)="register_overwork()">Зарегестрировать переработку</button>
+    <button class="mt-3 btn btn-primary" (click)="register_overwork()">Зарегистрировать переработку</button>
    </div>
     <div class='users-c h5' *ngIf="!userService.user.is_authenticated">
     Вы не авторизованы для данной операции.
@@ -99,7 +99,7 @@ export class PresentComponent implements OnInit {
                 if (data.text() != 'ok') {
                     this.msg.send("Ошибка");
                 } else {
-                    this.msg.send("Зарегестрирована переработка на " + this.interval 
+                    this.msg.send("Зарегистрирована переработка на " + this.interval 
                         + " минут ");
                 }
             });
