@@ -63,6 +63,14 @@ export class LoginComponent implements OnInit {
             this.msg.send("Необходимо ввести пароль");
             return;
         }
+
+        let hasMoreThanAscii = this.password.split("")
+            .some((char) => { return char.charCodeAt(0) > 127 });
+        if (hasMoreThanAscii) {
+            this.msg.send("Пароль не может содержать такие символы");
+            return;
+        }
+
         this.msg.send("Пробую войти...");
         this.user.username = this.id_username;
         this.user.password = this.password;
