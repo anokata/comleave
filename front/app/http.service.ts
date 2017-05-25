@@ -39,28 +39,19 @@ export class HttpService{
             new_interval);
     }
 
-    register_overwork(date: string, interval: number, 
-        person_id: number, comment: string) {
+    register_udwork(date: string, interval: number, 
+        person_id: number, comment: string, is_over: boolean) {
         if (!comment) {
             comment = '-';
         }
-        return this.http.get(this.host + '/register_overwork/' + 
-            date + '/' + 
-            interval + '/' + 
-            person_id + '/' + 
-            comment + '/' );
-    }
-
-    register_unwork(date: string, interval: number, 
-        person_id: number, comment: string) {
-        if (!comment) {
-            comment = '-';
-        }
-        return this.http.get(this.host + '/register_unwork/' + 
-            date + '/' + 
-            interval + '/' + 
-            person_id + '/' + 
-            comment + '/' );
+        var params = new URLSearchParams();
+        params.set('date', date);
+        params.set('interval', interval.toString());
+        params.set('person_id', person_id.toString());
+        params.set('comment', comment);
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
+        let action: string = is_over ? '/register_overwork/' : '/register_unwork/';
+        return this.http.post(this.host + action,  params.toString(), { headers: headers });
     }
 
     postData(obj: any, action: string){

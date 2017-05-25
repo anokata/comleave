@@ -292,17 +292,26 @@ def mail_user_udwork(over, status):
         logging.error(str(ex))
 
 @login_required
-def register_overwork(request, date, interval, person_id, comment):
+def register_overwork(request):
     logging.debug('register_overwork')
-    mail_register_udwork(person_id, date, interval, comment, True)
-    return register_interval(request, date, interval, person_id, comment, True)
+    if request.method == 'POST':
+        return register_interval(request, True)
+    return HttpResponse('not')
 
 @login_required
-def register_unwork(request, date, interval, person_id, comment):
-    mail_register_udwork(person_id, date, interval, comment, False)
-    return register_interval(request, date, interval, person_id, comment, False)
+def register_unwork(request):
+    logging.debug('register_unwork')
+    if request.method == 'POST':
+        return register_interval(request, False)
+    return HttpResponse('not')
 
-def register_interval(request, date, interval, person_id, comment, is_over):
+def register_interval(request, is_over):
+    date = request.POST["date"]
+    interval = request.POST["interval"]
+    person_id = request.POST["person_id"]
+    comment = request.POST["comment"]
+    mail_register_udwork(person_id, date, interval, comment, is_over)
+
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person'
     date = datetime.datetime.strptime(date, "%d.%m.%Y")

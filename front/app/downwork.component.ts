@@ -96,8 +96,8 @@ export class DownworkComponent implements OnInit {
     }
 
     register() {
-        this.httpService.register_unwork(this.date.date, this.interval, 
-            this.person_id, this.comment)
+        this.httpService.register_udwork(this.date.date, this.interval, 
+            this.person_id, this.comment, false)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
                     this.msg.send("Ошибка");
