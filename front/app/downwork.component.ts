@@ -19,6 +19,7 @@ import { DatepickerComponent} from './datepicker.component';
 
     <div class='container'> <div class='row justify-content-center'>
 
+  <div *ngIf="userService.user.is_staff">
     <div class='col-md-3'>Сотрудник: 
     <select class='form-control' [(ngModel)]="person_id">
         <option *ngFor="let person of persons" [value]="person.id">
@@ -26,6 +27,7 @@ import { DatepickerComponent} from './datepicker.component';
         </option>
     </select>
     </div>
+  </div>
 
     <div class='col-md-2 form-group'>
     <datepicker #date [title]="dateTitle"></datepicker>

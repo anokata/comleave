@@ -13,6 +13,7 @@ import { Util } from './util';
 import { PersonsComponent } from './persons.component';
 import { WorktypeComponent } from './worktype.component';
 import { DoubleDateComponent} from './doubledate.component';
+import { Strings } from './strings';
 
 @Component({
     selector: 'my-app',
@@ -81,8 +82,8 @@ export class RegistredComponent implements OnInit {
     is_change: boolean = false;
     @ViewChild('msg') msg: MessagesComponent;
 
-    dateTitleFrom: string = 'С';
-    dateTitleTo: string = 'По';
+    dateTitleFrom: string = Strings.dateTitleFrom;
+    dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
 
     constructor(private httpService: HttpService,

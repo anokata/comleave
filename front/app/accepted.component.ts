@@ -10,6 +10,7 @@ import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import { Util } from './util';
 import { DoubleDateComponent} from './doubledate.component';
+import { Strings } from './strings';
 
 @Component({
     selector: 'my-app',
@@ -58,8 +59,8 @@ export class AcceptedComponent implements OnInit {
   
     reqs: Array<Overs>;
     @ViewChild('msg') msg: MessagesComponent;
-    dateTitleFrom: string = 'С';
-    dateTitleTo: string = 'По';
+    dateTitleFrom: string = Strings.dateTitleFrom;
+    dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
 
     constructor(private httpService: HttpService,

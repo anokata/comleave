@@ -30,6 +30,10 @@ td, th{
 text-align: center;
 }
 
+nav {
+    margin-bottom: 1em;
+}
+
 .nav-content {
     display: inherit;
 }
