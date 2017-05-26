@@ -64,6 +64,9 @@ import {Router} from '@angular/router';
 <router-outlet></router-outlet>
                `,
     providers: [HttpService],
+    host: {
+        '(document:keydown)': 'onKey($event)'
+    }
 })
 
 
@@ -83,6 +86,16 @@ export class AppComponent implements OnInit {
                 this.userService.update();
                 this.router.navigateByUrl('login');
             });
+    }
+
+    onKey(e: KeyboardEvent) {
+        if (e.altKey && e.ctrlKey) {
+            console.log(e);
+            if (e.key == 'y') this.router.navigateByUrl('sum');
+            if (e.key == 'u') this.router.navigateByUrl('reg');
+            if (e.key == 'i') this.router.navigateByUrl('denied');
+            if (e.key == 'o') this.router.navigateByUrl('accepted');
+        }
     }
 
 }
