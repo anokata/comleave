@@ -4,12 +4,17 @@ import { Http, Response } from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { UserService} from './user.service';
+import { Interval } from './interval';
 
 export class Summarize {
     name: string;
     unwork: number;
     overwork: number;
     total: number;
+    overworkStr: string;
+    unworkStr: string;
+    totalStr: string;
+    isNegative: boolean;
 }
 
 @Component({
@@ -30,9 +35,10 @@ export class Summarize {
     <tbody>
     <tr *ngFor="let rec of sums | personp:person.person_id">
       <td class=""> {{rec.name}} ({{rec.login}})</td> 
-      <td>{{rec.unwork}}</td> 
-      <td>{{rec.overwork}}</td> 
-      <td>{{rec.total}}</td> 
+      <td>{{rec.unworkStr}}</td> 
+      <td>{{rec.overworkStr}}</td> 
+      <td *ngIf="!rec.isNegative" class='font-weight-bold text-primary'>{{rec.totalStr}}</td> 
+      <td *ngIf="rec.isNegative" class='font-weight-bold text-danger'>-{{rec.totalStr}}</td> 
     </tr>
     </tbody>
     </table>
@@ -54,7 +60,13 @@ export class SummaryComponent implements OnInit {
         this.httpService.getSum().subscribe(
         (data: Response) => {
             this.sums=data.json();
-            this.sums.map((e:Summarize) => e.total = e.overwork - e.unwork);
+            this.sums.map((e: Summarize) => {
+                e.total = e.overwork - e.unwork;
+                e.overworkStr = Interval.makeRuTitle(e.overwork);
+                e.unworkStr = Interval.makeRuTitle(e.unwork);
+                e.totalStr = Interval.makeRuTitle(Math.abs(e.total));
+                e.isNegative = e.total < 0;
+            });
         });
         if (!this.userService.user.is_staff) {
             this.def_name = this.userService.user.username;

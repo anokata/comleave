@@ -4,6 +4,7 @@ export class Overs {
     reg_date: Date;
     start_date: string;
     interval: number;
+    interval_str: string;
     status: string;
     comment: string;
     person: Person;

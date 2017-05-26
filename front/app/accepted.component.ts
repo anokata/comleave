@@ -38,7 +38,7 @@ import { Strings } from './strings';
       <td *ngIf="rec.is_over">Переработка</td>
       <td *ngIf="!rec.is_over">Отгул</td>
       <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
-      <td>{{rec.interval}}</td> 
+      <td>{{rec.interval_str}}</td> 
       <td class='comment'>{{rec.comment}}</td> 
       <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
       <div *ngIf="userService.user.is_staff">
@@ -71,6 +71,7 @@ export class AcceptedComponent implements OnInit {
         this.httpService.getRest('accepted').subscribe(
         (data: Response) => {
             this.reqs=data.json();
+            Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });

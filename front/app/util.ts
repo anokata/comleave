@@ -1,4 +1,5 @@
 import { Overs } from './overs';
+import { Interval } from './interval';
 
 export class Util {
 
@@ -26,6 +27,12 @@ export class Util {
             date.datepicker();
         })
         return Util.dateToStr(new Date());
+    }
+    public static makeIntervalTitles(overs: Overs[]): Overs[] {
+        overs.map((e: Overs) => {
+            e.interval_str = Interval.makeRuTitle(e.interval);
+        });
+        return overs;
     }
 
     public static getMinDateStr(overs: Overs[]): string {

@@ -77,7 +77,7 @@ export class PresentComponent implements OnInit {
         this.login = this.userService.user.username;
         
         this.intervals = Array();
-        for (let i = 60; i < 60 * 24; i += 30) {
+        for (let i = 60; i <= 60 * 24; i += 30) {
             this.intervals.push(new Interval(i));
         }
 
