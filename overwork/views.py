@@ -243,9 +243,12 @@ def make_mail_acc_body(over, is_acc, user):
     body += 'Ваша заявка '
     body += "на переработку " if over.is_over else "на отгул "
 
-    body += str(over.start_date) + ' ('
-    body += str(over.interval) + ' min) '
-    body += "[%d:%d] " % (over.interval // 60, over.interval % 60)
+    #body += str(over.start_date) + ' ('
+    #body += str(over.interval) + ' min) '
+    body += "(%d" % (over.interval // 60)
+    if (over.interval % 60) == 30:
+        body += ' 1/2'
+    body += ' hour) '
 
     body += "была принята " if is_acc else "была отклонена "
     body += "\nВаш комментарий:" + over.comment
