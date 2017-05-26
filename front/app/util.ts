@@ -24,9 +24,6 @@ export class Util {
         datep.each((i: number, datep: any) => {
             let date: any = $(datep);
             date.datepicker();
-            date.datepicker("option", "dateFormat", "dd.mm.yy");
-            date.datepicker("option", "changeMonth", "true");
-            date.datepicker("option", "changeYear", "true");
         })
         return Util.dateToStr(new Date());
     }
