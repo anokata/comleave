@@ -1,10 +1,13 @@
 Overwork/unwork registration and accept web app
 
 App allow do jobs like:
+
     - Register and login new users(also with ldap account)
     - Show summary, filter data by user.
     - Register work/not work time interval. 
+
 In manager account:
+
     - Accept, deny, delete, particully edit work interval request.
     - View all requests and filter it.
 
