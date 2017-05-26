@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^user/$', views.get_user),
     url(r'^accept/(?P<over_id>[0-9a-zA-Z]+)/(?P<interval>[0-9]+)$', views.accept),
     url(r'^deny/(?P<param>[0-9a-zA-Z]+)$', views.deny),
+    url(r'^over_by_id/(?P<id>[0-9]+)$', views.over_by_id),
     url(r'^register/(?P<param>[0-9a-zA-Z]+)$', views.register),
     url(r'^delete/(?P<over_id>[0-9a-zA-Z]+)$', views.delete),
     url(r'^register_overwork/', views.register_overwork),

@@ -179,6 +179,17 @@ def restore(request):
             pass
     return HttpResponse('not')
 
+def over_by_id(request, id):
+    over = Overs.objects.filter(pk=id).first()
+    if over:
+        data = {
+            'interval': over.interval, 
+            'start_date':over.start_date, 
+            'comment':over.comment, 
+            }
+        return JsonResponse(data, safe=False)
+    return HttpResponse('not')
+
 # Views
 @csrf_protect
 def main(request):

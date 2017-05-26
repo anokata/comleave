@@ -14,6 +14,7 @@ import { PersonsComponent } from './persons.component';
 import { WorktypeComponent } from './worktype.component';
 import { DoubleDateComponent} from './doubledate.component';
 import { Strings } from './strings';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'my-app',
@@ -64,6 +65,7 @@ import { Strings } from './strings';
   <td class="d-inline"><button class="btn btn-info m5" (click)="accept(rec.id)">Принять</button> </td> 
   <td class="d-inline"><button class="btn btn-warning m5" (click)="deny(rec.id)">Отклонить</button> </td> 
   </div>
+  <td class="d-inline"><button class="btn btn-danger m5" (click)="edit(rec.id)">Редактировать</button> </td> 
 </tr>
 </tbody>
 </table>
@@ -87,6 +89,7 @@ export class RegistredComponent implements OnInit {
     @ViewChild('date') date: DoubleDateComponent;
 
     constructor(private httpService: HttpService,
+                private router: Router,
                 private userService: UserService){}
      
     ngOnInit(){
@@ -104,6 +107,10 @@ export class RegistredComponent implements OnInit {
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
 
+    }
+
+    edit(id: number) {
+        this.router.navigate(['/edit', id]);
     }
 
     remove(id: number) {

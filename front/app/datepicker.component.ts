@@ -15,6 +15,7 @@ export class DatepickerComponent implements OnInit {
     public date: string;
     @Input() title: string;
     @Input() name: string = 'name';
+    @Input() inDate: string;
     @ViewChild('getDate') public getDate: any;
 
     constructor() {};
@@ -30,5 +31,8 @@ export class DatepickerComponent implements OnInit {
                     this.date = date;
                 });
         })
+        if (this.inDate) {
+            this.date = this.inDate;
+        }
     }
 }

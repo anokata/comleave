@@ -26,6 +26,8 @@ import { WorktypePipe }  from './worktype.pipe';
 import { DatePipe }  from './date.pipe';
 import { DatepickerComponent }  from './datepicker.component';
 import { DoubleDateComponent }  from './doubledate.component';
+import { OrderComponent }  from './order.component';
+import { OrderEditComponent }  from './order-edit.component';
 
 import { UserService} from './user.service';
 import { HttpService} from './http.service';
@@ -78,6 +80,10 @@ import { HttpService} from './http.service';
             path: 'restore',
             component: RestorePwdComponent
           },
+          {
+            path: 'edit/:id',
+            component: OrderEditComponent,
+          },
             //NgbModule.forRoot()
         ])
     
@@ -87,7 +93,7 @@ import { HttpService} from './http.service';
         AcceptedComponent, MessagesComponent, RegistrationComponent, 
         UpdateComponent, LoginComponent, RestorePwdComponent, PersonsComponent,
         PersonPipe, WorktypeComponent, WorktypePipe, DatepickerComponent,
-        DatePipe, DoubleDateComponent],
+        DatePipe, DoubleDateComponent, OrderComponent, OrderEditComponent],
     bootstrap:    [ AppComponent ],
     providers: [
         {

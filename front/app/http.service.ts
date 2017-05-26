@@ -54,6 +54,20 @@ export class HttpService{
         return this.http.post(this.host + action,  params.toString(), { headers: headers });
     }
 
+    register(action: string, date: string, interval: number, 
+        person_id: number, comment: string) {
+        if (!comment) {
+            comment = '-';
+        }
+        var params = new URLSearchParams();
+        params.set('date', date);
+        params.set('interval', interval.toString());
+        params.set('person_id', person_id.toString());
+        params.set('comment', comment);
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
+        return this.http.post(this.host + action,  params.toString(), { headers: headers });
+    }
+
     postData(obj: any, action: string){
         var params = new URLSearchParams();
         params.set('username', obj['username']);

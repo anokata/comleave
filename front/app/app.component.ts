@@ -94,6 +94,9 @@ export class AppComponent implements OnInit {
             if (e.key == 'u') this.router.navigateByUrl('reg');
             if (e.key == 'i') this.router.navigateByUrl('denied');
             if (e.key == 'o') this.router.navigateByUrl('accepted');
+            if (e.key == 'j') this.router.navigateByUrl('edit');
+            if (e.key == 'k') 
+                this.router.navigate(['/edit', '1']);
         }
     }
 
