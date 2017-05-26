@@ -245,8 +245,12 @@ def make_mail_acc_body(over, is_acc, user):
 
     body += str(over.start_date) + ' ('
     body += str(over.interval) + ' min) '
+    body += "[%d:%d] " % (over.interval // 60, over.interval % 60)
 
     body += "была принята " if is_acc else "была отклонена "
+    body += "\nВаш комментарий:" + over.comment
+    body += "\n--"
+    body += "\nС уважением, Служба учёта переработок и отгулов (СУПиО)"
 
     return body
 
