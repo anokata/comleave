@@ -1,3 +1,6 @@
+.selected {
+    background-color: #7AD;
+}
 .users {
     margin: auto;
     width: 80%;

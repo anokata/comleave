@@ -19,6 +19,7 @@ export class DatePipe implements PipeTransform {
           endDate = new Date('9000');
       } else {
           endDate = Util.strToDate(endDate);
+          endDate.setDate(endDate.getDate() + 1);
       }
       let result = Array();
       value.forEach((over: Overs) => {

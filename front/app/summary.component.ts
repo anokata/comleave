@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
+import { UserService} from './user.service';
 
 export class Summarize {
     name: string;
@@ -14,6 +15,10 @@ export class Summarize {
 @Component({
     selector: 'my-app',
     template: `
+    <div class='container'> <div class='row justify-content-center'>
+        <persons #person [default_name]="def_name"></persons>
+    </div> </div>
+
     <div class='users table-responsive'>
     <table class="table table-striped table-hover table-sm">
     <thead class="thead-inverse">
@@ -23,8 +28,8 @@ export class Summarize {
     <th>Итог</th>
     </thead>
     <tbody>
-    <tr *ngFor="let rec of sums">
-      <td>{{rec.name}} ({{rec.login}})</td> 
+    <tr *ngFor="let rec of sums | personp:person.person_id">
+      <td class=""> {{rec.name}} ({{rec.login}})</td> 
       <td>{{rec.unwork}}</td> 
       <td>{{rec.overwork}}</td> 
       <td>{{rec.total}}</td> 
@@ -39,8 +44,10 @@ export class Summarize {
 export class SummaryComponent implements OnInit { 
   
     sums: Array<Summarize>;
+    def_name: string = '';
 
-    constructor(private httpService: HttpService){}
+    constructor(private httpService: HttpService,
+                private userService: UserService){}
      
     ngOnInit(){
 
@@ -49,6 +56,9 @@ export class SummaryComponent implements OnInit {
             this.sums=data.json();
             this.sums.map((e:Summarize) => e.total = e.overwork - e.unwork);
         });
+        if (!this.userService.user.is_staff) {
+            this.def_name = this.userService.user.username;
+        }
     }
 }
 

@@ -346,7 +346,8 @@ def summarize(request):
         'overwork': q.overwork, 
         'name':q.name, 
         'unwork':q.unwork, 
-        'login':q.login
+        'login':q.login,
+        'person_id':q.id,
         } for q in qd]
     return JsonResponse(data, safe=False)
 

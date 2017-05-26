@@ -81,8 +81,8 @@ export class LoginComponent implements OnInit {
                     return;
                 } else if (data.text() == 'ok') {
                     this.msg.send("Успешно");
-                    this.router.navigateByUrl('sum');
                     this.userService.update();
+                    this.router.navigateByUrl('reg');
                     return;
                 } else {
                     this.msg.send("Какая то ошибка ¯\_(-_-)_/¯");

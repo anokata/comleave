@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Response } from '@angular/http';
 import { Person } from './person';
 import { HttpService } from './http.service';
@@ -19,6 +19,7 @@ import { HttpService } from './http.service';
 export class PersonsComponent implements OnInit { 
     person_id: number;
     persons: Person[];
+    @Input() default_name: string='';
 
     constructor(private httpService: HttpService) {};
      
@@ -31,6 +32,13 @@ export class PersonsComponent implements OnInit {
                 allPerson.id = -1;
                 this.persons.unshift(allPerson);
                 this.person_id = this.persons[0].id;
+                if (this.default_name) {
+                    this.persons.forEach((e) => {
+                        if (e.login == this.default_name) {
+                            this.person_id = e.id;
+                        }
+                    });
+                }
             });
     }
 
