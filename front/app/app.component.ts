@@ -10,7 +10,6 @@ import {Router} from '@angular/router';
 @Component({
     selector: 'my-app',
     template: `
-    <h4>Hello {{ userService.user.first_name }} aka {{ userService.user.username }} </h4>
     <nav class="navbar navbar-inverse bg-primary navbar-toggleable-md navbar-light bg-faded">
  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -35,11 +34,11 @@ import {Router} from '@angular/router';
 <span class='nav-content nav-right' *ngIf="!userService.user.is_authenticated"> 
 <div class="dropdown ">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Пользователь
+    {{ userService.user.first_name }} ({{ userService.user.username }})
   </button>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
       <a class="dropdown-item" routerLink="/login" routerLinkActive="active">Войти</a>
-      <a class="dropdown-item" routerLink="/register" routerLinkActive="active">Зарегистрироватся</a>
+      <a class="dropdown-item" routerLink="/register" routerLinkActive="active">Зарегистрироваться</a>
     <a class="dropdown-item" routerLink="/restore" routerLinkActive="active">Восстановить пароль</a>
   </div>
   </div>
@@ -49,7 +48,7 @@ import {Router} from '@angular/router';
 
 <div class="dropdown ">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Пользователь
+    {{ userService.user.first_name }} {{ userService.user.last_name }} ({{ userService.user.username }})
   </button>
 
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">

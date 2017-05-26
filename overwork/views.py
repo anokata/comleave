@@ -32,7 +32,6 @@ log = logging.getLogger('main.views')
 
 # Login 
 def ldap_login(user, password):
-    print('*** ldap', user, password)
     try:
         ldap_user = ActiveDirectoryBackend(username=user,
                                            password=password).authenticate()
@@ -42,7 +41,6 @@ def ldap_login(user, password):
         return False
 
     log.info('Logged in AD-user: {}'.format(ldap_user['username']))
-    print('ldap ***', ldap_user)
     return ldap_user
 
 
@@ -85,7 +83,7 @@ def register_new_user(request):
             return HttpResponse('exist')
 
         try:
-            add_user(username, email, password, first_name, last_name)
+            add_user(username, email, password, first_name=first_name, last_name=last_name)
         except Exception as e:
             return HttpResponse(str(e))
         user = authenticate(request=request, username=username, password=password)
@@ -108,7 +106,7 @@ def get_user(request):
     else:
         return JsonResponse({
                 'username': 'anonymous',
-                'first_name': '',
+                'first_name': 'Пользователь',
                 'last_name': '',
                 'email': '',
                 'is_staff': False,
@@ -154,8 +152,8 @@ def login_user(request):
                     return HttpResponse('not')
                 # if ok then create that user
                 add_user(username, user['email'], 
-                        password, user['first_name'], 
-                        user['last_name'])
+                        password, first_name=user['first_name'], 
+                        last_name=user['last_name'])
             #ldap
 
             user = authenticate(request=request, username=username, password=password)
