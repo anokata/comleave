@@ -39,7 +39,6 @@ import {Router} from '@angular/router';
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
       <a class="dropdown-item" routerLink="/login" routerLinkActive="active">Войти</a>
       <a class="dropdown-item" routerLink="/register" routerLinkActive="active">Зарегистрироваться</a>
-    <a class="dropdown-item" routerLink="/restore" routerLinkActive="active">Восстановить пароль</a>
   </div>
   </div>
 </span>
@@ -90,7 +89,7 @@ export class AppComponent implements OnInit {
 
     onKey(e: KeyboardEvent) {
         if (e.altKey && e.ctrlKey) {
-            console.log(e);
+            //console.log(e);
             if (e.key == 'y') this.router.navigateByUrl('sum');
             if (e.key == 'u') this.router.navigateByUrl('reg');
             if (e.key == 'i') this.router.navigateByUrl('denied');
