@@ -34,9 +34,9 @@ deploy:
 	(cd front; npm run tsc)
 	python manage.py collectstatic
 #	sudo systemctl restart emperor.uwsgi
-	echo NEED sudo systemctl restart emperor.uwsgi
-	echo NEED sudo systemctl restart gunicorn.service
-	echo NEED sudo systemctl start gunicorn.socket
+	#sudo systemctl restart emperor.uwsgi
+	sudo systemctl restart gunicorn.service
+	sudo systemctl restart gunicorn.socket
 
 uwsgie:
 	sudo uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
