@@ -30,4 +30,9 @@ class SimpleTest(TestCase):
         persons = Person.objects.all()
         self.assertEqual(len(persons), 2, "test user not created")
         print(persons[1])
+        self._test_login()
+
+    def _test_login(self):
+        pass
+
 
