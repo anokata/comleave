@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
+from django.contrib.auth.models import User
 from .models import Overs, Person
 
 class SimpleTest(TestCase):
@@ -33,6 +34,16 @@ class SimpleTest(TestCase):
         self._test_login()
 
     def _test_login(self):
-        pass
+        print('*** Test login')
+        response = self.client.post('/login/', {
+            'username':'testuser',
+            'password':'1',
+                    })
+        print(response)
+        response = self.client.get('/')
+        user = User.objects.get(username='testuser')
+        print(response.context.request.user.is_authenticated)
+        assert(response.context.request.user.is_authenticated)
+        self.assertEqual(response.context.request.user.email, 'email@mail.com')
 
 
