@@ -11,7 +11,8 @@ from overwork import views
 urlpatterns = [
     url(r'^persons/$', views.persons),
     url(r'^summarize/$', views.summarize),
-    url(r'^registred/$', views.registred),
+    url(r'^registred/$', views.registred, {'limit':0}),
+    url(r'^registred/(?P<limit>[0-9]+)$', views.registred),
     url(r'^accepted/$', views.accepted),
     url(r'^denied/$', views.denied),
     url(r'^register_user/$', views.register_new_user),

@@ -95,6 +95,7 @@ class SummaryTest(TestCase):
         print("***Check is added to registred")
         response = self.client.get('/registred/')
 
+        drint(response)
         json = response.json()
         record = json[0]
         drint(record)

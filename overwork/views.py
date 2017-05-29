@@ -256,13 +256,13 @@ def persons(request):
 def summarize(request):
     return JsonResponse(summarize_query(), safe=False)
 
-def registred(request):
-    return JsonResponse(overwork_query('R'), safe=False)
+def registred(request, limit=0):
+    return JsonResponse(overwork_query('R', limit), safe=False)
 
-def accepted(request):
-    return JsonResponse(overwork_query('A'), safe=False)
+def accepted(request, limit=0):
+    return JsonResponse(overwork_query('A'), limit, safe=False)
 
-def denied(request):
-    return JsonResponse(overwork_query('D'), safe=False)
+def denied(request, limit=0):
+    return JsonResponse(overwork_query('D'), limit, safe=False)
 
 ensure_manager_exist()
