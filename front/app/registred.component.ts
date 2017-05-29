@@ -61,16 +61,16 @@ import { Router } from '@angular/router';
   <td>{{rec.interval_str}} </td> 
   <td class='comment'>{{rec.comment}}</td> 
   <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
-<div class="text-right" *ngIf="userService.user.is_staff">
+<div class="text-right d-inline" *ngIf="userService.user.is_staff">
   <td class="d-inline"><button class="btn btn-info m5" (click)="accept(rec.id)">Принять</button> </td> 
   <td class="d-inline"><button class="btn btn-warning m5" (click)="deny(rec.id)">Отклонить</button> </td> 
   </div>
 
-  <td class="">
-  <div class="text-right" *ngIf="(userService.user.username == rec.login) ">
+  <div class="text-right d-inline" *ngIf="(userService.user.username == rec.login) || (userService.user.is_staff) ">
+  <td class="d-inline">
   <button class="btn btn-danger m5" (click)="edit(rec.id)">Редактировать</button> 
-  </div>
   </td> 
+  </div>
 
 </tr>
 </tbody>
