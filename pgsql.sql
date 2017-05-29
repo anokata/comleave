@@ -6,3 +6,4 @@ local all test md5
 host all test 127.0.0.1/32 password
 
 sudo systemctl restart postgresql-9.5
+alter user test with createdb;
