@@ -260,9 +260,9 @@ def registred(request, limit=0):
     return JsonResponse(overwork_query('R', limit), safe=False)
 
 def accepted(request, limit=0):
-    return JsonResponse(overwork_query('A'), limit, safe=False)
+    return JsonResponse(overwork_query('A', limit), safe=False)
 
 def denied(request, limit=0):
-    return JsonResponse(overwork_query('D'), limit, safe=False)
+    return JsonResponse(overwork_query('D', limit), safe=False)
 
 ensure_manager_exist()
