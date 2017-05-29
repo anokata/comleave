@@ -1,5 +1,6 @@
 run:
 	#python manage.py runserver
+	python manage.py test && \
 	DJANGO_DEBUG=1 python -Wall manage.py runserver
 
 frontinit:

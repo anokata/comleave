@@ -40,3 +40,40 @@ class Overs(models.Model):
                 + self.person.name + ' '\
                 + ('(UP)' if self.is_over else '(DN)')
 
+def overwork_query(status):
+    query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
+        "from overwork_overs inner join overwork_person "\
+        "on overwork_overs.person_id=overwork_person.id "\
+        "where overwork_overs.status='" + status + "' order by reg_date desc"
+    querydata = Overs.objects.raw(query)
+    data = [{
+        'id': q.id, 
+        'name':q.name, 
+        'login':q.login, 
+        'is_over':q.is_over, 
+        'comment':q.comment,
+        'interval':q.interval,
+        'start_date':q.start_date,
+        'reg_date':q.reg_date,
+        'person_id':q.person_id,
+        } for q in querydata]
+    return data
+
+def summarize_query():
+    q = "select oo.id, oo.name, oo.login, "\
+        "coalesce((select sum(overwork_overs.interval) as downwork "\
+        "from overwork_overs "\
+        "where status='A' AND is_over='0' and person_id=oo.id ) , 0) as unwork, "\
+        "coalesce((select sum(overwork_overs.interval) as upwork "\
+        "from overwork_overs join overwork_person on overwork_overs.person_id=overwork_person.id "\
+        "where status='A' AND is_over='1' and person_id=oo.id), 0) as overwork "\
+        "from overwork_person as oo;";
+    qd = Overs.objects.raw(q)
+    data = [{
+        'overwork': q.overwork, 
+        'name':q.name, 
+        'unwork':q.unwork, 
+        'login':q.login,
+        'person_id':q.id,
+        } for q in qd]
+    return data
