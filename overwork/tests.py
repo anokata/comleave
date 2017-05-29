@@ -46,4 +46,43 @@ class SimpleTest(TestCase):
         assert(response.context.request.user.is_authenticated)
         self.assertEqual(response.context.request.user.email, 'email@mail.com')
 
+        user = self.client.get('/user/').json()
+        self.assertEqual(user['username'], 'testuser')
+        self.assertEqual(user['is_authenticated'], True)
+
+class SummaryTest(TestCase):
+    def setUp(self):
+        response = self.client.post('/register_user/', {
+            'username':'testuser',
+            'password':'1',
+            'email':'email@mail.com',
+            'first_name':'first_name',
+            'last_name':'last_name',
+                    })
+        self.person_id = Person.objects.filter(login='testuser').first().id
+
+    def test_sum(self):
+        print("*** Test summary")
+        response = self.client.get('/summarize/')
+        json = response.json()
+        print(json)
+        for line in json:
+            self.assertEqual(line['unwork'], 0)
+            self.assertEqual(line['overwork'], 0)
+
+    def test_order_over(self):
+        print("*** Test order over")
+        response = self.client.post('/register_overwork/', {
+            'date': '01.01.2001',
+            'interval': '60',
+            'person_id': self.person_id,
+            'comment': 'no com',
+            })
+        self.assertEqual(response.status_code, 200)
+        # check is added to registred
+        response = self.client.get('/registred/')
+
+        print(response.json())
+
+
 
