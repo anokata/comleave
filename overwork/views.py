@@ -4,19 +4,14 @@ from __future__ import print_function
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext, loader
-from django.views.generic import TemplateView, View
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
-from django.http import JsonResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import auth
-from django.core import serializers
 
 from .models import Overs, Person, overwork_query, summarize_query
 from .users import ensure_manager_exist, add_user, ldap_login
