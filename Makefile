@@ -56,5 +56,8 @@ deleteme:
 deleteall:
 	python manage.py shell < deleteall.py 
 
+addmany:
+	python manage.py shell < addmany.py 
+
 test:
 	python manage.py test
