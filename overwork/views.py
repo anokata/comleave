@@ -20,57 +20,14 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import auth
 from django.core import serializers
 from django.core.mail import send_mail
-from auth import ActiveDirectoryBackend
 
 from .models import Overs, Person
-
+from .users import ensure_manager_exist, add_user, ldap_login
 
 import logging
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 logging.debug('Start of webapp comleave')
 log = logging.getLogger('main.views')
-
-# Login 
-def ldap_login(user, password):
-    try:
-        ldap_user = ActiveDirectoryBackend(username=user,
-                                           password=password).authenticate()
-    except Exception as e:
-        log.critical('LDAP Error: {}'.format(e))
-        ldap_user = None
-        return False
-
-    log.info('Logged in AD-user: {}'.format(ldap_user['username']))
-    return ldap_user
-
-
-def ensure_manager_exist():
-    try:
-        user = User.objects.filter(username='manager').first()
-        if user:
-            logging.debug('manager exist. OK')
-        else:
-            logging.debug('manager do not exist')
-            add_user('manager', password=settings.MANAGER_PWD, is_staff=True)
-            logging.debug('manager created')
-    except Exception as ex:
-        logging.error(str(ex))
-        return
-
-def add_user(username, email='', password='', first_name='', last_name='', is_staff=False):
-    user = User.objects.create_user(
-            username,
-            email=email,
-            password=password)
-    user.first_name = first_name
-    user.last_name = last_name
-    user.is_staff = is_staff
-    user.save()
-    person = Person(login=username, 
-        name=first_name + ' ' + last_name,
-        is_manager=is_staff,
-        email=email)
-    person.save()
 
 def register_new_user(request):
     if request.method == 'POST':
@@ -226,6 +183,7 @@ def main(request):
         'ANGULAR_URL' : settings.ANGULAR_URL,
         })
 
+# Data manip
 def changeStatus(over_id, status):
     over = Overs.objects.filter(pk=over_id).first()
     if over:
@@ -254,6 +212,7 @@ def deny(request, param):
     changeStatus(param, Overs.DENIED)
     return HttpResponse(' param:' + param)
 
+# Views
 def register(request, param):
     changeStatus(param, Overs.REGISTRED)
     return HttpResponse(' param:' + param)
@@ -262,6 +221,7 @@ def register(request, param):
 def interval2hours(i):
     return str(int(i) / 60) + ' hours ' + str(int(i) % 60) + ' minutes'
 
+# mail
 def make_mail_body(person_id, date, interval, comment, is_over):
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person' # Exception
