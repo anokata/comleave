@@ -50,6 +50,11 @@ import { Strings } from './strings';
     </tbody>
     </table>
    </div>
+
+<div class="text-center">
+    <button class='btn btn' (click)="more()">Ещё</button>
+</div>
+
    <messages #msg></messages>
    `,
     providers: [HttpService],
@@ -63,18 +68,28 @@ export class DeniedComponent implements OnInit {
     dateTitleFrom: string = Strings.dateTitleFrom;
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
+    limit: number = 10;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
      
     ngOnInit(){
-        this.httpService.getRest('denied').subscribe(
+        this.refresh();
+    }
+
+    refresh() {
+        this.httpService.getRest('denied', this.limit.toString()).subscribe(
         (data: Response) => {
             this.reqs=data.json();
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
+    }
+
+    more() {
+        this.limit += 10;
+        this.refresh();
     }
 
     remove(id: number) {

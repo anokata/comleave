@@ -48,6 +48,11 @@ import { Strings } from './strings';
     </tr>
     </tbody>
     </table>
+
+<div class="text-center">
+    <button class='btn btn' (click)="more()">Ещё</button>
+</div>
+
    </div>
    <messages #msg></messages>
    `,
@@ -62,19 +67,28 @@ export class AcceptedComponent implements OnInit {
     dateTitleFrom: string = Strings.dateTitleFrom;
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
+    limit: number = 10;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
      
     ngOnInit(){
+        this.refresh();
+    }
 
-        this.httpService.getRest('accepted').subscribe(
+    refresh() {
+        this.httpService.getRest('accepted', this.limit.toString()).subscribe(
         (data: Response) => {
             this.reqs=data.json();
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
+    }
+
+    more() {
+        this.limit += 10;
+        this.refresh();
     }
 
     remove(id: number) {

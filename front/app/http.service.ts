@@ -18,12 +18,12 @@ export class HttpService{
         return this.http.get(this.host + 'summarize/');
     }
 
-    getReqs() {
-        return this.http.get(this.host + 'registred/');
+    getReqs(limit: number = 0) {
+        return this.http.get(this.host + 'registred/' + limit.toString());
     }
 
-    getRest(req: string) {
-        return this.http.get(this.host + req + '/');
+    getRest(req: string, param: string="") {
+        return this.http.get(this.host + req + '/' + param);
     }
 
     getUrl(url: string) {

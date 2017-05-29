@@ -75,6 +75,11 @@ import { Router } from '@angular/router';
 </tr>
 </tbody>
 </table>
+
+<div class="text-center">
+    <button class='btn btn' (click)="more()">Ещё</button>
+</div>
+
 </div>
 <messages #msg></messages>
    `,
@@ -93,6 +98,7 @@ export class RegistredComponent implements OnInit {
     dateTitleFrom: string = Strings.dateTitleFrom;
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
+    limit: number = 10;
 
     constructor(private httpService: HttpService,
                 private router: Router,
@@ -104,15 +110,23 @@ export class RegistredComponent implements OnInit {
         for (let i = 60; i <= 60 * 24; i += 30) {
             this.intervals.push(new Interval(i));
         }
+        this.refresh();
 
-        this.httpService.getReqs().subscribe(
+    }
+
+    refresh() {
+        this.httpService.getReqs(this.limit).subscribe(
         (data: Response) => {
             this.reqs=data.json();
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
+    }
 
+    more() {
+        this.limit += 10;
+        this.refresh();
     }
 
     edit(id: number) {
