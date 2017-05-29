@@ -370,7 +370,7 @@ def summarize(request):
     return JsonResponse(data, safe=False)
 
 def overwork_query(status):
-    query = "select overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
+    query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
         "where overwork_overs.status='" + status + "' order by reg_date desc"
@@ -378,6 +378,7 @@ def overwork_query(status):
     data = [{
         'id': q.id, 
         'name':q.name, 
+        'login':q.login, 
         'is_over':q.is_over, 
         'comment':q.comment,
         'interval':q.interval,

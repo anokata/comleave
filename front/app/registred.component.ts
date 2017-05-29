@@ -65,7 +65,13 @@ import { Router } from '@angular/router';
   <td class="d-inline"><button class="btn btn-info m5" (click)="accept(rec.id)">Принять</button> </td> 
   <td class="d-inline"><button class="btn btn-warning m5" (click)="deny(rec.id)">Отклонить</button> </td> 
   </div>
-  <td class="d-inline"><button class="btn btn-danger m5" (click)="edit(rec.id)">Редактировать</button> </td> 
+
+  <td class="d-inline">
+  <div class="text-right" *ngIf="(userService.user.username == rec.login) ">
+  <button class="btn btn-danger m5" (click)="edit(rec.id)">Редактировать</button> 
+  </div>
+  </td> 
+
 </tr>
 </tbody>
 </table>
