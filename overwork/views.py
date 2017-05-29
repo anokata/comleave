@@ -212,6 +212,7 @@ def order_edit(request):
             over.interval = interval
             over.comment = comment
             over.is_over = is_over
+            over.person_id = person_id
             over.save()
         except Exception as ex:
             return HttpResponse(ex)
