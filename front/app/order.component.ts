@@ -66,6 +66,7 @@ export class OrderComponent implements OnInit {
     @Input() inInterval: number;
     @Input() inComment: string;
     @Input() inAction: string;
+    @Input() inId: number;
 
     comment: string = '-';
     interval: number = 60;
@@ -113,14 +114,15 @@ export class OrderComponent implements OnInit {
     }
 
     register() {
-        this.httpService.register(this.inAction, this.date.date, this.interval, 
-            this.person_id, this.comment)
+        let date = Util.dateStrToStr(this.date.date);
+        this.httpService.register(this.inAction, date, this.inInterval, 
+            this.person_id, this.inComment, this.inId)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
                     this.msg.send("Ошибка");
+                    this.msg.send(data.text());
                 } else {
-                    this.msg.send("Зарегистрировано" + this.interval 
-                        + " минут ");
+                    this.msg.send("Успешно отредактировано");
                 }
             });
     }

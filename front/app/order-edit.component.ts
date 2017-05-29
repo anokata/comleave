@@ -18,6 +18,7 @@ import {ViewChild} from '@angular/core';
        [inInterval]="inInterval"
        [inComment]="inComment"
        [inAction]="inAction"
+       [inId]="inId"
 ></order>
    `,
 })
@@ -29,6 +30,7 @@ export class OrderEditComponent implements OnInit {
     inDate: string;
     inInterval: number;
     inComment: string;
+    inId: number;
     inAction: string = '/order_edit/';
     @ViewChild('order') order: OrderComponent;
   
@@ -37,7 +39,8 @@ export class OrderEditComponent implements OnInit {
                 private route: ActivatedRoute) {}
 
     ngOnInit(){
-        let id = this.route.snapshot.params['id'];
+        let id:number = parseInt(this.route.snapshot.params['id']);
+        this.inId = id;
         let over: Overs;
         this.httpService.action('over_by_id', id).subscribe(
             (data: Response) => {

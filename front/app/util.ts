@@ -19,6 +19,14 @@ export class Util {
         return new Date(year, month - 1, day);
     }
 
+    public static dateStrToStr(date: any) {
+        let l = date.split('.');
+        let day = (l[0]);
+        let month = (l[1]);
+        let year = (l[2]);
+        return year + '-' + month + '-' + day;
+    }
+
     public static setupDate() {
         let datep: JQuery;
         datep = $(".datepicker");

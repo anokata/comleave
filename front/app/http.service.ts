@@ -55,12 +55,13 @@ export class HttpService{
     }
 
     register(action: string, date: string, interval: number, 
-        person_id: number, comment: string) {
+        person_id: number, comment: string, id:number) {
         if (!comment) {
             comment = '-';
         }
         var params = new URLSearchParams();
         params.set('date', date);
+        params.set('id', id.toString());
         params.set('interval', interval.toString());
         params.set('person_id', person_id.toString());
         params.set('comment', comment);

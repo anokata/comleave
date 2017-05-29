@@ -190,6 +190,27 @@ def over_by_id(request, id):
         return JsonResponse(data, safe=False)
     return HttpResponse('not')
 
+@login_required
+def order_edit(request):
+    if request.method == 'POST':
+        date = request.POST["date"]
+        id = request.POST["id"]
+        interval = request.POST["interval"]
+        person_id = request.POST["person_id"]
+        comment = request.POST["comment"]
+        over = Overs.objects.filter(pk=id).first()
+        if not over:
+            return HttpResponse('not found')
+        try:
+            over.start_date = date
+            over.interval = interval
+            over.comment = comment
+            over.save()
+        except Exception as ex:
+            return HttpResponse(ex)
+        return HttpResponse('ok')
+    return HttpResponse('not post')
+
 # Views
 @csrf_protect
 def main(request):
