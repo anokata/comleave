@@ -9,6 +9,7 @@ import {ViewChild} from '@angular/core';
 import { MessagesComponent } from './messages.component';
 import { UserService} from './user.service';
 import { Util } from './util';
+import { Type } from './type';
 import { DatepickerComponent} from './datepicker.component';
 
 @Component({
@@ -42,6 +43,15 @@ import { DatepickerComponent} from './datepicker.component';
 </select></label>
 </div>
 
+<div class='col-md-2 form-group'>
+<label>Тип:
+<select class='form-control' [(ngModel)]="inType">
+    <option *ngFor="let opt of types" [value]="opt.value">
+    {{opt.title}}
+    </option>
+</select></label>
+</div>
+
 <div class='form_margin form-control'>Комментарий: <input class='form-control w100' type=text [(ngModel)]="inComment"> </div>
 </div>
 </div>
@@ -67,11 +77,14 @@ export class OrderComponent implements OnInit {
     @Input() inComment: string;
     @Input() inAction: string;
     @Input() inId: number;
+    @Input() inType: number;
 
     comment: string = '-';
+    type: number = 1;
     interval: number = 60;
     person_id: number;
     intervals: Interval[];
+    types: Type[];
     persons: Person[];
     login: string = '';
     @ViewChild('msg') msg: MessagesComponent;
@@ -84,6 +97,16 @@ export class OrderComponent implements OnInit {
     ngOnInit(){
         this.comment = this.inComment;
         this.login = this.userService.user.username;
+
+        this.types = Array();
+        this.types.push(new Type(Type.UNDER, 'Отгул'));
+        this.types.push(new Type(Type.OVER, 'Переработка'));
+
+        if (this.inType) {
+            this.type = this.inType;
+        } else {
+            this.inType = this.type;
+        }
         
         this.intervals = Array();
         for (let i = 60; i <= 60 * 24; i += 30) {
@@ -115,8 +138,9 @@ export class OrderComponent implements OnInit {
 
     register() {
         let date = Util.dateStrToStr(this.date.date);
+        let is_over = this.inType == Type.OVER ? 'True' : '';
         this.httpService.register(this.inAction, date, this.inInterval, 
-            this.person_id, this.inComment, this.inId)
+            this.person_id, this.inComment, this.inId, is_over)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
                     this.msg.send("Ошибка");

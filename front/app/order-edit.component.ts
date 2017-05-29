@@ -7,6 +7,7 @@ import { Overs } from './overs';
 import { Response } from '@angular/http';
 import { Util } from './util';
 import {ViewChild} from '@angular/core';
+import { Type } from './type';
 
 @Component({
     selector: 'oapp',
@@ -19,6 +20,7 @@ import {ViewChild} from '@angular/core';
        [inComment]="inComment"
        [inAction]="inAction"
        [inId]="inId"
+       [inType]="inType"
 ></order>
    `,
 })
@@ -31,6 +33,7 @@ export class OrderEditComponent implements OnInit {
     inInterval: number;
     inComment: string;
     inId: number;
+    inType: number;
     inAction: string = '/order_edit/';
     @ViewChild('order') order: OrderComponent;
   
@@ -50,6 +53,11 @@ export class OrderEditComponent implements OnInit {
                     this.order.setDate(this.inDate);
                     this.inInterval = over.interval;
                     this.inComment = over.comment;
+                    if (over.is_over) {
+                        this.inType = Type.OVER;
+                    } else {
+                        this.inType = Type.UNDER;
+                    }
                 } else {
                     console.log('no');
                 }

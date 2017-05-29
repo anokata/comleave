@@ -186,6 +186,7 @@ def over_by_id(request, id):
             'interval': over.interval, 
             'start_date':over.start_date, 
             'comment':over.comment, 
+            'is_over':over.is_over, 
             }
         return JsonResponse(data, safe=False)
     return HttpResponse('not')
@@ -198,13 +199,19 @@ def order_edit(request):
         interval = request.POST["interval"]
         person_id = request.POST["person_id"]
         comment = request.POST["comment"]
+        is_over = request.POST["is_over"] == "True"
+
         over = Overs.objects.filter(pk=id).first()
         if not over:
             return HttpResponse('not found')
+        if over.status != Overs.REGISTRED:
+            return HttpResponse('not registred')
+
         try:
             over.start_date = date
             over.interval = interval
             over.comment = comment
+            over.is_over = is_over
             over.save()
         except Exception as ex:
             return HttpResponse(ex)
