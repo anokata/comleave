@@ -11,6 +11,7 @@ import { MessagesComponent } from './messages.component';
 import { Util } from './util';
 import { DoubleDateComponent} from './doubledate.component';
 import { Strings } from './strings';
+import { ModalComponent } from './modal.component';
 
 @Component({
     selector: 'my-app',
@@ -20,6 +21,13 @@ import { Strings } from './strings';
         <worktypes #worktype></worktypes>
         <doubledate #date [titleOne]="dateTitleFrom" 
         [titleTwo]="dateTitleTo"></doubledate>
+        <div class='col-md-5 form-group'> 
+        <modal #modal
+            [title]="modalTitle"
+            [caption]="modalCaption"
+            [body]="modalBody"
+        ></modal>
+        </div>
     </div> </div>
 
     <div class='users table-responsive'>
@@ -53,6 +61,7 @@ import { Strings } from './strings';
 
 <div class="text-center">
     <button class='btn btn' (click)="more()">Ещё</button>
+    <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
 
    <messages #msg></messages>
@@ -69,6 +78,10 @@ export class DeniedComponent implements OnInit {
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
     limit: number = 10;
+
+    modalCaption: string = 'Удалить все';
+    modalTitle: string = 'Подвердите удаление';
+    modalBody: string = 'Все отображенные заявки будут удалены.';
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
@@ -89,6 +102,11 @@ export class DeniedComponent implements OnInit {
 
     more() {
         this.limit += 10;
+        this.refresh();
+    }
+
+    viewAll() {
+        this.limit = 0;
         this.refresh();
     }
 

@@ -28,6 +28,7 @@ import { DatepickerComponent }  from './datepicker.component';
 import { DoubleDateComponent }  from './doubledate.component';
 import { OrderComponent }  from './order.component';
 import { OrderEditComponent }  from './order-edit.component';
+import { ModalComponent }  from './modal.component';
 
 import { UserService} from './user.service';
 import { HttpService} from './http.service';
@@ -93,7 +94,8 @@ import { HttpService} from './http.service';
         AcceptedComponent, MessagesComponent, RegistrationComponent, 
         UpdateComponent, LoginComponent, RestorePwdComponent, PersonsComponent,
         PersonPipe, WorktypeComponent, WorktypePipe, DatepickerComponent,
-        DatePipe, DoubleDateComponent, OrderComponent, OrderEditComponent],
+        DatePipe, DoubleDateComponent, OrderComponent, OrderEditComponent,
+        ModalComponent],
     bootstrap:    [ AppComponent ],
     providers: [
         {

@@ -51,6 +51,7 @@ import { Strings } from './strings';
 
 <div class="text-center">
     <button class='btn btn' (click)="more()">Ещё</button>
+    <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
 
    </div>
@@ -88,6 +89,11 @@ export class AcceptedComponent implements OnInit {
 
     more() {
         this.limit += 10;
+        this.refresh();
+    }
+
+    viewAll() {
+        this.limit = 0;
         this.refresh();
     }
 
