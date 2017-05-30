@@ -25,7 +25,7 @@ import { Type } from './type';
         <worktypes #worktype></worktypes>
         <doubledate #date [titleOne]="dateTitleFrom" 
         [titleTwo]="dateTitleTo"></doubledate>
-        <div class='col-md-5 form-group'> 
+        <div class='col-md-5 form-group' *ngIf="userService.user.is_staff"> 
         <modal #modal
             [title]="modalTitle"
             [caption]="modalCaption"
@@ -96,10 +96,12 @@ export class DeniedComponent implements OnInit {
     @ViewChild('worktype') worktype: WorktypeComponent;
     @ViewChild('person') person: PersonsComponent;
 
-    limit: number = 10;
+    static LIMIT: number = 10;
+
+    limit: number = DeniedComponent.LIMIT;
     offset: number = 0;
     total: number;
-    atPage: number = 10;
+    atPage: number = DeniedComponent.LIMIT;
     pages: number = 1;
     pagenum: number = 1;
     numPages: Array<number>;
@@ -114,6 +116,7 @@ export class DeniedComponent implements OnInit {
      
     ngOnInit(){
         this.refresh();
+        // for delete
         this.modalAct = this;
     }
 
@@ -138,12 +141,14 @@ export class DeniedComponent implements OnInit {
             this.date.dateOne,
             this.date.dateTwo,
             this.worktype.worktype,
+            "D",
             this.person.person_id
         );
         this.httpService.postFilter(filter).subscribe(
             (data: Response) => {
-                console.log(data.text());
-                console.log('end del');
+                this.limit = DeniedComponent.LIMIT;
+                this.offset = 0;
+                this.refresh();
             });
     }
 

@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import {Response, Headers, URLSearchParams} from '@angular/http';
 import { User } from './user';
 import { Filter } from './filter';
+import { Util } from './util';
  
 @Injectable()
 export class HttpService{
@@ -82,10 +83,11 @@ export class HttpService{
     postFilter(obj: Filter){
         let params = new URLSearchParams();
         let action = obj['action'];
-        params.set('date1', obj.date1);
-        params.set('date2', obj.date2);
+        params.set('date1', Util.dateStrToStr(obj.date1));
+        params.set('date2', Util.dateStrToStr(obj.date2));
         params.set('type', obj.type.toString());
         params.set('person_id', obj.person_id.toString());
+        params.set('status', obj.status);
 
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
         console.log(action);

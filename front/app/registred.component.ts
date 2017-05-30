@@ -17,6 +17,7 @@ import { Strings } from './strings';
 import { Router } from '@angular/router';
 import { Filter } from './filter';
 import { Type } from './type';
+import { ModalComponent } from './modal.component';
 
 @Component({
     selector: 'my-app',
@@ -27,6 +28,14 @@ import { Type } from './type';
     <worktypes #worktype></worktypes>
     <doubledate #date [titleOne]="dateTitleFrom" 
     [titleTwo]="dateTitleTo"></doubledate>
+        <div class='col-md-5 form-group' *ngIf="userService.user.is_staff"> 
+        <modal #modal
+            [title]="modalTitle"
+            [caption]="modalCaption"
+            [body]="modalBody"
+            [action]="modalAct"
+        ></modal>
+        </div>
 </div> </div>
 
 <div class='users table-responsive'>
@@ -79,7 +88,7 @@ import { Type } from './type';
 </table>
 
 <nav>
-  <ul class="pagination justify-content-left">
+  <ul class="pagination justify-content-center">
     <li class="page-item" *ngFor="let num of numPages">
         <span *ngIf="num == pagenum" class="page-item active" (click)="page(num)">
             <button class="page-link">{{ num }}</button></span>
@@ -113,7 +122,10 @@ export class RegistredComponent implements OnInit {
     dateTitleFrom: string = Strings.dateTitleFrom;
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
+    @ViewChild('worktype') worktype: WorktypeComponent;
+    @ViewChild('person') person: PersonsComponent;
 
+    static LIMIT: number = 10;
     limit: number = 10;
     offset: number = 0;
     total: number;
@@ -121,6 +133,11 @@ export class RegistredComponent implements OnInit {
     pages: number = 1;
     pagenum: number = 1;
     numPages: Array<number>;
+
+    modalCaption: string = 'Удалить все';
+    modalTitle: string = 'Подвердите удаление';
+    modalBody: string = 'Все отображенные заявки будут удалены.';
+    modalAct: any;
 
     constructor(private httpService: HttpService,
                 private router: Router,
@@ -132,8 +149,27 @@ export class RegistredComponent implements OnInit {
         for (let i = 60; i <= 60 * 24; i += 30) {
             this.intervals.push(new Interval(i));
         }
+        // for delete
+        this.modalAct = this;
         this.refresh();
 
+    }
+
+    action() {
+        let filter = new Filter(
+            "/delete_orders/",
+            this.date.dateOne,
+            this.date.dateTwo,
+            this.worktype.worktype,
+            "R",
+            this.person.person_id
+        );
+        this.httpService.postFilter(filter).subscribe(
+            (data: Response) => {
+                this.limit = RegistredComponent.LIMIT;
+                this.offset = 0;
+                this.refresh();
+            });
     }
 
     refresh() {

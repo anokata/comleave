@@ -170,6 +170,17 @@ class SummaryTest(TestCase):
         self.assertEqual(response.content, 'ok')
         return response
 
+    def delete(self, is_over, status):
+        print("*** Check delete")
+        response = self.client.post('/delete_orders/', {
+            'date1': DEFAULT_DATE_BASE,
+            'date2': DEFAULT_DATE_BASE,
+            'type': 2 if is_over else 1,
+            'person_id': self.person_id,
+            'status': status,
+            })
+        self.assertEqual(response.content, 'ok')
+        return response
 
     def test_order_process(self):
         self.sum_is_zero()
@@ -211,6 +222,12 @@ class SummaryTest(TestCase):
         record_id = self.check_last('/registred/', interval=60, is_over=True)
         self.accept(record_id)
         self.summary_eq(total_un=120, total_over=240)
+
+        self.delete(True, 'A')
+        self.summary_eq(total_un=120, total_over=0)
+        self.delete(False, 'A')
+        self.summary_eq(total_un=0, total_over=0)
+        self.delete(True, 'D')
 
         print("*** Process OK")
 

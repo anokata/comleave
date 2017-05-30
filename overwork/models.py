@@ -49,7 +49,6 @@ def overwork_query(status, limit=False, offset=0):
     offset = int(offset)
     query += " limit %s"%(limit) if limit > 0 else ""
     query += " offset %s"%(offset) if offset > 0 else ""
-    print(limit, offset)
     querydata = Overs.objects.raw(query)
     data = {
             "total": overwork_count(status),

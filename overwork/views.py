@@ -269,7 +269,26 @@ def denied(request, limit=0, offset=0):
 
 def delete_orders(request):
     if request.method == 'POST':
-        #TODO
+        date1 = request.POST["date1"]
+        date2 = request.POST["date2"]
+        otype = int(request.POST["type"])
+        person_id = int(request.POST["person_id"])
+        status = request.POST["status"]
+        params = {'start_date__range': [date1, date2],
+                'status': status }
+        if otype == 2:  # over
+            params['is_over'] = True
+        elif otype == 1:
+            params['is_over'] = False
+        if person_id != -1:
+            params['person_id'] = person_id
+
+        overs = Overs.objects.filter(**params)
+        #print(overs.count())
+        #print(params)
+        for over in overs:
+            pass
+            over.delete()
         return HttpResponse('ok')
     return HttpResponse('not')
 
