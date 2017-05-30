@@ -39,7 +39,8 @@ export class ModalComponent implements OnInit {
     @Input() title: string = 'title';
     @Input() caption: string = 'caption';
     @Input() body: string = 'body';
-    @Input() action: () => any;
+    //@Input() action: () => any;
+    @Input() action: any;
 
     constructor(private httpService: HttpService) {}
                 
@@ -58,7 +59,7 @@ export class ModalComponent implements OnInit {
 
     act() {
         if (this.action) {
-            this.action();
+            this.action.action();
         }
         this.hide();
     }

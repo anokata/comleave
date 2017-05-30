@@ -76,6 +76,8 @@ export class HttpService{
         let action = obj['action'];
         params.set('date1', obj.date1);
         params.set('date2', obj.date2);
+        params.set('type', obj.type.toString());
+        params.set('person_id', obj.person_id.toString());
 
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
         console.log(action);

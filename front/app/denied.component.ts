@@ -13,6 +13,9 @@ import { DoubleDateComponent} from './doubledate.component';
 import { Strings } from './strings';
 import { ModalComponent } from './modal.component';
 import { Filter } from './filter';
+import { WorktypeComponent } from './worktype.component';
+import { PersonsComponent } from './persons.component';
+import { Type } from './type';
 
 @Component({
     selector: 'my-app',
@@ -79,19 +82,21 @@ export class DeniedComponent implements OnInit {
     dateTitleFrom: string = Strings.dateTitleFrom;
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
+    @ViewChild('worktype') worktype: WorktypeComponent;
+    @ViewChild('person') person: PersonsComponent;
     limit: number = 10;
 
     modalCaption: string = 'Удалить все';
     modalTitle: string = 'Подвердите удаление';
     modalBody: string = 'Все отображенные заявки будут удалены.';
-    modalAct: () => any;
+    modalAct: any;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
      
     ngOnInit(){
         this.refresh();
-        this.modalAct = this.action;
+        this.modalAct = this;
     }
 
     refresh() {
@@ -107,8 +112,10 @@ export class DeniedComponent implements OnInit {
     action() {
         let filter = new Filter(
             "/delete_orders/",
-            "date1",
-            "date2"
+            this.date.dateOne,
+            this.date.dateTwo,
+            this.worktype.worktype,
+            this.person.person_id
         );
         this.httpService.postFilter(filter).subscribe(
             (data: Response) => {
