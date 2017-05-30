@@ -74,6 +74,7 @@ class UserTest(TestCase):
         self.assertEqual(user['last_name'], 'LAST')
         self.assertEqual(user['first_name'], 'First')
         self.assertEqual(user['email'], 'mail@mail.ru')
+        print("*** update ok")
 
 
 class SummaryTest(TestCase):
@@ -214,5 +215,4 @@ class SummaryTest(TestCase):
         print("*** Process OK")
 
 #TODO
-#update user
 #over by id
