@@ -184,6 +184,8 @@ def changeStatus(over_id, status):
             mail_user_udwork(over, status)
         over.status = status
         over.save()
+        return 'ok'
+    return 'not'
 
 def user_is_staff(user):
     return user.is_authenticated and user.is_staff
@@ -202,13 +204,13 @@ def accept(request, over_id, interval):
 
 @user_passes_test(user_is_staff, login_url="/accounts/login/")
 def deny(request, param):
-    changeStatus(param, Overs.DENIED)
-    return HttpResponse(' param:' + param)
+    result = changeStatus(param, Overs.DENIED)
+    return HttpResponse(result)
 
 # Views
 def register(request, param):
-    changeStatus(param, Overs.REGISTRED)
-    return HttpResponse(' param:' + param)
+    result = changeStatus(param, Overs.REGISTRED)
+    return HttpResponse(result)
 
 @login_required
 def register_overwork(request):
