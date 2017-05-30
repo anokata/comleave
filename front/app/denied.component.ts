@@ -64,7 +64,18 @@ import { Type } from './type';
     </table>
    </div>
 
-<div class="text-center">
+<nav>
+  <ul class="pagination justify-content-center">
+    <li class="page-item" *ngFor="let num of numPages">
+        <span *ngIf="num == pagenum" class="page-item active" (click)="page(num)">
+            <button class="page-link">{{ num }}</button></span>
+        <span *ngIf="num != pagenum" class="page-item " (click)="page(num)">
+            <button class="page-link">{{ num }}</button></span>
+    </li>
+  </ul>
+</nav>
+
+<div class="d-none text-center">
     <button *ngIf="total > limit" class='btn btn' (click)="more()">Ещё</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
@@ -85,7 +96,12 @@ export class DeniedComponent implements OnInit {
     @ViewChild('worktype') worktype: WorktypeComponent;
     @ViewChild('person') person: PersonsComponent;
     limit: number = 10;
+    offset: number = 0;
     total: number;
+    atPage: number = 10;
+    pages: number = 1;
+    pagenum: number = 1;
+    numPages: Array<number>;
 
     modalCaption: string = 'Удалить все';
     modalTitle: string = 'Подвердите удаление';
@@ -101,13 +117,17 @@ export class DeniedComponent implements OnInit {
     }
 
     refresh() {
-        this.httpService.getRest('denied', this.limit.toString()).subscribe(
+        this.httpService.getRest('denied', this.limit.toString(), this.offset.toString()).subscribe(
         (data: Response) => {
             this.reqs=data.json()['data'];
             this.total=parseInt(data.json()['total']);
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
+
+            // Pagination.
+            this.pages = Math.ceil(this.total / this.atPage);
+            this.numPages = Array(this.pages).fill(0).map((x: any, i: any) => i + 1);
         });
     }
 
@@ -124,6 +144,12 @@ export class DeniedComponent implements OnInit {
                 console.log(data.text());
                 console.log('end del');
             });
+    }
+
+    page(n: number) {
+        this.offset = this.atPage * (n - 1);
+        this.pagenum = n;
+        this.refresh();
     }
 
     more() {

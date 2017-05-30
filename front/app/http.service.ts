@@ -23,8 +23,12 @@ export class HttpService{
         return this.http.get(this.host + 'registred/' + limit.toString());
     }
 
-    getRest(req: string, param: string="") {
-        return this.http.get(this.host + req + '/' + param);
+    getRest(req: string, param: string="", offset: string="") {
+        if (offset == "") {
+            return this.http.get(this.host + req + '/' + param);
+        } else {
+            return this.http.get(this.host + req + '/' + param + '/' + offset);
+        }
     }
 
     getUrl(url: string) {

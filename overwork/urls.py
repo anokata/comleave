@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^accepted/$', views.accepted, {'limit':0}),
     url(r'^accepted/(?P<limit>[0-9]+)$', views.accepted),
     url(r'^denied/$', views.denied, {'limit':0}),
-    url(r'^denied/(?P<limit>[0-9]+)$', views.denied),
+    url(r'^denied/(?P<limit>[0-9]+)/(?P<offset>[0-9]+)$', views.denied),
     url(r'^register_user/$', views.register_new_user),
     url(r'^update/$', views.update_current_user),
     url(r'^login/$', views.login_user),

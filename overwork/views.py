@@ -258,14 +258,14 @@ def persons(request):
 def summarize(request):
     return JsonResponse(summarize_query(), safe=False)
 
-def registred(request, limit=0):
-    return JsonResponse(overwork_query('R', limit), safe=False)
+def registred(request, limit=0, offset=0):
+    return JsonResponse(overwork_query('R', limit, offset), safe=False)
 
-def accepted(request, limit=0):
-    return JsonResponse(overwork_query('A', limit), safe=False)
+def accepted(request, limit=0, offset=0):
+    return JsonResponse(overwork_query('A', limit, offset), safe=False)
 
-def denied(request, limit=0):
-    return JsonResponse(overwork_query('D', limit), safe=False)
+def denied(request, limit=0, offset=0):
+    return JsonResponse(overwork_query('D', limit, offset), safe=False)
 
 def delete_orders(request):
     if request.method == 'POST':

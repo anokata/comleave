@@ -40,13 +40,16 @@ class Overs(models.Model):
                 + self.person.name + ' '\
                 + ('(UP)' if self.is_over else '(DN)')
 
-def overwork_query(status, limit=False):
+def overwork_query(status, limit=False, offset=0):
     query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
         "where overwork_overs.status='" + status + "' order by reg_date desc"
     limit = int(limit)
+    offset = int(offset)
     query += " limit %s"%(limit) if limit > 0 else ""
+    query += " offset %s"%(offset) if offset > 0 else ""
+    print(limit, offset)
     querydata = Overs.objects.raw(query)
     data = {
             "total": overwork_count(status),
