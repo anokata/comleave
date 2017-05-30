@@ -60,5 +60,8 @@ deleteall:
 addmany:
 	python manage.py shell < addmany.py 
 
+adddata:
+	python manage.py shell < adddata.py 
+
 test:
 	python manage.py test

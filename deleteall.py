@@ -1,4 +1,4 @@
-from overwork.models import Person
+from overwork.models import Person, Overs
 from django.contrib.auth.models import User
 
 all = Person.objects.all()
@@ -9,4 +9,7 @@ for x in all:
 
 for x in allusers:
     print(x, 'deleted')
+    x.delete()
+
+for x in Overs.objects.all():
     x.delete()

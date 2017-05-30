@@ -19,8 +19,12 @@ export class HttpService{
         return this.http.get(this.host + 'summarize/');
     }
 
-    getReqs(limit: number = 0) {
-        return this.http.get(this.host + 'registred/' + limit.toString());
+    getReqs(limit: number = 0, offset: string="") {
+        if (offset == "") {
+            return this.http.get(this.host + 'registred/' + limit.toString());
+        } else {
+            return this.http.get(this.host + 'registred/' + limit.toString() + '/' + offset);
+        }
     }
 
     getRest(req: string, param: string="", offset: string="") {

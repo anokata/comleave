@@ -65,7 +65,7 @@ import { Type } from './type';
    </div>
 
 <nav>
-  <ul class="pagination justify-content-center">
+  <ul class="pagination justify-content-left">
     <li class="page-item" *ngFor="let num of numPages">
         <span *ngIf="num == pagenum" class="page-item active" (click)="page(num)">
             <button class="page-link">{{ num }}</button></span>
@@ -95,6 +95,7 @@ export class DeniedComponent implements OnInit {
     @ViewChild('date') date: DoubleDateComponent;
     @ViewChild('worktype') worktype: WorktypeComponent;
     @ViewChild('person') person: PersonsComponent;
+
     limit: number = 10;
     offset: number = 0;
     total: number;
