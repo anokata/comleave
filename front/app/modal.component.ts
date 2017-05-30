@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Injectable} from '@angular/core';
 import { UserService} from './user.service';
+import { HttpService} from './http.service';
 
 @Component({
     selector: 'modal',
@@ -40,7 +41,8 @@ export class ModalComponent implements OnInit {
     @Input() body: string = 'body';
     @Input() action: () => any;
 
-    constructor(){}
+    constructor(private httpService: HttpService) {}
+                
      
     ngOnInit(){
         this.modal = $('#Modal');

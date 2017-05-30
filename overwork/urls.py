@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^order_edit/', views.order_edit),
     url(r'^register_overwork/', views.register_overwork),
     url(r'^register_unwork/', views.register_unwork),
+    url(r'^delete_orders/', views.delete_orders),
 ]

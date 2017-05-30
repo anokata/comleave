@@ -12,6 +12,7 @@ import { Util } from './util';
 import { DoubleDateComponent} from './doubledate.component';
 import { Strings } from './strings';
 import { ModalComponent } from './modal.component';
+import { Filter } from './filter';
 
 @Component({
     selector: 'my-app',
@@ -26,6 +27,7 @@ import { ModalComponent } from './modal.component';
             [title]="modalTitle"
             [caption]="modalCaption"
             [body]="modalBody"
+            [action]="modalAct"
         ></modal>
         </div>
     </div> </div>
@@ -82,12 +84,14 @@ export class DeniedComponent implements OnInit {
     modalCaption: string = 'Удалить все';
     modalTitle: string = 'Подвердите удаление';
     modalBody: string = 'Все отображенные заявки будут удалены.';
+    modalAct: () => any;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
      
     ngOnInit(){
         this.refresh();
+        this.modalAct = this.action;
     }
 
     refresh() {
@@ -98,6 +102,19 @@ export class DeniedComponent implements OnInit {
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
+    }
+
+    action() {
+        let filter = new Filter(
+            "/delete_orders/",
+            "date1",
+            "date2"
+        );
+        this.httpService.postFilter(filter).subscribe(
+            (data: Response) => {
+                console.log(data.text());
+                console.log('end del');
+            });
     }
 
     more() {

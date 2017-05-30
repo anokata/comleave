@@ -3,6 +3,7 @@ import {Http} from '@angular/http';
 import { HttpModule } from '@angular/http';
 import {Response, Headers, URLSearchParams} from '@angular/http';
 import { User } from './user';
+import { Filter } from './filter';
  
 @Injectable()
 export class HttpService{
@@ -67,6 +68,18 @@ export class HttpService{
         params.set('comment', comment);
         params.set('is_over', is_over);
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
+        return this.http.post(this.host + action,  params.toString(), { headers: headers });
+    }
+
+    postFilter(obj: Filter){
+        let params = new URLSearchParams();
+        let action = obj['action'];
+        params.set('date1', obj.date1);
+        params.set('date2', obj.date2);
+
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
+        console.log(action);
+        console.log(params.toString());
         return this.http.post(this.host + action,  params.toString(), { headers: headers });
     }
 

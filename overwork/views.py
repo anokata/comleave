@@ -267,4 +267,10 @@ def accepted(request, limit=0):
 def denied(request, limit=0):
     return JsonResponse(overwork_query('D', limit), safe=False)
 
+def delete_orders(request):
+    if request.method == 'POST':
+
+        return HttpResponse('ok')
+    return HttpResponse('not')
+
 ensure_manager_exist()
