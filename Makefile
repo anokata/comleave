@@ -52,16 +52,16 @@ guni:
 	gunicorn -w 4 -b 127.0.0.1:8004 comleave.wsgi 
 
 deleteme:
-	python manage.py shell < deleteme.py 
+	python manage.py shell < scripts/deleteme.py 
 
 deleteall:
-	python manage.py shell < deleteall.py 
+	python manage.py shell < scripts/deleteall.py 
 
 addmany:
-	python manage.py shell < addmany.py 
+	python manage.py shell < scripts/addmany.py 
 
 adddata:
-	python manage.py shell < adddata.py 
+	python manage.py shell < scripts/adddata.py 
 
 test:
 	python manage.py test
