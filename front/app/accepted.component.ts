@@ -80,7 +80,7 @@ export class AcceptedComponent implements OnInit {
         this.httpService.getRest('accepted', this.limit.toString()).subscribe(
         (data: Response) => {
             this.reqs=data.json();
-            Util.makeIntervalTitles(this.reqs);
+            Util.makeIntervalTitles(this.reqs); // TODO make pipe?
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
         });
