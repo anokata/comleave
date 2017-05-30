@@ -15,7 +15,6 @@ import { WorktypeComponent } from './worktype.component';
 import { DoubleDateComponent} from './doubledate.component';
 import { Strings } from './strings';
 import { Router } from '@angular/router';
-import { ModalComponent } from './modal.component';
 import { Filter } from './filter';
 import { Type } from './type';
 
@@ -91,7 +90,7 @@ import { Type } from './type';
 </nav>
 
 
-<div class="text-center">
+<div class="text-center d-none">
     <button *ngIf="total > limit" class='btn btn' (click)="more()">Еще</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
@@ -122,10 +121,6 @@ export class RegistredComponent implements OnInit {
     pages: number = 1;
     pagenum: number = 1;
     numPages: Array<number>;
-    modalCaption: string = 'Удалить все';
-    modalTitle: string = 'Подвердите удаление';
-    modalBody: string = 'Все отображенные заявки будут удалены.';
-    modalAct: any;
 
     constructor(private httpService: HttpService,
                 private router: Router,

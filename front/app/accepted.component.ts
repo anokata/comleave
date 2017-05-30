@@ -11,6 +11,8 @@ import { MessagesComponent } from './messages.component';
 import { Util } from './util';
 import { DoubleDateComponent} from './doubledate.component';
 import { Strings } from './strings';
+import { Filter } from './filter';
+import { Type } from './type';
 
 @Component({
     selector: 'my-app',
@@ -49,7 +51,18 @@ import { Strings } from './strings';
     </tbody>
     </table>
 
-<div class="text-center">
+<nav>
+  <ul class="pagination justify-content-left">
+    <li class="page-item" *ngFor="let num of numPages">
+        <span *ngIf="num == pagenum" class="page-item active" (click)="page(num)">
+            <button class="page-link">{{ num }}</button></span>
+        <span *ngIf="num != pagenum" class="page-item " (click)="page(num)">
+            <button class="page-link">{{ num }}</button></span>
+    </li>
+  </ul>
+</nav>
+
+<div class="text-center d-none">
     <button *ngIf="total > limit" class='btn btn' (click)="more()">Ещё</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
@@ -68,8 +81,15 @@ export class AcceptedComponent implements OnInit {
     dateTitleFrom: string = Strings.dateTitleFrom;
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
+
     limit: number = 10;
+    offset: number = 0;
     total: number;
+    atPage: number = 10;
+    pages: number = 1;
+    pagenum: number = 1;
+    numPages: Array<number>;
+
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
@@ -79,14 +99,23 @@ export class AcceptedComponent implements OnInit {
     }
 
     refresh() {
-        this.httpService.getRest('accepted', this.limit.toString()).subscribe(
+        this.httpService.getRest('accepted', this.limit.toString(), this.offset.toString()).subscribe(
         (data: Response) => {
             this.reqs=data.json()['data'];
             this.total=parseInt(data.json()['total']);
             Util.makeIntervalTitles(this.reqs); // TODO make pipe?
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
+            // Pagination.
+            this.pages = Math.ceil(this.total / this.atPage);
+            this.numPages = Array(this.pages).fill(0).map((x: any, i: any) => i + 1);
         });
+    }
+
+    page(n: number) {
+        this.offset = this.atPage * (n - 1);
+        this.pagenum = n;
+        this.refresh();
     }
 
     more() {
