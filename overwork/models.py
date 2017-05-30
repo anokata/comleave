@@ -45,6 +45,7 @@ def overwork_query(status, limit=False):
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
         "where overwork_overs.status='" + status + "' order by reg_date desc"
+    limit = int(limit)
     query += " limit %s"%(limit) if limit > 0 else ""
     querydata = Overs.objects.raw(query)
     data = [{
