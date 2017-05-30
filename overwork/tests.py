@@ -17,7 +17,7 @@ def drint(arg):
     if debug:
         print(arg)
 
-class SimpleTest(TestCase):
+class UserTest(TestCase):
     def test_root(self):
         print('*** Test view')
         response = self.client.get('/')
@@ -61,6 +61,20 @@ class SimpleTest(TestCase):
         user = self.client.get('/user/').json()
         self.assertEqual(user['username'], TEST_USERNAME)
         self.assertEqual(user['is_authenticated'], True)
+
+    def update_user(self):
+        print('*** Test update user')
+        response = self.client.post('/update/', {
+            'last_name':'LAST',
+            'first_name':'First',
+            'email':'mail@mail.ru',
+                    })
+        self.assertEqual(response.content, 'ok')
+        user = self.client.get('/user/').json()
+        self.assertEqual(user['last_name'], 'LAST')
+        self.assertEqual(user['first_name'], 'First')
+        self.assertEqual(user['email'], 'mail@mail.ru')
+
 
 class SummaryTest(TestCase):
     def setUp(self):
