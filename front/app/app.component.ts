@@ -57,10 +57,19 @@ import {Router} from '@angular/router';
 </div>
 
     </span>
+<span class="badge badge-pill info d-none">I</span>
     </ul>
   </div>
 </nav>
+
 <router-outlet></router-outlet>
+
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted text-center">.</span>
+        <span class="copyleft">&copy;</span>
+    </div>
+</footer>
                `,
     providers: [HttpService],
     host: {
