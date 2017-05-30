@@ -85,13 +85,21 @@ class SummaryTest(TestCase):
             self.assertEqual(line['unwork'], 0)
             self.assertEqual(line['overwork'], 0)
 
-    def register_over(self, interval=60, date='01.01.2001', comment='no comment'):
-        response = self.client.post('/register_overwork/', {
-            'date': date,
-            'interval': str(interval),
-            'person_id': self.person_id,
-            'comment': comment,
-            })
+    def register(self, interval=60, date='01.01.2001', comment='no comment', is_over=True):
+        if is_over:
+            response = self.client.post('/register_overwork/', {
+                'date': date,
+                'interval': str(interval),
+                'person_id': self.person_id,
+                'comment': comment,
+                })
+        else:
+            response = self.client.post('/register_unwork/', {
+                'date': date,
+                'interval': str(interval),
+                'person_id': self.person_id,
+                'comment': comment,
+                })
         self.assertEqual(response.status_code, 200)
 
     def summary_eq(self, total_over=False, total_un=False):
@@ -106,7 +114,7 @@ class SummaryTest(TestCase):
         return json
 
     def check_last(self, type, interval=60, date=DEFAULT_DATE_BASE, is_over=True):
-        print("***Check last " + type)
+        print("*** Check last " + type)
         record = self.client.get(type).json()[0]
         drint(record)
         record_id = record['id']
@@ -128,24 +136,69 @@ class SummaryTest(TestCase):
         self.assertEqual(response.content, 'ok')
         return response
 
-    def test_order_over(self):
+    def to_registred(self, id):
+        print("*** Check to_registred")
+        response = self.client.get('/register/' + str(id))
+        self.assertEqual(response.content, 'ok')
+        return response
+
+    def edit(self, id, interval, comment, is_over, date=DEFAULT_DATE_BASE):
+        print("*** Check edit")
+        response = self.client.post('/order_edit/', {
+            'id': id,
+            'date': date,
+            'interval': interval,
+            'person_id': self.person_id,
+            'comment': comment,
+            'is_over': is_over,
+            })
+        self.assertEqual(response.content, 'ok')
+        return response
+
+
+    def test_order_process(self):
         self.sum_is_zero()
-        self.register_over(interval=60)
+        self.register(interval=60)
         record_id = self.check_last('/registred/')
         self.accept(record_id, 90)
         record_id = self.check_last('/accepted/', interval=90)
         self.summary_eq(90)
 
-        self.register_over(interval=90)
+        self.register(interval=90)
         record_id = self.check_last('/registred/', interval=90)
         self.accept(record_id)
         record_id = self.check_last('/accepted/', interval=90)
         self.summary_eq(total_over=180)
 
-        self.register_over(interval=120)
+        self.register(interval=120)
         record_id = self.check_last('/registred/', interval=120)
         self.deny(record_id)
         record_id = self.check_last('/denied/', interval=120)
         self.summary_eq(total_over=180)
 
+        self.register(interval=120, is_over=False)
+        record_id = self.check_last('/registred/', interval=120, is_over=False)
+        self.accept(record_id)
+        record_id = self.check_last('/accepted/', interval=120, is_over=False)
+        self.summary_eq(total_un=120)
 
+        self.register(interval=120, is_over=False)
+        record_id = self.check_last('/registred/', interval=120, is_over=False)
+        self.accept(record_id)
+        record_id = self.check_last('/accepted/', interval=120, is_over=False)
+        self.summary_eq(total_un=240)
+
+        self.deny(record_id)
+        self.summary_eq(total_un=120)
+        self.to_registred(record_id)
+        record_id = self.check_last('/registred/', interval=120, is_over=False)
+        self.edit(record_id, interval=60, is_over=True, comment='abc')
+        record_id = self.check_last('/registred/', interval=60, is_over=True)
+        self.accept(record_id)
+        self.summary_eq(total_un=120, total_over=240)
+
+        print("*** Process OK")
+
+#TODO
+#update user
+#over by id
