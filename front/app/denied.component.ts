@@ -65,7 +65,7 @@ import { Type } from './type';
    </div>
 
 <div class="text-center">
-    <button class='btn btn' (click)="more()">Ещё</button>
+    <button *ngIf="total > limit" class='btn btn' (click)="more()">Ещё</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
 
@@ -85,6 +85,7 @@ export class DeniedComponent implements OnInit {
     @ViewChild('worktype') worktype: WorktypeComponent;
     @ViewChild('person') person: PersonsComponent;
     limit: number = 10;
+    total: number;
 
     modalCaption: string = 'Удалить все';
     modalTitle: string = 'Подвердите удаление';
@@ -102,7 +103,8 @@ export class DeniedComponent implements OnInit {
     refresh() {
         this.httpService.getRest('denied', this.limit.toString()).subscribe(
         (data: Response) => {
-            this.reqs=data.json();
+            this.reqs=data.json()['data'];
+            this.total=parseInt(data.json()['total']);
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
@@ -132,6 +134,7 @@ export class DeniedComponent implements OnInit {
     viewAll() {
         this.limit = 0;
         this.refresh();
+        this.limit = this.total;
     }
 
     remove(id: number) {

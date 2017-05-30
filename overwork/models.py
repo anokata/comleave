@@ -48,7 +48,9 @@ def overwork_query(status, limit=False):
     limit = int(limit)
     query += " limit %s"%(limit) if limit > 0 else ""
     querydata = Overs.objects.raw(query)
-    data = [{
+    data = {
+            "total": overwork_count(status),
+            "data": [{
         'id': q.id, 
         'name':q.name, 
         'login':q.login, 
@@ -58,8 +60,11 @@ def overwork_query(status, limit=False):
         'start_date':q.start_date,
         'reg_date':q.reg_date,
         'person_id':q.person_id,
-        } for q in querydata]
+        } for q in querydata]}
     return data
+
+def overwork_count(status):
+    return Overs.objects.filter(status=status).count()
 
 def summarize_query():
     q = "select oo.id, oo.name, oo.login, "\

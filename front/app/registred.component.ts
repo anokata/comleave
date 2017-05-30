@@ -77,7 +77,7 @@ import { Router } from '@angular/router';
 </table>
 
 <div class="text-center">
-    <button class='btn btn' (click)="more()">Еще</button>
+    <button *ngIf="total > limit" class='btn btn' (click)="more()">Еще</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
 
@@ -100,6 +100,7 @@ export class RegistredComponent implements OnInit {
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
     limit: number = 10;
+    total: number;
 
     constructor(private httpService: HttpService,
                 private router: Router,
@@ -118,7 +119,8 @@ export class RegistredComponent implements OnInit {
     refresh() {
         this.httpService.getReqs(this.limit).subscribe(
         (data: Response) => {
-            this.reqs=data.json();
+            this.reqs=data.json()['data'];
+            this.total=parseInt(data.json()['total']);
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
@@ -133,6 +135,7 @@ export class RegistredComponent implements OnInit {
     viewAll() {
         this.limit = 0;
         this.refresh();
+        this.limit = this.total;
     }
 
     edit(id: number) {

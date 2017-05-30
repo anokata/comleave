@@ -50,7 +50,7 @@ import { Strings } from './strings';
     </table>
 
 <div class="text-center">
-    <button class='btn btn' (click)="more()">Ещё</button>
+    <button *ngIf="total > limit" class='btn btn' (click)="more()">Ещё</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
 
@@ -69,6 +69,7 @@ export class AcceptedComponent implements OnInit {
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
     limit: number = 10;
+    total: number;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
@@ -80,7 +81,8 @@ export class AcceptedComponent implements OnInit {
     refresh() {
         this.httpService.getRest('accepted', this.limit.toString()).subscribe(
         (data: Response) => {
-            this.reqs=data.json();
+            this.reqs=data.json()['data'];
+            this.total=parseInt(data.json()['total']);
             Util.makeIntervalTitles(this.reqs); // TODO make pipe?
             this.date.dateOne = Util.getMinDateStr(this.reqs);
             this.date.dateTwo = Util.getMaxDateStr(this.reqs);
@@ -95,6 +97,7 @@ export class AcceptedComponent implements OnInit {
     viewAll() {
         this.limit = 0;
         this.refresh();
+        this.limit = this.total;
     }
 
     remove(id: number) {

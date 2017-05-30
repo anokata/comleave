@@ -269,7 +269,7 @@ def denied(request, limit=0):
 
 def delete_orders(request):
     if request.method == 'POST':
-
+        #TODO
         return HttpResponse('ok')
     return HttpResponse('not')
 

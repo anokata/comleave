@@ -130,7 +130,7 @@ class SummaryTest(TestCase):
 
     def check_last(self, type, interval=60, date=DEFAULT_DATE_BASE, is_over=True):
         print("*** Check last " + type)
-        record = self.client.get(type).json()[0]
+        record = self.client.get(type).json()["data"][0]
         drint(record)
         record_id = record['id']
         self.assertEqual(record['interval'], interval)
