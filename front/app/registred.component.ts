@@ -90,8 +90,8 @@ import { Type } from './type';
 </nav>
 
 
-<div class="text-center d-none">
-    <button *ngIf="total > limit" class='btn btn' (click)="more()">Еще</button>
+<div class="text-center">
+    <button *ngIf="total > limit" class='btn btn d-none' (click)="more()">Еще</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
 
@@ -163,6 +163,7 @@ export class RegistredComponent implements OnInit {
 
     viewAll() {
         this.limit = 0;
+        this.offset = 0;
         this.refresh();
         this.limit = this.total;
     }

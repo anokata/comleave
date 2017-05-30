@@ -75,8 +75,8 @@ import { Type } from './type';
   </ul>
 </nav>
 
-<div class="d-none text-center">
-    <button *ngIf="total > limit" class='btn btn' (click)="more()">Ещё</button>
+<div class="text-center">
+    <button *ngIf="total > limit" class='btn btn d-none' (click)="more()">Ещё</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
 </div>
 
@@ -160,6 +160,7 @@ export class DeniedComponent implements OnInit {
 
     viewAll() {
         this.limit = 0;
+        this.offset = 0;
         this.refresh();
         this.limit = this.total;
     }
