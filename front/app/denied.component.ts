@@ -155,6 +155,7 @@ export class DeniedComponent implements OnInit {
     page(n: number) {
         this.offset = this.atPage * (n - 1);
         this.pagenum = n;
+        this.limit = DeniedComponent.LIMIT;
         this.refresh();
     }
 

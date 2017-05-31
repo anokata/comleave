@@ -189,6 +189,7 @@ export class RegistredComponent implements OnInit {
     page(n: number) {
         this.offset = this.atPage * (n - 1);
         this.pagenum = n;
+        this.limit = RegistredComponent.LIMIT;
         this.refresh();
     }
 

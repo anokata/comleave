@@ -82,6 +82,7 @@ export class AcceptedComponent implements OnInit {
     dateTitleTo: string = Strings.dateTitleTo;
     @ViewChild('date') date: DoubleDateComponent;
 
+    static LIMIT: number = 10;
     limit: number = 10;
     offset: number = 0;
     total: number;
@@ -115,6 +116,7 @@ export class AcceptedComponent implements OnInit {
     page(n: number) {
         this.offset = this.atPage * (n - 1);
         this.pagenum = n;
+        this.limit = AcceptedComponent.LIMIT;
         this.refresh();
     }
 
