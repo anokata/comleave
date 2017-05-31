@@ -52,7 +52,7 @@ import { Type } from './type';
     </table>
 
 <nav>
-  <ul class="pagination justify-content-left">
+  <ul class="pagination justify-content-center">
     <li class="page-item" *ngFor="let num of numPages">
         <span *ngIf="num == pagenum" class="page-item active" (click)="page(num)">
             <button class="page-link">{{ num }}</button></span>
