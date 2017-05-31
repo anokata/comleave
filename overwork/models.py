@@ -40,11 +40,17 @@ class Overs(models.Model):
                 + self.person.name + ' '\
                 + ('(UP)' if self.is_over else '(DN)')
 
-def overwork_query(status, limit=False, offset=0):
+# filters: person_id, datefrom dateto, is_over
+def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None):
     query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
-        "where overwork_overs.status='" + status + "' order by reg_date desc"
+        "where overwork_overs.status='" + status  + "' "
+    if person_id != -1:
+        query += " overwork_overs.person_id = " + str(person_id)
+    if is_over != None:
+        query += " overwork_overs.is_over = " + "'1'" if is_over else "'0'"
+    query += " order by reg_date desc"
     limit = int(limit)
     offset = int(offset)
     query += " limit %s"%(limit) if limit > 0 else ""

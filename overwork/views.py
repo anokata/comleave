@@ -258,6 +258,7 @@ def persons(request):
 def summarize(request):
     return JsonResponse(summarize_query(), safe=False)
 
+#TODO make post and filter
 def registred(request, limit=0, offset=0):
     return JsonResponse(overwork_query('R', limit, offset), safe=False)
 
