@@ -88,6 +88,8 @@ export class HttpService{
         params.set('type', obj.type.toString());
         params.set('person_id', obj.person_id.toString());
         params.set('status', obj.status);
+        params.set('limit', obj.limit.toString());
+        params.set('offset', obj.offset.toString());
 
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
         console.log(action);

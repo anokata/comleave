@@ -17,6 +17,7 @@ import { Strings } from './strings';
 import { Router } from '@angular/router';
 import { Filter } from './filter';
 import { Type } from './type';
+import { WorkType } from './worktype';
 import { ModalComponent } from './modal.component';
 
 @Component({
@@ -183,7 +184,26 @@ export class RegistredComponent implements OnInit {
             // Pagination.
             this.pages = Math.ceil(this.total / this.atPage);
             this.numPages = Array(this.pages).fill(0).map((x: any, i: any) => i + 1);
+
+            /*
+        let filter = new Filter(
+            "/registred/",
+            this.date.dateOne,
+            this.date.dateTwo,
+            this.worktype.worktype || WorkType.ALL,
+            "R",
+            this.person.person_id || -1,
+            this.limit,
+            this.offset,
+        );
+        this.httpService.postFilter(filter).subscribe(
+            (data: Response) => {
+                console.log(data);
+                //this.refresh();
+            });
+             */
         });
+
     }
 
     page(n: number) {

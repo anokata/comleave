@@ -262,12 +262,16 @@ def summarize(request):
 def registred(request, limit=0, offset=0):
     if request.method == "POST":
         status = request.POST["status"]
-        limit = request.POST["limit"]
-        offset = request.POST["offset"]
-        person_id = request.POST["person_id"]
-        #is_over = request.POST["is_over"]
-        dateFrom = request.POST["dateFrom"]
-        dateTo = request.POST["dateTo"]
+        limit = int(request.POST["limit"])
+        offset = int(request.POST["offset"])
+        person_id = int(request.POST["person_id"])
+        worktype = int(request.POST["type"])
+        dateFrom = request.POST["date1"]
+        dateTo = request.POST["date2"]
+        is_over = None
+        print(request.POST)
+        return JsonResponse(overwork_query('R', limit, offset,
+            person_id, is_over, dateFrom, dateTo), safe=False)
     else:
         return JsonResponse(overwork_query('R', limit, offset), safe=False)
 

@@ -42,28 +42,24 @@ class Overs(models.Model):
                 + ('(UP)' if self.is_over else '(DN)')
 
 # filters: person_id, datefrom dateto, is_over
+# TODO total remake
 def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None,
         dateFrom=False, dateTo=False):
 
     query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
         "from overwork_overs inner join overwork_person "\
-        "on overwork_overs.person_id=overwork_person.id "\
-        "where overwork_overs.status='" + status  + "' "
-    if person_id != -1:
-        query += " and overwork_overs.person_id = " + str(person_id)
-    if is_over != None:
-        query += " and overwork_overs.is_over = " + "'1'" if is_over else "'0'"
-    if dateFrom and dateTo:
-        query += " and overwork_overs.start_date >'" + dateFrom + "'"
-        query += " and overwork_overs.start_date <'" + dateTo + "'"
+        "on overwork_overs.person_id=overwork_person.id "
+    query += over_where(status, limit, offset, person_id, is_over, dateFrom, dateTo)
     query += " order by reg_date desc"
     limit = int(limit)
     offset = int(offset)
     query += " limit %s"%(limit) if limit > 0 else ""
     query += " offset %s"%(offset) if offset > 0 else ""
+    #print(query)
     querydata = Overs.objects.raw(query)
+    total = overwork_count(status, person_id, is_over, dateFrom, dateTo)
     data = {
-            "total": overwork_count(status),
+            "total": total,
             "data": [{
         'id': q.id, 
         'name':q.name, 
@@ -77,8 +73,23 @@ def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None,
         } for q in querydata]}
     return data
 
-def overwork_count(status):
-    return Overs.objects.filter(status=status).count()
+def overwork_count(status, person_id=-1, is_over=None, dateFrom=False, dateTo=False):
+    if not person_id != -1 and is_over == None and not dateFrom:
+        return Overs.objects.filter(status=status).count()
+    else: 
+        return 30
+
+def over_where(status, limit=False, offset=0, person_id=-1, is_over=None,
+        dateFrom=False, dateTo=False):
+    query = "where overwork_overs.status='" + status  + "' "
+    if person_id != -1:
+        query += " and overwork_overs.person_id = '" + str(person_id) + "' "
+    if is_over != None:
+        query += " and overwork_overs.is_over = " + "'1'" if is_over else "'0'"
+    if dateFrom and dateTo:
+        query += " and overwork_overs.start_date >= '" + dateFrom + "'"
+        query += " and overwork_overs.start_date <= '" + dateTo + "'"
+    return query
 
 def summarize_query():
     q = "select oo.id, oo.name, oo.login, "\
