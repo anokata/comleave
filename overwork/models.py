@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+import datetime
 
 # Create your models here.
 class Person(models.Model):
@@ -41,15 +42,20 @@ class Overs(models.Model):
                 + ('(UP)' if self.is_over else '(DN)')
 
 # filters: person_id, datefrom dateto, is_over
-def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None):
+def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None,
+        dateFrom=False, dateTo=False):
+
     query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "\
         "where overwork_overs.status='" + status  + "' "
     if person_id != -1:
-        query += " overwork_overs.person_id = " + str(person_id)
+        query += " and overwork_overs.person_id = " + str(person_id)
     if is_over != None:
-        query += " overwork_overs.is_over = " + "'1'" if is_over else "'0'"
+        query += " and overwork_overs.is_over = " + "'1'" if is_over else "'0'"
+    if dateFrom and dateTo:
+        query += " and overwork_overs.start_date >'" + dateFrom + "'"
+        query += " and overwork_overs.start_date <'" + dateTo + "'"
     query += " order by reg_date desc"
     limit = int(limit)
     offset = int(offset)

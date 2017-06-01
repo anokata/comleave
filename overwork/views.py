@@ -260,7 +260,16 @@ def summarize(request):
 
 #TODO make post and filter
 def registred(request, limit=0, offset=0):
-    return JsonResponse(overwork_query('R', limit, offset), safe=False)
+    if request.method == "POST":
+        status = request.POST["status"]
+        limit = request.POST["limit"]
+        offset = request.POST["offset"]
+        person_id = request.POST["person_id"]
+        #is_over = request.POST["is_over"]
+        dateFrom = request.POST["dateFrom"]
+        dateTo = request.POST["dateTo"]
+    else:
+        return JsonResponse(overwork_query('R', limit, offset), safe=False)
 
 def accepted(request, limit=0, offset=0):
     return JsonResponse(overwork_query('A', limit, offset), safe=False)
