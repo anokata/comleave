@@ -16,8 +16,8 @@ import {ViewChild} from '@angular/core';
    `,
 })
 export class DoubleDateComponent implements OnInit { 
-    public dateOne: string;
-    public dateTwo: string;
+    public dateOne: string = "01.01.1000";
+    public dateTwo: string = "01.01.3000";
     @Input() titleOne: string;
     @Input() titleTwo: string;
 

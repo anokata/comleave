@@ -65,7 +65,7 @@ import { ModalComponent } from './modal.component';
 </th>
 </thead>
 <tbody>
-<tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
+<tr *ngFor="let rec of reqs ">
   <td>{{rec.name}}</td> 
   <td *ngIf="rec.is_over">Переработка</td>
   <td *ngIf="!rec.is_over">Отгул</td>
@@ -99,7 +99,6 @@ import { ModalComponent } from './modal.component';
   </ul>
 </nav>
 
-
 <div class="text-center">
     <button *ngIf="total > limit" class='btn btn d-none' (click)="more()">Еще</button>
     <button class='btn btn' (click)="viewAll()">Показать все</button>
@@ -115,6 +114,7 @@ import { ModalComponent } from './modal.component';
 export class RegistredComponent implements OnInit { 
   
     reqs: Overs[];
+    first: boolean = true;
     intervals: Interval[];
     selected_interval: number;
     is_change: boolean = false;
@@ -173,7 +173,8 @@ export class RegistredComponent implements OnInit {
             });
     }
 
-    refresh() {
+    refresh(n: number = 1) {
+            /*
         this.httpService.getReqs(this.limit, this.offset.toString()).subscribe(
         (data: Response) => {
             this.reqs=data.json()['data'];
@@ -184,8 +185,9 @@ export class RegistredComponent implements OnInit {
             // Pagination.
             this.pages = Math.ceil(this.total / this.atPage);
             this.numPages = Array(this.pages).fill(0).map((x: any, i: any) => i + 1);
+             */
 
-            /*
+        console.log(this.date.dateOne);
         let filter = new Filter(
             "/registred/",
             this.date.dateOne,
@@ -198,11 +200,23 @@ export class RegistredComponent implements OnInit {
         );
         this.httpService.postFilter(filter).subscribe(
             (data: Response) => {
-                console.log(data);
-                //this.refresh();
+                //console.log(this.date.dateOne);
+                //console.log(data);
+                this.reqs=data.json()['data'];
+                this.total=parseInt(data.json()['total']);
+                Util.makeIntervalTitles(this.reqs);
+                if (this.first) {
+                    this.date.dateOne = Util.getMinDateStr(this.reqs);
+                    this.date.dateTwo = Util.getMaxDateStr(this.reqs);
+                    this.first = false;
+                }
+                // Pagination.
+                this.pages = Math.ceil(this.total / this.atPage);
+                this.numPages = Array(this.pages).fill(0).map((x: any, i: any) => i + 1);
+                console.log(this.pages);
+                this.pagenum = n;
             });
-             */
-        });
+        //});
 
     }
 
@@ -210,7 +224,7 @@ export class RegistredComponent implements OnInit {
         this.offset = this.atPage * (n - 1);
         this.pagenum = n;
         this.limit = RegistredComponent.LIMIT;
-        this.refresh();
+        this.refresh(n);
     }
 
     more() {

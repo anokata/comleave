@@ -269,7 +269,10 @@ def registred(request, limit=0, offset=0):
         dateFrom = request.POST["date1"]
         dateTo = request.POST["date2"]
         is_over = None
-        print(request.POST)
+        if worktype == 2:
+            is_over = True
+        elif worktype == 1:
+            is_over = False
         return JsonResponse(overwork_query('R', limit, offset,
             person_id, is_over, dateFrom, dateTo), safe=False)
     else:

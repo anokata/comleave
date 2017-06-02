@@ -49,13 +49,13 @@ def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None,
     query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "
-    query += over_where(status, limit, offset, person_id, is_over, dateFrom, dateTo)
+    query += over_where(status, person_id, is_over, dateFrom, dateTo)
     query += " order by reg_date desc"
     limit = int(limit)
     offset = int(offset)
     query += " limit %s"%(limit) if limit > 0 else ""
     query += " offset %s"%(offset) if offset > 0 else ""
-    #print(query)
+    print(query)
     querydata = Overs.objects.raw(query)
     total = overwork_count(status, person_id, is_over, dateFrom, dateTo)
     data = {
@@ -77,15 +77,21 @@ def overwork_count(status, person_id=-1, is_over=None, dateFrom=False, dateTo=Fa
     if not person_id != -1 and is_over == None and not dateFrom:
         return Overs.objects.filter(status=status).count()
     else: 
-        return 30
+        query = "select 1 as id, count(*) as count "\
+            "from overwork_overs inner join overwork_person "\
+            "on overwork_overs.person_id=overwork_person.id "
+        query += over_where(status, person_id, is_over, dateFrom, dateTo)
+        querydata = Overs.objects.raw(query)
+        #print(query, querydata[0].count)
+        return querydata[0].count
 
-def over_where(status, limit=False, offset=0, person_id=-1, is_over=None,
+def over_where(status, person_id=-1, is_over=None,
         dateFrom=False, dateTo=False):
     query = "where overwork_overs.status='" + status  + "' "
     if person_id != -1:
         query += " and overwork_overs.person_id = '" + str(person_id) + "' "
     if is_over != None:
-        query += " and overwork_overs.is_over = " + "'1'" if is_over else "'0'"
+        query += " and overwork_overs.is_over = " + ("'1'" if is_over else "'0'")
     if dateFrom and dateTo:
         query += " and overwork_overs.start_date >= '" + dateFrom + "'"
         query += " and overwork_overs.start_date <= '" + dateTo + "'"
