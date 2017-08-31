@@ -65,3 +65,7 @@ adddata:
 
 test:
 	python manage.py test
+
+prod_restart:
+	sudo systemctl restart gunicorn.service
+	sudo systemctl restart gunicorn.socket
