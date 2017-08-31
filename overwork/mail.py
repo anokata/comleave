@@ -19,7 +19,9 @@ def make_mail_body(person_id, date, interval, comment, is_over):
     body += person.name + ' на '
     body += interval2hours(interval)
     body += u' на ' + date
-    body += u' \nComment:\n' + comment
+    body += u' \nComment:\n' + comment #TODO {} .format
+    body += u'\n\nПортал отгулов и переработок \n'
+    body += u'http://10.4.126.23:8005/reg\n'
     return body
 
 
