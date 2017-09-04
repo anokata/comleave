@@ -69,3 +69,5 @@ test:
 prod_restart:
 	sudo systemctl restart gunicorn.service
 	sudo systemctl restart gunicorn.socket
+
+.PHONY: front

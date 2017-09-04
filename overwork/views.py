@@ -244,8 +244,10 @@ def register_interval(request, is_over):
     over.save()
     return HttpResponse('ok')
 
-@user_passes_test(user_is_staff, login_url="/accounts/login/")
+@login_required
 def delete(request, over_id):
+    print("DELETE")
+    print(over_id)
     Overs.objects.get(id=over_id).delete()
     return HttpResponse(' param:' + over_id)
 

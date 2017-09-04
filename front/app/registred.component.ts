@@ -81,6 +81,7 @@ import { ModalComponent } from './modal.component';
   <div class="text-right d-inline" *ngIf="(userService.user.username == rec.login) || (userService.user.is_staff) ">
   <td class="d-inline">
   <button class="btn btn-danger m5" (click)="edit(rec.id)">Редактировать</button> 
+  <button class="btn btn-danger m5" (click)="delete(rec.id)">Удалить</button> 
   </td> 
   </div>
 
@@ -235,6 +236,14 @@ export class RegistredComponent implements OnInit {
         if (idx >= 0) {
             this.reqs.splice(idx, 1);
         }
+    }
+
+    delete(id: number) {
+        this.httpService.action('delete', id)
+            .subscribe((data) => {
+                this.msg.send("Удалена заявка #" + id);
+                this.remove(id);
+        });
     }
 
     accept(id: number){
