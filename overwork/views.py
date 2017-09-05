@@ -235,10 +235,21 @@ def register_interval(request, is_over):
 
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person'
-    date = datetime.datetime.strptime(date, "%d.%m.%Y")
+    date = datetime.datetime.strptime(date, "%d.%m.%Y").date()
     now = datetime.datetime.now()
     if not comment:
         comment = '-'
+    interval = int(interval)
+    # Find last for this person
+    last = Overs.objects.filter(person=person).order_by('-reg_date')[0]
+    is_same = (last.start_date == date 
+            and last.comment == comment 
+            and last.is_over == is_over 
+            and last.interval == interval)
+    # if exist same then fail
+    if is_same:
+        return HttpResponse('Already exist')
+
     over = Overs(start_date=date, reg_date=now, comment=comment, 
             interval=interval, person=person, is_over=is_over)
     over.save()

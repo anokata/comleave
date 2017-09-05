@@ -99,7 +99,7 @@ export class PresentComponent implements OnInit {
             this.person_id, this.comment, true)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
-                    this.msg.send("Ошибка");
+                    this.msg.send("Ошибка: " + data.text());
                 } else {
                     this.msg.send("Зарегистрирована переработка на " + this.interval 
                         + " минут ");

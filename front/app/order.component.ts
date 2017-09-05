@@ -143,7 +143,7 @@ export class OrderComponent implements OnInit {
             this.person_id, this.inComment, this.inId, is_over)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
-                    this.msg.send("Ошибка");
+                    this.msg.send("Ошибка: " + data.text());
                     this.msg.send(data.text());
                 } else {
                     this.msg.send("Успешно отредактировано");

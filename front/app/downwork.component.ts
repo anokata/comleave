@@ -102,7 +102,7 @@ export class DownworkComponent implements OnInit {
             this.person_id, this.comment, false)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
-                    this.msg.send("Ошибка");
+                    this.msg.send("Ошибка: " + data.text());
                 } else {
                     this.msg.send("Зарегистрирован отгул");
                 }
