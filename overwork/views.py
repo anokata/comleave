@@ -263,7 +263,7 @@ def delete(request, over_id):
     return HttpResponse(' param:' + over_id)
 
 def persons(request):
-    persons = Person.objects.all()
+    persons = Person.objects.all().order_by('name')
     data = [{'id': p.pk, 'name':p.name, 
         'is_manager':p.is_manager, 'login':p.login} for p in persons]
     return JsonResponse(data, safe=False)
