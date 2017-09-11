@@ -241,11 +241,14 @@ def register_interval(request, is_over):
         comment = '-'
     interval = int(interval)
     # Find last for this person
-    last = Overs.objects.filter(person=person).order_by('-reg_date')[0]
-    is_same = (last.start_date == date 
-            and last.comment == comment 
-            and last.is_over == is_over 
-            and last.interval == interval)
+    last = Overs.objects.filter(person=person).order_by('-reg_date')
+    is_same = False
+    if len(last) > 0:
+        last = last[0]
+        is_same = (last.start_date == date
+                and last.comment == comment
+                and last.is_over == is_over
+                and last.interval == interval)
     # if exist same then fail
     if is_same:
         return HttpResponse('Already exist')
