@@ -227,15 +227,14 @@ def register_unwork(request):
     return HttpResponse('not')
 
 def register_interval(request, is_over):
-    date = request.POST["date"]
+    date_str = request.POST["date"]
     interval = request.POST["interval"]
     person_id = request.POST["person_id"]
     comment = request.POST["comment"]
-    mail_register_udwork(person_id, date, interval, comment, is_over)
 
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person'
-    date = datetime.datetime.strptime(date, "%d.%m.%Y").date()
+    date = datetime.datetime.strptime(date_str, "%d.%m.%Y").date()
     now = datetime.datetime.now()
     if not comment:
         comment = '-'
@@ -256,6 +255,7 @@ def register_interval(request, is_over):
     over = Overs(start_date=date, reg_date=now, comment=comment, 
             interval=interval, person=person, is_over=is_over)
     over.save()
+    mail_register_udwork(person_id, date_str, str(interval), comment, is_over)
     return HttpResponse('ok')
 
 @login_required
