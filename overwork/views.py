@@ -164,6 +164,9 @@ def order_edit(request):
             over.is_over = is_over
             over.person_id = person_id
             over.save()
+            # TODO DRY IN mail and make mail that edited
+            mail_register_udwork(person_id, str(date), str(interval), 
+                    comment, is_over, edited=True)
         except Exception as ex:
             return HttpResponse(ex)
         return HttpResponse('ok')

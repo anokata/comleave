@@ -9,13 +9,20 @@ log = logging.getLogger('mail')
 def interval2hours(i):
     return str(int(i) / 60) + ' hours ' + str(int(i) % 60) + ' minutes'
 
-def make_mail_body(person_id, date, interval, comment, is_over):
+# TODO over obj with request
+def make_mail_body(person_id, date, interval, comment, is_over, edited=False):
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person' # Exception
-    if is_over:
-        body = u'Запрос переработки от ' 
-    else: 
-        body = u'Запрос на отгул от ' 
+    if edited:
+        if is_over:
+            body = u'Редактирование:\n\tПереработка от ' 
+        else: 
+            body = u'Редактирование:\n\tОтгул от ' 
+    else:
+        if is_over:
+            body = u'Запрос переработки от ' 
+        else: 
+            body = u'Запрос на отгул от ' 
     body += person.name + ' на '
     body += interval2hours(interval)
     body += u' на ' + date
@@ -46,7 +53,7 @@ def make_mail_acc_body(over, is_acc, user):
 
     return body
 
-def mail_register_udwork(person_id, date, interval, comment, is_over):
+def mail_register_udwork(person_id, date, interval, comment, is_over, edited=False):
     manager = User.objects.filter(is_staff=True).exclude(is_superuser=True).first()
     if not manager: 
         logging.error("manager not found")
@@ -56,7 +63,7 @@ def mail_register_udwork(person_id, date, interval, comment, is_over):
     try:
         send_mail(
             'Registred overwork' if is_over else 'Registred unwork',
-            make_mail_body(person_id, date, interval, comment, is_over),
+            make_mail_body(person_id, date, interval, comment, is_over, edited),
             'djangomosreg@mail.ru',
             [mail],
             fail_silently=False,
