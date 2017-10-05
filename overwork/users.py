@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.conf import settings
-from auth import ActiveDirectoryBackend
+from overwork.auth import ActiveDirectoryBackend
 
 from .models import Overs, Person
 import logging

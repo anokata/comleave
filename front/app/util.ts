@@ -1,12 +1,13 @@
 import { Overs } from './overs';
 import { Interval } from './interval';
+// vi: filetype=javascript
 
 export class Util {
 
     public static dateToStr(date: Date) {
         let month: string = (date.getMonth() + 1).toString();
         let day: string = (date.getDate()).toString();
-        if (date.getMonth() < 10) month = '0' + month;
+        if ((date.getMonth() + 1) < 10) month = '0' + month;
         if (date.getDate() < 10) day = '0' + day;
         return day + '.' + month + '.' + date.getFullYear();
     }
