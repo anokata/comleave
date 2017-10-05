@@ -1,13 +1,13 @@
 test:
 	python manage.py test
 run:
-	DJANGO_DEBUG=1 python -Wall manage.py runserver
+	(. env/bin/activate; DJANGO_DEBUG=1 python2 -Wall manage.py runserver)
 
 frontinit:
-	npm install
+	(cd front; npm install)
 
 front:
-	npm run tsc:w
+	(cd front; npm run tsc:w)
 
 testquery:
 	watch -n1 sudo -u postgres psql -d django_comleave -f query.sql 
@@ -69,5 +69,12 @@ test:
 prod_restart:
 	sudo systemctl restart gunicorn.service
 	sudo systemctl restart gunicorn.socket
+
+_env_init:
+	virtualenv env -p python2
+	(. env/bin/activate; pip install --upgrade pip; pip install -r requirements.txt)
+
+init: _env_init frontinit
+
 
 .PHONY: front
