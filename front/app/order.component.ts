@@ -171,7 +171,7 @@ export class OrderComponent implements OnInit {
         } else {
             kind = undefined;
         }
-        console.log(kind);
+
         this.httpService.register(this.inAction, date, this.inInterval, 
             this.person_id, this.inComment, this.inId, is_over, kind)
             .subscribe((data) => { 

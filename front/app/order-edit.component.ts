@@ -61,7 +61,7 @@ export class OrderEditComponent implements OnInit {
                         this.inType = Type.ILL;
                     }
                 } else {
-                    console.log('no');
+                    //console.log('no');
                 }
             });
     }

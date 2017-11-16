@@ -200,7 +200,7 @@ export class RegistredComponent implements OnInit {
         );
         this.httpService.postFilter(filter).subscribe(
             (data: Response) => {
-                console.log(data);
+                //console.log(data);
                 //this.refresh();
             });
              */

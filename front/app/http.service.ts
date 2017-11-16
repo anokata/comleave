@@ -100,8 +100,8 @@ export class HttpService{
         params.set('offset', obj.offset.toString());
 
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
-        console.log(action);
-        console.log(params.toString());
+        //console.log(action);
+        //console.log(params.toString());
         return this.http.post(this.host + action,  params.toString(), { headers: headers });
     }
 

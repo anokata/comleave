@@ -101,7 +101,6 @@ export class AppComponent implements OnInit {
 
     onKey(e: KeyboardEvent) {
         if (e.altKey && e.ctrlKey) {
-            //console.log(e);
             if (e.key == 'y') this.router.navigateByUrl('sum');
             if (e.key == 'u') this.router.navigateByUrl('reg');
             if (e.key == 'i') this.router.navigateByUrl('denied');

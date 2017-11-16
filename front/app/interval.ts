@@ -23,7 +23,7 @@ export class Interval {
         let m = value % 60;
         let decad = h % 10;
         let hundr = h % 100;
-        //console.log(value, h, m, decad, hundr);
+
         if (decad == 0) {
             suffix = 'ов';
         } else if (decad == 1 && hundr > 11) {
@@ -48,7 +48,6 @@ export class Interval {
         let decad = h % 10;
         let d = Math.floor(h / 10);
         
-        console.log(h, h==1);
         if (decad == 1 && d != 1) {
             suffix = ' день';
         } else if (decad > 1 && decad < 5 && d != 1) {
