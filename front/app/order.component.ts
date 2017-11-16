@@ -45,7 +45,7 @@ import { DatepickerComponent} from './datepicker.component';
 
 <div class='col-md-2 form-group'>
 <label>Тип:
-<select class='form-control' [(ngModel)]="inType">
+<select class='form-control' [(ngModel)]="inType" (change)=intervalRemake()>
     <option *ngFor="let opt of types" [value]="opt.value">
     {{opt.title}}
     </option>
@@ -143,6 +143,23 @@ export class OrderComponent implements OnInit {
 
     setDate(sdate: string) {
         this.date.date = sdate;
+    }
+
+    intervalRemake() {
+        this.intervals = Array();
+        if (this.inType == Type.ILL) {
+            let day = 60 * 24;
+            for (let i = day; i <= day * 30; i += day) {
+                this.intervals.push(new Interval(i));
+            }
+            this.inInterval = day;
+        } else {
+            for (let i = 60; i <= 60 * 24; i += 30) {
+                this.intervals.push(new Interval(i));
+            }
+            if (this.inInterval > 60 * 24)
+                this.inInterval = 60;
+        }
     }
 
     register() {

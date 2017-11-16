@@ -136,6 +136,7 @@ def over_by_id(request, id):
             'interval': over.interval, 
             'start_date':over.start_date, 
             'comment':over.comment, 
+            'kind':over.kind, 
             'is_over':over.is_over, 
             }
         return JsonResponse(data, safe=False)
