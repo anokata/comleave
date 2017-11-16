@@ -24,6 +24,10 @@ class Overs(models.Model):
         ('D', 'Denied'),
         ('A', 'Accepted'),
     )
+    KIND_CHOISES = (
+            ("O", "Overwork/downwork"),
+            ("I", "Ill"),
+    )
     reg_date = models.DateTimeField('date registred', auto_now_add=True)
     start_date = models.DateField('start date')
     interval = models.IntegerField(default=1)
@@ -33,12 +37,16 @@ class Overs(models.Model):
     comment = models.CharField(max_length=512, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     is_over = models.BooleanField("is overwork?(else unworked)", default=False)
+    kind = models.CharField(max_length=42,
+                                  choices=KIND_CHOISES,
+                                  default='O')
 
     def __str__(self):
         return self.reg_date.strftime("%Y.%m.%d") + ' ' \
                 + self.get_status_display() + '  ' \
                 + str(self.interval) + ' minutes ' \
                 + self.person.name + ' '\
+                + self.get_kind_display() + ' '\
                 + ('(UP)' if self.is_over else '(DN)')
 
 # filters: person_id, datefrom dateto, is_over
@@ -46,7 +54,7 @@ class Overs(models.Model):
 def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None,
         dateFrom=False, dateTo=False):
 
-    query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, overwork_person.id "\
+    query = "select overwork_person.login, overwork_overs.id, reg_date, start_date, overwork_overs.interval, comment, name, is_over, kind, overwork_person.id "\
         "from overwork_overs inner join overwork_person "\
         "on overwork_overs.person_id=overwork_person.id "
     query += over_where(status, limit, offset, person_id, is_over, dateFrom, dateTo)
@@ -66,6 +74,7 @@ def overwork_query(status, limit=False, offset=0, person_id=-1, is_over=None,
         'login':q.login, 
         'is_over':q.is_over, 
         'comment':q.comment,
+        'kind':q.kind,
         'interval':q.interval,
         'start_date':q.start_date,
         'reg_date':q.reg_date,
@@ -93,18 +102,22 @@ def over_where(status, limit=False, offset=0, person_id=-1, is_over=None,
 
 def summarize_query():
     q = "select oo.id, oo.name, oo.login, "\
+        "coalesce((select sum(overwork_overs.interval) as ill "\
+        "from overwork_overs "\
+        "where status='A' AND person_id=oo.id and kind='I') , 0) as ill, "\
         "coalesce((select sum(overwork_overs.interval) as downwork "\
         "from overwork_overs "\
-        "where status='A' AND is_over='0' and person_id=oo.id ) , 0) as unwork, "\
+        "where status='A' AND is_over='0' and person_id=oo.id and kind='O') , 0) as unwork, "\
         "coalesce((select sum(overwork_overs.interval) as upwork "\
         "from overwork_overs join overwork_person on overwork_overs.person_id=overwork_person.id "\
-        "where status='A' AND is_over='1' and person_id=oo.id), 0) as overwork "\
+        "where status='A' AND is_over='1' and person_id=oo.id and kind='O'), 0) as overwork "\
         "from overwork_person as oo;";
     qd = Overs.objects.raw(q)
     data = [{
         'overwork': q.overwork, 
         'name':q.name, 
         'unwork':q.unwork, 
+        'ill':q.ill, 
         'login':q.login,
         'person_id':q.id,
         } for q in qd]

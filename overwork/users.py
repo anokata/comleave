@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.conf import settings
 from overwork.auth import ActiveDirectoryBackend
@@ -21,9 +22,8 @@ def ensure_manager_exist():
 
 def add_user(username, email='', password='', first_name='', last_name='', is_staff=False):
     user = User.objects.create_user(
-            username,
-            email=email,
-            password=password)
+            username.encode(),
+            email=email.decode(), password=password.encode())
     user.first_name = first_name
     user.last_name = last_name
     user.is_staff = is_staff
@@ -38,6 +38,9 @@ def ldap_login(user, password):
     try:
         ldap_user = ActiveDirectoryBackend(username=user,
                                            password=password).authenticate()
+        #ldap_user['first_name'] = ldap_user['first_name'].encode('utf-8')
+        #ldap_user['last_name'] = ldap_user['last_name'].encode('utf-8')
+        #ldap_user['username'] = ldap_user['username'].encode('utf-8')
     except Exception as e:
         log.critical('LDAP Error: {}'.format(e))
         ldap_user = None

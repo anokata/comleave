@@ -13,5 +13,5 @@ pytz==2017.2
 six==1.10.0
 uwsgi
 gunicorn
-ldap
+pyldap
 pytest

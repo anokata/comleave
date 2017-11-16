@@ -29,6 +29,9 @@ import {Router} from '@angular/router';
     <li class="nav-item">
       <a class="nav-link"  routerLink="/downwork" routerLinkActive="active">Зарегистрировать отгул</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link"  routerLink="/ill" routerLinkActive="active">Зарегистрировать больничный</a>
+    </li>
     </span>
 
 <span class='nav-content nav-right' *ngIf="!userService.user.is_authenticated"> 

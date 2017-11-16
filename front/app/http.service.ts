@@ -50,15 +50,19 @@ export class HttpService{
     }
 
     register_udwork(date: string, interval: number, 
-        person_id: number, comment: string, is_over: boolean) {
+        person_id: number, comment: string, is_over: boolean, kind?: string) {
         if (!comment) {
             comment = '-';
+        }
+        if (!kind) {
+            kind = 'O';
         }
         var params = new URLSearchParams();
         params.set('date', date);
         params.set('interval', interval.toString());
         params.set('person_id', person_id.toString());
         params.set('comment', comment);
+        params.set('kind', kind);
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
         let action: string = is_over ? '/register_overwork/' : '/register_unwork/';
         return this.http.post(this.host + action,  params.toString(), { headers: headers });

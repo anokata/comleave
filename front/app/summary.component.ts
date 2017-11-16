@@ -31,6 +31,7 @@ export class Summarize {
     <th>Отгул</th>
     <th>Переработка</th>
     <th>Итог</th>
+    <th>Больничный</th>
     </thead>
     <tbody>
     <tr *ngFor="let rec of sums | personp:person.person_id">
@@ -39,6 +40,7 @@ export class Summarize {
       <td>{{rec.overworkStr}}</td> 
       <td *ngIf="!rec.isNegative" class='font-weight-bold text-primary'>{{rec.totalStr}}</td> 
       <td *ngIf="rec.isNegative" class='font-weight-bold text-danger'>-{{rec.totalStr}}</td> 
+      <td>{{rec.illStr}}</td> 
     </tr>
     </tbody>
     </table>
@@ -65,6 +67,7 @@ export class SummaryComponent implements OnInit {
                 e.overworkStr = Interval.makeRuTitle(e.overwork);
                 e.unworkStr = Interval.makeRuTitle(e.unwork);
                 e.totalStr = Interval.makeRuTitle(Math.abs(e.total));
+                e.illStr = Interval.makeRuTitleDays(Math.abs(e.ill));
                 e.isNegative = e.total < 0;
             });
         });

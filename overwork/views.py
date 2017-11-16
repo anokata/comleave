@@ -234,6 +234,7 @@ def register_interval(request, is_over):
     interval = request.POST["interval"]
     person_id = request.POST["person_id"]
     comment = request.POST["comment"]
+    kind = request.POST["kind"]
 
     person = Person.objects.filter(pk=person_id).first()
     if not person: return 'no person'
@@ -250,13 +251,14 @@ def register_interval(request, is_over):
         is_same = (last.start_date == date
                 and last.comment == comment
                 and last.is_over == is_over
+                and last.kind == kind
                 and last.interval == interval)
     # if exist same then fail
     if is_same:
         return HttpResponse('Already exist')
 
     over = Overs(start_date=date, reg_date=now, comment=comment, 
-            interval=interval, person=person, is_over=is_over)
+            interval=interval, person=person, is_over=is_over, kind=kind)
     over.save()
     mail_register_udwork(person_id, date_str, str(interval), comment, is_over)
     return HttpResponse('ok')

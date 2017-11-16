@@ -29,6 +29,7 @@ import { DoubleDateComponent }  from './doubledate.component';
 import { OrderComponent }  from './order.component';
 import { OrderEditComponent }  from './order-edit.component';
 import { ModalComponent }  from './modal.component';
+import { IllComponent }  from './ill.component';
 
 import { UserService} from './user.service';
 import { HttpService} from './http.service';
@@ -56,6 +57,10 @@ import { HttpService} from './http.service';
           {
             path: 'downwork',
             component: DownworkComponent
+          },
+          {
+            path: 'ill',
+            component: IllComponent
           },
           {
             path: 'denied',
@@ -95,7 +100,7 @@ import { HttpService} from './http.service';
         UpdateComponent, LoginComponent, RestorePwdComponent, PersonsComponent,
         PersonPipe, WorktypeComponent, WorktypePipe, DatepickerComponent,
         DatePipe, DoubleDateComponent, OrderComponent, OrderEditComponent,
-        ModalComponent],
+        ModalComponent, IllComponent],
     bootstrap:    [ AppComponent ],
     providers: [
         {

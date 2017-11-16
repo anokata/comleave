@@ -1,15 +1,20 @@
 
 export class Interval {
     public title: string;
+    public kind: string;
 
-    constructor (public value:number) {
+    constructor (public value:number, kind?: string) {
         /*
         this.title = Math.floor(value / 60).toString() + ' hour ';
         if ((value % 60) != 0) {
             this.title += (value % 60).toString() + ' min';
         }
-         */
-        this.title = Interval.makeRuTitle(value);
+        */
+        if (kind == 'days') {
+            this.title = Interval.makeRuTitleDays(value);
+        } else {
+            this.title = Interval.makeRuTitle(value);
+        }
     }
 
     public static makeRuTitle(value: number) {
@@ -35,6 +40,24 @@ export class Interval {
         } else {
             return h + hour.toString();
         }
+    }
+
+    public static makeRuTitleDays(value: number) {
+        let suffix = '';
+        let h = Math.floor(value / (60 * 24));
+        let decad = h % 10;
+        let d = Math.floor(h / 10);
+        
+        console.log(h, h==1);
+        if (decad == 1 && d != 1) {
+            suffix = ' день';
+        } else if (decad > 1 && decad < 5 && d != 1) {
+            suffix = ' дня';
+        } else if (h > 4) {
+            suffix = ' дней';
+        }
+        return (h + suffix);
+        //return Math.floor(value / (60 * 24)).toString() + ' дней';
     }
     /*
      один час
