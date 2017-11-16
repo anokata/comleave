@@ -39,7 +39,11 @@ export class Util {
     }
     public static makeIntervalTitles(overs: Overs[]): Overs[] {
         overs.map((e: Overs) => {
-            e.interval_str = Interval.makeRuTitle(e.interval);
+            if (e.kind == 'I') {
+                e.interval_str = Interval.makeRuTitleDays(e.interval);
+            } else {
+                e.interval_str = Interval.makeRuTitle(e.interval);
+            }
         });
         return overs;
     }

@@ -27,6 +27,7 @@ export class WorktypeComponent implements OnInit {
         this.worktypes = new Array();
         this.worktypes.push(new WorkType('Отгул', WorkType.UNWORK));
         this.worktypes.push(new WorkType('Переработка', WorkType.OVER));
+        this.worktypes.push(new WorkType('Больничный', WorkType.ILL));
         this.worktypes.push(new WorkType('Все', WorkType.ALL));
         this.worktype = 0;
     }

@@ -37,8 +37,9 @@ import { Type } from './type';
     <tbody>
     <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
       <td>{{rec.name}}</td> 
-      <td *ngIf="rec.is_over">Переработка</td>
-      <td *ngIf="!rec.is_over">Отгул</td>
+      <td *ngIf="rec.is_over && rec.kind == 'O'">Переработка</td>
+      <td *ngIf="!rec.is_over && rec.kind == 'O'">Отгул</td>
+      <td *ngIf="rec.kind == 'I'">Больничный</td>
       <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
       <td>{{rec.interval_str}}</td> 
       <td class='comment'>{{rec.comment}}</td> 
