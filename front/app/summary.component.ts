@@ -5,6 +5,9 @@ import { HttpModule } from '@angular/http';
 import { HttpService} from './http.service';
 import { UserService} from './user.service';
 import { Interval } from './interval';
+import { Strings } from './strings';
+import { ViewChild } from '@angular/core';
+import { DoubleDateComponent} from './doubledate.component';
 
 export class Summarize {
     name: string;
@@ -24,7 +27,13 @@ export class Summarize {
     template: `
     <div class='container'> <div class='row justify-content-center'>
         <persons #person [default_name]="def_name"></persons>
+        <doubledate #date [titleOne]="dateTitleFrom" 
+            [titleTwo]="dateTitleTo" (change)=filter()></doubledate>
+        <div class='col mt-3 form-group'>
+            <button class="btn btn-info m5" (click)=filter()>Применить</button>  
+        </div>
     </div> </div>
+
 
     <div class='users table-responsive'>
     <table class="table table-striped table-hover table-sm">
@@ -55,27 +64,35 @@ export class SummaryComponent implements OnInit {
   
     sums: Array<Summarize>;
     def_name: string = '';
+    dateTitleFrom: string = Strings.dateTitleFrom;
+    dateTitleTo: string = Strings.dateTitleTo;
+    @ViewChild('date') date: DoubleDateComponent;
 
     constructor(private httpService: HttpService,
                 private userService: UserService){}
+
+    refresh(data: Response) {
+        this.sums=data.json();
+        this.sums.map((e: Summarize) => {
+            e.total = e.overwork - e.unwork;
+            e.overworkStr = Interval.makeRuTitle(e.overwork);
+            e.unworkStr = Interval.makeRuTitle(e.unwork);
+            e.totalStr = Interval.makeRuTitle(Math.abs(e.total));
+            e.illStr = Interval.makeRuTitleDays(Math.abs(e.ill));
+            e.isNegative = e.total < 0;
+        });
+    }
      
     ngOnInit(){
 
-        this.httpService.getSum().subscribe(
-        (data: Response) => {
-            this.sums=data.json();
-            this.sums.map((e: Summarize) => {
-                e.total = e.overwork - e.unwork;
-                e.overworkStr = Interval.makeRuTitle(e.overwork);
-                e.unworkStr = Interval.makeRuTitle(e.unwork);
-                e.totalStr = Interval.makeRuTitle(Math.abs(e.total));
-                e.illStr = Interval.makeRuTitleDays(Math.abs(e.ill));
-                e.isNegative = e.total < 0;
-            });
-        });
+        this.httpService.getSum().subscribe((data: Response) => {this.refresh(data)});
         if (!this.userService.user.is_staff) {
             this.def_name = this.userService.user.username;
         }
+    }
+
+    filter() {
+        this.httpService.getSumFiltred(this.date.dateOne, this.date.dateTwo).subscribe((data: Response) => {this.refresh(data)});
     }
 }
 

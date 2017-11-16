@@ -41,6 +41,11 @@ doubledate {
     margin: 5px;
 }
 
+.m2r {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .comment {
     word-break: break-all;
 }

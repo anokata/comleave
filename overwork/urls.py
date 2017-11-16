@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^register_overwork/', views.register_overwork),
     url(r'^register_unwork/', views.register_unwork),
     url(r'^delete_orders/', views.delete_orders),
+    url(r'^sum_filter/$', views.summarize_between),
 ]

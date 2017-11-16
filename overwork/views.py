@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import auth
 
-from .models import Overs, Person, overwork_query, summarize_query
+from .models import Overs, Person, overwork_query, summarize_query, summarize_query_between
 from .users import ensure_manager_exist, add_user, ldap_login
 from .mail import *
 
@@ -281,6 +281,13 @@ def persons(request):
 
 def summarize(request):
     return JsonResponse(summarize_query(), safe=False)
+
+def summarize_between(request):
+    start_date = request.POST.get("start_date")
+    end_date = request.POST.get("end_date")
+    return JsonResponse(summarize_query_between(start_date, end_date), safe=False)
+
+# get_min_date
 
 #TODO make post and filter
 def registred(request, limit=0, offset=0):

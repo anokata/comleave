@@ -20,6 +20,14 @@ export class HttpService{
         return this.http.get(this.host + 'summarize/');
     }
 
+    getSumFiltred(start: string, end: string) {
+        var params = new URLSearchParams();
+        params.set('start_date', Util.dateStrToStr(start));
+        params.set('end_date', Util.dateStrToStr(end));
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
+        return this.http.post(this.host + 'sum_filter/',  params.toString(), { headers: headers });
+    }
+
     getReqs(limit: number = 0, offset: string="") {
         if (offset == "") {
             return this.http.get(this.host + 'registred/' + limit.toString());
