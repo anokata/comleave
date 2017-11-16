@@ -69,9 +69,12 @@ export class HttpService{
     }
 
     register(action: string, date: string, interval: number, 
-        person_id: number, comment: string, id:number, is_over:string) {
+        person_id: number, comment: string, id:number, is_over:string, kind?: string) {
         if (!comment) {
             comment = '-';
+        }
+        if (!kind) {
+            kind = 'O';
         }
         var params = new URLSearchParams();
         params.set('date', date);
@@ -80,6 +83,7 @@ export class HttpService{
         params.set('person_id', person_id.toString());
         params.set('comment', comment);
         params.set('is_over', is_over);
+        params.set('kind', kind);
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }); 
         return this.http.post(this.host + action,  params.toString(), { headers: headers });
     }

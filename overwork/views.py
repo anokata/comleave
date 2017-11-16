@@ -150,6 +150,7 @@ def order_edit(request):
         person_id = request.POST["person_id"]
         comment = request.POST["comment"]
         is_over = request.POST["is_over"] == "True"
+        kind = request.POST.get("kind", 'O')
 
         over = Overs.objects.filter(pk=id).first()
         if not over:
@@ -163,6 +164,7 @@ def order_edit(request):
             over.comment = comment
             over.is_over = is_over
             over.person_id = person_id
+            over.kind = kind
             over.save()
             # TODO DRY IN mail and make mail that edited
             mail_register_udwork(person_id, str(date), str(interval), 

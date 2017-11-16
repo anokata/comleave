@@ -101,6 +101,7 @@ export class OrderComponent implements OnInit {
         this.types = Array();
         this.types.push(new Type(Type.UNDER, 'Отгул'));
         this.types.push(new Type(Type.OVER, 'Переработка'));
+        this.types.push(new Type(Type.ILL, 'Больничный'));
 
         if (this.inType) {
             this.type = this.inType;
@@ -139,8 +140,15 @@ export class OrderComponent implements OnInit {
     register() {
         let date = Util.dateStrToStr(this.date.date);
         let is_over = this.inType == Type.OVER ? 'True' : '';
+        let kind: string = this.inType.toString();
+        if (this.inType == Type.ILL) {
+            kind = 'I';
+        } else {
+            kind = undefined;
+        }
+        console.log(kind);
         this.httpService.register(this.inAction, date, this.inInterval, 
-            this.person_id, this.inComment, this.inId, is_over)
+            this.person_id, this.inComment, this.inId, is_over, kind)
             .subscribe((data) => { 
                 if (data.text() != 'ok') {
                     this.msg.send("Ошибка: " + data.text());

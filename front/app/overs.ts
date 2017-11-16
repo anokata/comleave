@@ -13,4 +13,5 @@ export class Overs {
     start: string;
     is_over: boolean;
     id: number;
+    kind: string;
 }

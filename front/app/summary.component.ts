@@ -15,6 +15,8 @@ export class Summarize {
     unworkStr: string;
     totalStr: string;
     isNegative: boolean;
+    ill: number;
+    illStr: string;
 }
 
 @Component({

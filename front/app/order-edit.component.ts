@@ -53,10 +53,12 @@ export class OrderEditComponent implements OnInit {
                     this.order.setDate(this.inDate);
                     this.inInterval = over.interval;
                     this.inComment = over.comment;
-                    if (over.is_over) {
+                    if (over.is_over && over.kind == 'O') {
                         this.inType = Type.OVER;
-                    } else {
+                    } else if (!over.is_over && over.kind == 'O') {
                         this.inType = Type.UNDER;
+                    } else {
+                        this.inType = Type.ILL;
                     }
                 } else {
                     console.log('no');
