@@ -79,6 +79,9 @@ _db_init:
 	(. env/bin/activate; python manage.py migrate)
 	sudo -u postgres psql -c "create database django_comleave owner test;"
 
+backup:
+	PGPASSWORD=Test pg_dump -U test django_comleave | gzip > /tmp/comleave.sql.gz
+
 init: _env_init frontinit _db_init
 
 
