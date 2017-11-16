@@ -80,6 +80,9 @@ _db_init:
 	sudo -u postgres psql -c "create database django_comleave owner test;"
 
 backup:
+	pg_dump -U test django_comleave | gzip > /tmp/comleave.sql.gz
+
+backup_test:
 	PGPASSWORD=Test pg_dump -U test django_comleave | gzip > /tmp/comleave.sql.gz
 
 init: _env_init frontinit _db_init
