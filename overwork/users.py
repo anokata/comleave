@@ -21,9 +21,12 @@ def ensure_manager_exist():
         return
 
 def add_user(username, email='', password='', first_name='', last_name='', is_staff=False):
+    if type(email) != str:
+        email = email.decode()
     user = User.objects.create_user(
             username.encode(),
-            email=email.decode(), password=password.encode())
+            email=email, 
+            password=password.encode())
     user.first_name = first_name
     user.last_name = last_name
     user.is_staff = is_staff

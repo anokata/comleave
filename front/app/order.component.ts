@@ -108,11 +108,19 @@ export class OrderComponent implements OnInit {
         } else {
             this.inType = this.type;
         }
-        
+
         this.intervals = Array();
-        for (let i = 60; i <= 60 * 24; i += 30) {
-            this.intervals.push(new Interval(i));
+        if (this.type == Type.ILL) {
+            let day = 60 * 24;
+            for (let i = day; i <= day * 30; i += day) {
+                this.intervals.push(new Interval(i));
+            }
+        } else {
+            for (let i = 60; i <= 60 * 24; i += 30) {
+                this.intervals.push(new Interval(i));
+            }
         }
+        
         if (this.inInterval) {
             this.interval = this.inInterval;
         }

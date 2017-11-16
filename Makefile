@@ -85,6 +85,10 @@ backup:
 backup_test:
 	PGPASSWORD=Test pg_dump -U test django_comleave | gzip > /tmp/comleave.sql.gz
 
+backup_prod:
+	sudo -u postgres /usr/pgsql-9.6/bin/pg_dump django_comleave | gzip > /tmp/comleave.sql.gz
+	mv /tmp/comleave.sql.gz ../
+
 init: _env_init frontinit _db_init
 
 
