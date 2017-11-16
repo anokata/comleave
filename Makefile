@@ -1,7 +1,7 @@
 test:
 	python manage.py test
 run:
-	(. env/bin/activate; DJANGO_DEBUG=1 python3 -Wall manage.py runserver)
+	(. env/bin/activate; DJANGO_DEBUG=1 python -Wall manage.py runserver)
 
 frontinit:
 	(cd front; npm install)
@@ -71,8 +71,8 @@ prod_restart:
 	sudo systemctl restart gunicorn.socket
 
 _env_init:
-	virtualenv env -p python3
-	(. env/bin/activate; pip3 install --upgrade pip3; pip3 install -r requirements.txt)
+	virtualenv env -p python
+	(. env/bin/activate; pip install --upgrade pip; pip install -r requirements.txt)
 
 _db_init:
 	sudo -u postgres psql -c "create role test with password 'test' login;" || true
