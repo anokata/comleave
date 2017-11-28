@@ -30,7 +30,8 @@ export class Summarize {
         <doubledate #date [titleOne]="dateTitleFrom" 
             [titleTwo]="dateTitleTo" (change)=filter()></doubledate>
         <div class='col mt-3 form-group'>
-            <button class="btn btn-info m5" (click)=filter()>Применить</button>  
+            <span style="color:white">Применить</span>
+            <button class="btn btn-info m5" style="display: block;" (click)=filter()>Применить</button>  
         </div>
     </div> </div>
 
