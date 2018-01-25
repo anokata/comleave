@@ -59,7 +59,7 @@ export class Util {
     }
 
     public static getMaxDateStr(overs: Overs[]): string {
-        let maxDate = new Date('1900');
+        let maxDate = new Date('2020');
         overs.forEach((over: Overs) => {
             if (new Date(over.start_date) > maxDate) {
                 maxDate = new Date(over.start_date);
