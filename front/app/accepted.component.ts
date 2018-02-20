@@ -54,14 +54,24 @@ import { Type } from './type';
 
 <nav>
   <ul class="pagination justify-content-center">
-    <li class="page-item" *ngFor="let num of numPages">
-        <span *ngIf="num == pagenum" class="page-item active" (click)="page(num)">
-            <button class="page-link">{{ num }}</button></span>
-        <span *ngIf="num != pagenum" class="page-item " (click)="page(num)">
-            <button class="page-link">{{ num }}</button></span>
+    <li class="page-item" *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo;let i=index">
+        <span *ngIf="(i / limit + 1) == pagenum*1.0" class="page-item active" (click)="page(i/limit - i%limit + 1)">
+            <button class="page-link">{{ i / limit  - i % limit + 1 }}</button></span>
+        <span *ngIf="(i / limit + 1) != pagenum*1.0 && (i%limit) == 0" class="page-item " (click)="page(i/limit - i%limit + 1)">
+            <button class="page-link">{{ i / limit  - i % limit + 1 }}</button></span>
     </li>
   </ul>
 </nav>
+<!-- <nav> -->
+<!--   <ul class="pagination justify-content-center"> -->
+<!--     <li class="page-item" *ngFor="let num of numPages"> -->
+<!--         <span *ngIf="num == pagenum" class="page-item active" (click)="page(num)"> -->
+<!--             <button class="page-link">{{ num }}</button></span> -->
+<!--         <span *ngIf="num != pagenum" class="page-item " (click)="page(num)"> -->
+<!--             <button class="page-link">{{ num }}</button></span> -->
+<!--     </li> -->
+<!--   </ul> -->
+<!-- </nav> -->
 
 <div class="text-center ">
     <button *ngIf="total > limit" class='btn btn d-none' (click)="more()">Ещё</button>
