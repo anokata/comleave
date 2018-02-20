@@ -1,7 +1,7 @@
 test:
 	python manage.py test
 run:
-	(. env/bin/activate; DJANGO_DEBUG=1 python -Wall manage.py runserver)
+	(. env/bin/activate; DJANGO_DEBUG=1 python -Wall manage.py runserver 0.0.0.0:9005)
 
 frontinit:
 	(cd front; npm install)

@@ -65,25 +65,25 @@ import { ModalComponent } from './modal.component';
 </th>
 </thead>
 <tbody>
-<tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
-  <td>{{rec.name}}</td> 
-  <td *ngIf="rec.is_over && rec.kind == 'O'">Переработка</td>
-  <td *ngIf="!rec.is_over && rec.kind == 'O'">Отгул</td>
-  <td *ngIf="rec.kind == 'I'">Больничный</td>
-  <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
-  <td>{{rec.interval_str}} </td> 
-  <td class='comment'>{{rec.comment}}</td> 
-  <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
-<div class="text-right d-inline" *ngIf="userService.user.is_staff">
-  <td class="d-inline"><button class="btn btn-info m5" (click)="accept(rec.id)">Принять</button> </td> 
-  <td class="d-inline"><button class="btn btn-warning m5" (click)="deny(rec.id)">Отклонить</button> </td> 
-  </div>
+    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo ;let i=index" >
+    <td *ngIf="i>=offset && i < offset + limit ">{{rec.name}}</td> 
+    <td *ngIf="i>=offset && i < offset + limit && rec.is_over && rec.kind == 'O'">Переработка</td>
+    <td *ngIf="i>=offset && i < offset + limit && !rec.is_over && rec.kind == 'O'">Отгул</td>
+    <td *ngIf="i>=offset && i < offset + limit && rec.kind == 'I'">Больничный</td>
+    <td *ngIf="i>=offset && i < offset + limit">{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
+    <td *ngIf="i>=offset && i < offset + limit">{{rec.interval_str}} </td> 
+    <td *ngIf="i>=offset && i < offset + limit" class='comment'>{{rec.comment}}</td> 
+    <td *ngIf="i>=offset && i < offset + limit">{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
+    <div class="text-right d-inline" *ngIf="i>=offset && i < offset + limit && userService.user.is_staff">
+      <td class="d-inline"><button class="btn btn-info m5" (click)="accept(rec.id)">Принять</button> </td> 
+      <td class="d-inline"><button class="btn btn-warning m5" (click)="deny(rec.id)">Отклонить</button> </td> 
+    </div>
 
-  <div class="text-right d-inline" *ngIf="(userService.user.username == rec.login) || (userService.user.is_staff) ">
-  <td class="d-inline">
+    <div class="text-right d-inline" *ngIf="i>=offset && i < offset + limit && (userService.user.username == rec.login) || (userService.user.is_staff) ">
+<td *ngIf="i>=offset && i < offset + limit " class="d-inline">
   <button class="btn btn-danger m5" (click)="edit(rec.id)">Редактировать</button> 
   <button class="btn btn-danger m5" (click)="delete(rec.id)">Удалить</button> 
-  </td> 
+</td> 
   </div>
 
 </tr>
@@ -176,9 +176,20 @@ export class RegistredComponent implements OnInit {
     }
 
     refresh() {
-        this.httpService.getReqs(this.limit, this.offset.toString()).subscribe(
+        this.httpService.getReqs(0, '0').subscribe(
         (data: Response) => {
             this.reqs=data.json()['data'];
+            // front paging
+            // console.log(this.reqs);
+            // console.log(this.limit, this.offset);
+            // let reqs = this.reqs;
+            // this.reqs=[];
+            // for (let i = this.offset; i < this.offset + this.limit; i ++) {
+            // if (reqs[i]) 
+            // this.reqs.push(reqs[i]);
+            // }
+            // console.log(this.reqs);
+            // end paging
             this.total=parseInt(data.json()['total']);
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);

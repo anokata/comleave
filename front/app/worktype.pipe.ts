@@ -12,7 +12,6 @@ export class WorktypePipe implements PipeTransform {
       if (workType == 0 || workType == null) return value;
       let result = Array();
       value.forEach((over: Overs) => {
-          let wtype = WorkType.OVER;
           if (over.is_over && over.kind == 'O') {
               let wtype = WorkType.OVER;
           } else if (!over.is_over && over.kind == 'O') {
