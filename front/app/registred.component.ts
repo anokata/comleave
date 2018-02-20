@@ -179,17 +179,6 @@ export class RegistredComponent implements OnInit {
         this.httpService.getReqs(0, '0').subscribe(
         (data: Response) => {
             this.reqs=data.json()['data'];
-            // front paging
-            // console.log(this.reqs);
-            // console.log(this.limit, this.offset);
-            // let reqs = this.reqs;
-            // this.reqs=[];
-            // for (let i = this.offset; i < this.offset + this.limit; i ++) {
-            // if (reqs[i]) 
-            // this.reqs.push(reqs[i]);
-            // }
-            // console.log(this.reqs);
-            // end paging
             this.total=parseInt(data.json()['total']);
             Util.makeIntervalTitles(this.reqs);
             this.date.dateOne = Util.getMinDateStr(this.reqs);

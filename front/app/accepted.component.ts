@@ -35,16 +35,16 @@ import { Type } from './type';
 <th class="align-middle">Дата регистрации заявки</th>
     </thead>
     <tbody>
-    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo">
-      <td>{{rec.name}}</td> 
-      <td *ngIf="rec.is_over && rec.kind == 'O'">Переработка</td>
-      <td *ngIf="!rec.is_over && rec.kind == 'O'">Отгул</td>
-      <td *ngIf="rec.kind == 'I'">Больничный</td>
-      <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
-      <td>{{rec.interval_str}}</td> 
-      <td class='comment'>{{rec.comment}}</td> 
-      <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
-      <div *ngIf="userService.user.is_staff">
+    <tr *ngFor="let rec of reqs | personp:person.person_id | worktypep:worktype.worktype  | datepipe:date.dateOne:date.dateTwo;let i=index">
+      <td *ngIf="i>=offset && i < offset + limit ">{{rec.name}}</td> 
+      <td *ngIf="i>=offset && i < offset + limit && rec.is_over && rec.kind == 'O'">Переработка</td>
+      <td *ngIf="i>=offset && i < offset + limit && !rec.is_over && rec.kind == 'O'">Отгул</td>
+      <td *ngIf="i>=offset && i < offset + limit && rec.kind == 'I'">Больничный</td>
+      <td *ngIf="i>=offset && i < offset + limit ">{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
+      <td *ngIf="i>=offset && i < offset + limit ">{{rec.interval_str}}</td> 
+      <td *ngIf="i>=offset && i < offset + limit " class='comment'>{{rec.comment}}</td> 
+      <td *ngIf="i>=offset && i < offset + limit ">{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
+      <div *ngIf="i>=offset && i < offset + limit && userService.user.is_staff">
       <td><button class="btn btn-info" (click)="register(rec.id)">Зарегистрировать</button> </td> 
       <td><button class="btn btn-warning" (click)="deny(rec.id)">Отклонить</button> </td> 
       </div>
@@ -101,7 +101,7 @@ export class AcceptedComponent implements OnInit {
     }
 
     refresh() {
-        this.httpService.getRest('accepted', this.limit.toString(), this.offset.toString()).subscribe(
+        this.httpService.getRest('accepted', '0', '0').subscribe(
         (data: Response) => {
             this.reqs=data.json()['data'];
             this.total=parseInt(data.json()['total']);
