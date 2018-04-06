@@ -73,7 +73,7 @@ import { ModalComponent } from './modal.component';
     <td *ngIf="i>=offset && i < offset + limit">{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
     <td *ngIf="i>=offset && i < offset + limit">{{rec.interval_str}} </td> 
     <td *ngIf="i>=offset && i < offset + limit" class='comment'>{{rec.comment}}</td> 
-    <td *ngIf="i>=offset && i < offset + limit">{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
+    <td *ngIf="i>=offset && i < offset + limit">{{rec.reg_date | date:"HH:mm dd.MM.yyyy"}}</td> 
     <div class="text-right d-inline" *ngIf="i>=offset && i < offset + limit && userService.user.is_staff">
       <td class="d-inline"><button class="btn btn-info m5" (click)="accept(rec.id)">Принять</button> </td> 
       <td class="d-inline"><button class="btn btn-warning m5" (click)="deny(rec.id)">Отклонить</button> </td> 

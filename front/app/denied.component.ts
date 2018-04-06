@@ -54,7 +54,7 @@ import { Type } from './type';
       <td>{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
       <td>{{rec.interval_str}}</td> 
       <td class='comment'>{{rec.comment}}</td> 
-      <td>{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
+      <td>{{rec.reg_date | date:"HH:mm dd.MM.yyyy"}}</td> 
       <div *ngIf="userService.user.is_staff">
       <td><button class="btn btn-info" (click)="accept(rec.id)">Принять</button> </td> 
       <td><button class="btn btn-info" (click)="register(rec.id)">Зарегистрировать</button> </td> 

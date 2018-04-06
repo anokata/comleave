@@ -43,7 +43,7 @@ import { Type } from './type';
       <td *ngIf="i>=offset && i < offset + limit ">{{rec.start_date | date:"dd.MM.yyyy"}}</td> 
       <td *ngIf="i>=offset && i < offset + limit ">{{rec.interval_str}}</td> 
       <td *ngIf="i>=offset && i < offset + limit " class='comment'>{{rec.comment}}</td> 
-      <td *ngIf="i>=offset && i < offset + limit ">{{rec.reg_date | date:"HH:MM dd.MM.yyyy"}}</td> 
+      <td *ngIf="i>=offset && i < offset + limit ">{{rec.reg_date | date:"HH:mm dd.MM.yyyy"}}</td> 
       <div *ngIf="i>=offset && i < offset + limit && userService.user.is_staff">
       <td><button class="btn btn-info" (click)="register(rec.id)">Зарегистрировать</button> </td> 
       <td><button class="btn btn-warning" (click)="deny(rec.id)">Отклонить</button> </td> 
