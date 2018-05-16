@@ -1,2 +1,5 @@
+#!/bin/bash
+# vim: filetype=sh
 sudo -Hiu postgres /usr/pgsql-9.6/bin/pg_dump django_comleave | gzip > /tmp/comleave.sql.gz
 mv -f /tmp/comleave.sql.gz /home/tikhomirovsvl/
+chown tikhomirovsvl /home/tikhomirovsvl/comleave.sql.gz
