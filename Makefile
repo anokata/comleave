@@ -46,7 +46,8 @@ start:
 	systemctl start emperor.uwsgi
 
 restart:
-	systemctl restart emperor.uwsgi
+	sudo systemctl restart gunicorn.service
+	sudo systemctl restart gunicorn.socket
 
 guni:
 	gunicorn -w 4 -b 127.0.0.1:8004 comleave.wsgi 

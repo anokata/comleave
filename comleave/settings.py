@@ -90,8 +90,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'django_comleave',
         'USER': 'test',
-        'PASSWORD': 'test',
-        #'PASSWORD': 'B070L<Mf4j9O15G',
+        #'PASSWORD': 'test',
+        'PASSWORD': 'B070L<Mf4j9O15G',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
