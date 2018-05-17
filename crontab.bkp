@@ -1,0 +1,1 @@
+0 11 * * * (/home/tikhomirovsvl/remote_backup_comleave) &>> /home/tikhomirovsvl/bkp.log
