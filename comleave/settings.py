@@ -93,7 +93,7 @@ DATABASES = {
         #'PASSWORD': 'test',
         'PASSWORD': 'B070L<Mf4j9O15G',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': '5433',
     }
 }
 if PROD:
