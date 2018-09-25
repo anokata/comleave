@@ -74,13 +74,14 @@ prod_restart:
 	sudo systemctl restart gunicorn.socket
 
 _env_init:
-	virtualenv env -p python
+	virtualenv env -p python3
 	(. env/bin/activate; pip install --upgrade pip; pip install -r requirements.txt)
 
 _db_init:
 	sudo -u postgres psql -c "create role test with password 'test' login;" || true
 	sudo -u postgres psql -c "create database django_comleave owner test;"
-	(. env/bin/activate; python manage.py migrate)
+	zcat comleave.sql.gz | sudo -u postgres psql django_comleave
+	#(. env/bin/activate; python manage.py migrate)
 
 backup:
 	pg_dump -U test django_comleave | gzip > /tmp/comleave.sql.gz
